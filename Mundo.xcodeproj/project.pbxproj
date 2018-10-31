@@ -8,22 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		386287D321868D2F0058A164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D221868D2F0058A164 /* AppDelegate.swift */; };
-		386287D521868D2F0058A164 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D421868D2F0058A164 /* ViewController.swift */; };
+		386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D421868D2F0058A164 /* FirstPageVC.swift */; };
 		386287D821868D2F0058A164 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 386287D621868D2F0058A164 /* Main.storyboard */; };
 		386287DA21868D320058A164 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 386287D921868D320058A164 /* Assets.xcassets */; };
 		386287DD21868D320058A164 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 386287DB21868D320058A164 /* LaunchScreen.storyboard */; };
 		386287E521868DDE0058A164 /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287E421868DDE0058A164 /* ScannerVC.swift */; };
+		38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */; };
+		38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EF22188CCF7002D6A4B /* LoginVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		386287CF21868D2F0058A164 /* Mundo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mundo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386287D221868D2F0058A164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		386287D421868D2F0058A164 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		386287D421868D2F0058A164 /* FirstPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageVC.swift; sourceTree = "<group>"; };
 		386287D721868D2F0058A164 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		386287D921868D320058A164 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		386287DC21868D320058A164 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		386287DE21868D320058A164 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		386287E421868DDE0058A164 /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
+		38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		38E36EF22188CCF7002D6A4B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,29 +41,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		384A427A2187C54200EB7AEE /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		384A427B2187C54800EB7AEE /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		384A427C2187C54E00EB7AEE /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				386287D421868D2F0058A164 /* ViewController.swift */,
-				386287E421868DDE0058A164 /* ScannerVC.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		386287C621868D2F0058A164 = {
 			isa = PBXGroup;
 			children = (
@@ -79,9 +60,9 @@
 		386287D121868D2F0058A164 /* Mundo */ = {
 			isa = PBXGroup;
 			children = (
-				384A427A2187C54200EB7AEE /* Model */,
-				384A427B2187C54800EB7AEE /* View */,
-				384A427C2187C54E00EB7AEE /* Controller */,
+				38E36EEC2188CBC5002D6A4B /* Model */,
+				38E36EEB2188CBBF002D6A4B /* View */,
+				38E36EEA2188CBB5002D6A4B /* Controller */,
 				386287D221868D2F0058A164 /* AppDelegate.swift */,
 				386287D621868D2F0058A164 /* Main.storyboard */,
 				386287D921868D320058A164 /* Assets.xcassets */,
@@ -89,6 +70,39 @@
 				386287DE21868D320058A164 /* Info.plist */,
 			);
 			path = Mundo;
+			sourceTree = "<group>";
+		};
+		38E36EEA2188CBB5002D6A4B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				38E36EF12188CCB6002D6A4B /* Initial Pages */,
+				386287E421868DDE0058A164 /* ScannerVC.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		38E36EEB2188CBBF002D6A4B /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		38E36EEC2188CBC5002D6A4B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		38E36EF12188CCB6002D6A4B /* Initial Pages */ = {
+			isa = PBXGroup;
+			children = (
+				386287D421868D2F0058A164 /* FirstPageVC.swift */,
+				38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */,
+				38E36EF22188CCF7002D6A4B /* LoginVC.swift */,
+			);
+			path = "Initial Pages";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,8 +177,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				386287E521868DDE0058A164 /* ScannerVC.swift in Sources */,
-				386287D521868D2F0058A164 /* ViewController.swift in Sources */,
+				386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */,
+				38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */,
 				386287D321868D2F0058A164 /* AppDelegate.swift in Sources */,
+				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
