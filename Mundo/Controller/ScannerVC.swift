@@ -102,8 +102,8 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     // Object functions
     
-    @IBAction func backBttnPressed(_ sender: Any) {
-        performSegue(withIdentifier: "scanToMain", sender: nil)
+    @IBAction func backBttnTapped(_ sender: Any) {
+        performSegue(withIdentifier: "scannerToFirstPage", sender: nil)
     }
     
 }
