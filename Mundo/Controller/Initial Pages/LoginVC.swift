@@ -12,9 +12,13 @@ class LoginVC: UIViewController {
     
     let linkURL = "http://dsg1.crc.nd.edu/cse30246/groms/dbaccess/login.php"
 
+
+    @IBOutlet weak var loginEmailTextField: UITextField!
+    @IBOutlet weak var loginPasswordTextField: UITextField!
     @IBOutlet weak var signInBttn: UIButton!
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

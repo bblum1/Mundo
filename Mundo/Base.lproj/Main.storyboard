@@ -181,6 +181,9 @@
                         <viewLayoutGuide key="safeArea" id="NYE-ZZ-G7T"/>
                     </view>
                     <connections>
+                        <outlet property="emailTextField" destination="NOC-IB-Ufc" id="Rs3-x1-gGv"/>
+                        <outlet property="passwordTextField" destination="acW-kW-kj4" id="HcX-5W-HLe"/>
+                        <outlet property="retypePasswordTextField" destination="oS8-6e-J2h" id="wDj-t1-qAY"/>
                         <outlet property="signUpBttn" destination="Ia8-IP-ECq" id="mOI-YZ-guR"/>
                         <outlet property="textFieldEmail" destination="NOC-IB-Ufc" id="hoJ-b2-f1e"/>
                         <outlet property="textFieldPassword" destination="acW-kW-kj4" id="uXO-AK-jGG"/>
@@ -445,6 +448,8 @@
                         <viewLayoutGuide key="safeArea" id="fap-CA-eUf"/>
                     </view>
                     <connections>
+                        <outlet property="loginEmailTextField" destination="hoh-EZ-AKV" id="6DS-zT-5Yg"/>
+                        <outlet property="loginPasswordTextField" destination="Ix7-CE-CnF" id="vuO-oU-eOx"/>
                         <outlet property="signInBttn" destination="4NZ-MQ-cWn" id="YRi-4O-SS1"/>
                         <outlet property="textFieldEmail" destination="hoh-EZ-AKV" id="s3x-fP-exC"/>
                         <outlet property="textFieldPassword" destination="Ix7-CE-CnF" id="gbN-gh-dCq"/>
@@ -560,5 +565,6 @@
         <segue reference="PFY-o8-PLt"/>
         <segue reference="pWE-lo-9D7"/>
         <segue reference="yM3-9n-cEP"/>
+
     </inferredMetricsTieBreakers>
 </document>
