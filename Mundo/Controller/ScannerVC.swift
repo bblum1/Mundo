@@ -85,9 +85,15 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
             {
                 if supportedCodeTypes.contains(object.type)
                 {
-                    // reads in followerIDgigID 38 char string
-                    let barcodeString = object.stringValue!
-                    print("THE STRING", barcodeString)
+                    // this is the final step where string val exists
+                    if let barcodeString = object.stringValue {
+                        print("THE STRING", barcodeString)
+                        let barcodeStringAlert = UIAlertController(title: "Barcode scanned!", message: barcodeString, preferredStyle: .alert)
+                        barcodeStringAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
+                        present(barcodeStringAlert, animated: true, completion: nil)
+                    } else {
+                        print("ERROR")
+                    }
                 }
             } else {
                 let unreadableBarcodeAlert = UIAlertController(title: "Unable to Read Barcode", message: "Please try again.", preferredStyle: .alert)
