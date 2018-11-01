@@ -9,6 +9,8 @@ DerivedData/
 
 ## Various settings
 *.pbxuser
+/Mundo.xcodeproj/
+/Mundo.xcworkspace/
 !default.pbxuser
 *.mode1v3
 !default.mode1v3
