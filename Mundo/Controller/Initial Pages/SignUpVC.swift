@@ -34,16 +34,24 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         retypePasswordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         
         // TODO: Google these errors
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+// NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: NSNotification.Name.UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     deinit {
         // TODO: Google these errors
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     
@@ -53,8 +61,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
             return
         }
         
-        if notification.name == Notification.Name.UIResponder.keyboardWillShowNotification ||
-            notification.name == Notification.Name.UIResponder.keyboardWillChangeFrameNotification {
+        if notification.name == UIResponder.keyboardWillShowNotification ||
+            notification.name == UIResponder.keyboardWillChangeFrameNotification {
             
             // Find out target Y
             let targetY = view.frame.size.height - keyboardRect.height - 20 - textFieldHeight
@@ -106,12 +114,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     
     // Start Editing The Text Field
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textFieldPosition = textField.frame.origin.y
-        textFieldHeight = textField.frame.size.height
-    }
-    
-    // Start Editing The Text Field
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         textFieldPosition = textField.frame.origin.y
         textFieldHeight = textField.frame.size.height
     }
