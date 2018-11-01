@@ -88,6 +88,9 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     // this is the final step where string val exists
                     if let barcodeString = object.stringValue {
                         print("THE STRING", barcodeString)
+                        let barcodeStringAlert = UIAlertController(title: "Barcode scanned!", message: barcodeString, preferredStyle: .alert)
+                        barcodeStringAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
+                        present(barcodeStringAlert, animated: true, completion: nil)
                     } else {
                         print("ERROR")
                     }
