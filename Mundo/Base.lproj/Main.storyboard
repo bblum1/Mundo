@@ -70,8 +70,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <segue destination="nnE-aj-0Yv" kind="show" identifier="firstPageToSignUp" id="7pK-6f-2NB"/>
                         <segue destination="YKK-BM-XPD" kind="show" identifier="firstPageToLogIn" id="yDb-lq-B4f"/>
+                        <segue destination="nnE-aj-0Yv" kind="show" identifier="firstPageToSignUp" id="7SU-g8-q7h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -558,8 +558,8 @@
         <image name="purple1-round-rect" width="250" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PFY-o8-PLt"/>
+        <segue reference="yDb-lq-B4f"/>
         <segue reference="pWE-lo-9D7"/>
-        <segue reference="T7D-SH-hqd"/>
+        <segue reference="zAR-34-OVM"/>
     </inferredMetricsTieBreakers>
 </document>

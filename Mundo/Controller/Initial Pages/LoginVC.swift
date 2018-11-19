@@ -167,16 +167,16 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             }
             
             do {
-             let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
-             
-             if let parseJSON = myJSON {
-                var msg : String!
-                var msgEmail : String!
-                msgEmail = parseJSON["email"] as? String
-                msg = parseJSON["result"] as? String
-                print(msg)
-                print(msgEmail)
-             }
+                 let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                 if let parseJSON = myJSON {
+                    var msg : String!
+                    var msgEmail : String!
+                    msgEmail = parseJSON["email"] as? String
+                    msg = parseJSON["result"] as? String
+                    print(msg)
+                    print(msgEmail)
+                 }
              } catch {
                 print(error)
              }

@@ -16,6 +16,7 @@
 		38D20F66218B6EC700553619 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D20F65218B6EC700553619 /* DataService.swift */; };
 		38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */; };
 		38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EF22188CCF7002D6A4B /* LoginVC.swift */; };
+		38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD981219A558A00B26869 /* BarcodeService.swift */; };
 		7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */; };
 		7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		38D20F65218B6EC700553619 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		38E36EF22188CCF7002D6A4B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		38EDD981219A558A00B26869 /* BarcodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeService.swift; sourceTree = "<group>"; };
 		7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordVC.swift; sourceTree = "<group>"; };
 		7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				38D20F65218B6EC700553619 /* DataService.swift */,
+				38EDD981219A558A00B26869 /* BarcodeService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 				7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */,
 				386287D321868D2F0058A164 /* AppDelegate.swift in Sources */,
 				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
+				38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */,
 				38D20F66218B6EC700553619 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
