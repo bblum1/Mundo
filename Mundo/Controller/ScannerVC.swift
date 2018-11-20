@@ -89,7 +89,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                         print("THE STRING", barcodeString)
                         
                         // Sending the API request
-                        barcodeService.makeBarcodeCall(gtin: barcodeString)
+                        barcodeService.makeBarcodeCall(gtin: barcodeString)//"018200150470")
                         let barcodeStringAlert = UIAlertController(title: "Barcode scanned!", message: barcodeString, preferredStyle: .alert)
                         barcodeStringAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
                         present(barcodeStringAlert, animated: true, completion: nil)

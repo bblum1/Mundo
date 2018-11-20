@@ -14,6 +14,7 @@ class BarcodeService {
     let apiURL = "https://mignify.p.mashape.com/gtins/v1.0/productsToGtin?gtin="
     
     func makeBarcodeCall(gtin: String) {
+        print("THE STRING IN BARCODE SERVICE:", gtin)
         
         let requestURL = NSURL(string: apiURL+gtin)
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -22,7 +23,8 @@ class BarcodeService {
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
-            
+            print("RESPONSE:", response)
+            print("DATA:", data)
             if error != nil {
                 print("error is \(String(describing: error))")
                 return;
@@ -30,8 +32,11 @@ class BarcodeService {
             
             do {
                 let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                print("MYJSON:", myJSON)
                 
-                if let parseJSON = myJSON as? Dictionary<String, Dictionary<String, Any>> {
+                let thePayload = myJSON!["payload"]
+                
+                if let parseJSON = thePayload as? Dictionary<String, Any>{
                     print("BOO YAA JSON: \(parseJSON)")
                     
                     // Parse the JSON returned from Mashape API and store to object
@@ -41,46 +46,47 @@ class BarcodeService {
 //                    let languageCode: String?
 //                    let productName: String?
 //
-                    let results = parseJSON["payload"]!["results"] as? [Dictionary<String, String>]
+                    if let results = parseJSON["results"] as? [Dictionary<String, String>] {
                         
-                        
-//                        languageCode = results[0]["languageCode"]
-//                        productName = results[0]["productName"]
-                    
-                    if let brand = results![0]["brand"] {
-                        // Send the brand name as POST request to DB
-                        let requestURL = NSURL(string: self.dbURL)
-                        let request = NSMutableURLRequest(url: requestURL! as URL)
-                        request.httpMethod = "POST"
-                        
-                        let postParameters = "brand="+brand
-                        request.httpBody = postParameters.data(using: String.Encoding.utf8)
-                        
-                        let task = URLSession.shared.dataTask(with: request as URLRequest) {
-                            data, response, error in
+                        if let brand = results[0]["brand"] {
+                            print("THE BRAND: \(brand)")
+                            // TODO: Send the brand name as POST request to DB
+                            let requestURL = NSURL(string: self.dbURL)
+                            let request = NSMutableURLRequest(url: requestURL! as URL)
+                            request.httpMethod = "POST"
                             
-                            if error != nil {
-                                print("error is \(String(describing: error))")
-                                return
-                            }
+                            let postParameters = "brand="+brand
+                            request.httpBody = postParameters.data(using: String.Encoding.utf8)
                             
-                            do {
-                                // TODO: Parse the return from our database response
-                                let ourJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                            let task = URLSession.shared.dataTask(with: request as URLRequest) {
+                                data, response, error in
                                 
-                                // TODO: Change this to
-                                if let parseJSON = ourJSON {
-                                    let result = parseJSON["result"] as? String
-                                    let corporation = parseJSON["corporation"] as? String
-                                    
-                                    print(result as Any)
-                                    print("CORPORATION BABY!!!!!", corporation as Any)
+                                if error != nil {
+                                    print("error is \(String(describing: error))")
+                                    return
                                 }
-                            } catch {
-                                print(error)
+                                
+                                do {
+                                    // TODO: Parse the return from our database response
+                                    let ourJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                                    
+                                    // TODO: Change this to
+                                    if let parseJSON = ourJSON {
+                                        
+                                        let result = parseJSON["result"] as? String
+                                        let symbol = parseJSON["symbol"] as? String
+                                        
+                                        print("result = \(result)")
+                                        print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
+                                        
+                                    }
+                                } catch {
+                                    print(error)
+                                }
                             }
+                            task.resume()
                         }
-                        task.resume()
+                        
                     }
                     
                 }

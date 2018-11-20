@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3834AD6621A3B3C700C5BA71 /* StockInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */; };
 		386287D321868D2F0058A164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D221868D2F0058A164 /* AppDelegate.swift */; };
 		386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D421868D2F0058A164 /* FirstPageVC.swift */; };
 		386287D821868D2F0058A164 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 386287D621868D2F0058A164 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoVC.swift; sourceTree = "<group>"; };
 		386287CF21868D2F0058A164 /* Mundo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mundo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386287D221868D2F0058A164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		386287D421868D2F0058A164 /* FirstPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageVC.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			children = (
 				38E36EF12188CCB6002D6A4B /* Initial Pages */,
 				386287E421868DDE0058A164 /* ScannerVC.swift */,
+				3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
 				38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */,
 				38D20F66218B6EC700553619 /* DataService.swift in Sources */,
+				3834AD6621A3B3C700C5BA71 /* StockInfoVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
