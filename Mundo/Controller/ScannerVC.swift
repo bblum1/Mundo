@@ -36,11 +36,16 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         super.viewDidLoad()
         
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
+        //captureDevice?.flashMode = .auto
         
         do {
             if captureDevice != nil {
+                
                 // Get the instance of the AVCaptureDeviceInput class using the previosu device object
                 let input = try AVCaptureDeviceInput(device: captureDevice!)
+                
+                // TODO: Allow flash if needed with the auto features
+                //let flashSettings = getCameraSettings(camera: captureDevice!)
                 
                 // Set the input device on the capture session
                 self.session.addInput(input)
@@ -68,14 +73,6 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         self.view.bringSubviewToFront(square)
         
         session.startRunning()
-        
-        // Optional code to change the rect if detected a code
-        /*if let barcodeFrameView = barcodeFrameView {
-            barcodeFrameView.layer.borderColor = UIColor.purple.cgColor
-            barcodeFrameView.layer.borderWidth = 5
-            view.addSubview(barcodeFrameView)
-            view.bringSubview(toFront: barcodeFrameView)
-        }*/
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -90,10 +87,15 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     // this is the final step where string val exists
                     if let barcodeString = object.stringValue {
                         print("THE STRING", barcodeString)
+                        
+                        // Sending the API request
                         barcodeService.makeBarcodeCall(gtin: barcodeString)
                         let barcodeStringAlert = UIAlertController(title: "Barcode scanned!", message: barcodeString, preferredStyle: .alert)
                         barcodeStringAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
                         present(barcodeStringAlert, animated: true, completion: nil)
+                        
+                        // stop capture session after successful scan
+                        session.stopRunning()
                     } else {
                         print("ERROR")
                     }
@@ -110,6 +112,16 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     // Object functions
+    
+    func getCameraSettings(camera: AVCaptureDevice) -> AVCapturePhotoSettings {
+        let settings = AVCapturePhotoSettings()
+        
+        if camera.hasFlash {
+            settings.flashMode = .auto
+        }
+        
+        return settings
+    }
     
     @IBAction func backBttnTapped(_ sender: Any) {
         performSegue(withIdentifier: "scannerToFirstPage", sender: nil)

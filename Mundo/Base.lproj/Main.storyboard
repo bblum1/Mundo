@@ -71,7 +71,7 @@
                     </view>
                     <connections>
                         <segue destination="YKK-BM-XPD" kind="show" identifier="firstPageToLogIn" id="yDb-lq-B4f"/>
-                        <segue destination="nnE-aj-0Yv" kind="show" identifier="firstPageToSignUp" id="7SU-g8-q7h"/>
+                        <segue destination="Pfj-nu-wHZ" kind="show" identifier="firstPageToSignUp" id="b8n-iR-rbe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -151,6 +151,12 @@
                                     <action selector="signUpBttnTapped:" destination="nnE-aj-0Yv" eventType="touchUpInside" id="JA2-G5-QmD"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password must be at least 6 characters long" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BWe-Gn-J3k">
+                                <rect key="frame" x="16" y="367" width="238" height="17"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                <color key="textColor" red="0.80392156859999997" green="0.57254901960000004" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -177,6 +183,8 @@
                             <constraint firstItem="NOC-IB-Ufc" firstAttribute="leading" secondItem="Ckw-a8-QYD" secondAttribute="leading" id="sAq-qQ-vza"/>
                             <constraint firstItem="NYE-ZZ-G7T" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="acW-kW-kj4" secondAttribute="trailing" constant="24" id="vza-0Z-gHN"/>
                             <constraint firstItem="Kih-br-r3V" firstAttribute="leading" secondItem="NYE-ZZ-G7T" secondAttribute="leading" constant="16" id="wNH-K6-u5z"/>
+                            <constraint firstItem="BWe-Gn-J3k" firstAttribute="leading" secondItem="acW-kW-kj4" secondAttribute="leading" id="xMT-LI-bqW"/>
+                            <constraint firstItem="BWe-Gn-J3k" firstAttribute="top" secondItem="acW-kW-kj4" secondAttribute="bottom" constant="8" id="z3I-vA-CFn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NYE-ZZ-G7T"/>
                     </view>
@@ -559,7 +567,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yDb-lq-B4f"/>
-        <segue reference="pWE-lo-9D7"/>
-        <segue reference="zAR-34-OVM"/>
+        <segue reference="b8n-iR-rbe"/>
+        <segue reference="T0Y-3w-Vz4"/>
     </inferredMetricsTieBreakers>
 </document>
