@@ -1,5 +1,5 @@
 //
-//  ScannedItem.swift
+//  ScannedProduct.swift
 //  Mundo
 //
 //  Created by Horacio Lopez on 11/19/18.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ScannedItem {
+class ScannedProduct {
     
     private var _gtinCode: Int!
     private var _gtinType: String!
