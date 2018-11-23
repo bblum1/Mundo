@@ -234,6 +234,7 @@
                     <connections>
                         <outlet property="square" destination="gwd-rk-UYC" id="0lt-6E-o8e"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="scannerToFirstPage" id="zAR-34-OVM"/>
+                        <segue destination="TZY-Sc-QpW" kind="show" identifier="scannerToStockInfo" id="eYr-Yv-mqk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nsA-L4-YrQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -560,10 +561,10 @@
             </objects>
             <point key="canvasLocation" x="-370" y="1793"/>
         </scene>
-        <!--View Controller-->
+        <!--Stock InfoVC-->
         <scene sceneID="Kn6-r2-0An">
             <objects>
-                <viewController id="TZY-Sc-QpW" sceneMemberID="viewController">
+                <viewController id="TZY-Sc-QpW" customClass="StockInfoVC" customModule="Mundo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RXp-IL-1NJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -576,34 +577,49 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Li-8g-DfZ">
-                                <rect key="frame" x="149" y="163" width="44" height="21"/>
+                                <rect key="frame" x="149" y="163" width="44" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Opening Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vGh-NG-mlJ">
-                                <rect key="frame" x="53" y="192" width="108" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Brand Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vGh-NG-mlJ">
+                                <rect key="frame" x="53" y="192" width="95" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Closing Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pEy-rI-MHt">
-                                <rect key="frame" x="169" y="191" width="101" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Product Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pEy-rI-MHt">
+                                <rect key="frame" x="169" y="191" width="110" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="68N-OI-KiY">
+                                <rect key="frame" x="22" y="43" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backBttn:" destination="TZY-Sc-QpW" eventType="touchUpInside" id="FfX-ii-tCf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="4vg-XW-u7C"/>
                     </view>
+                    <connections>
+                        <outlet property="brandNameLabel" destination="vGh-NG-mlJ" id="PUY-hm-gNS"/>
+                        <outlet property="companyNameLabel" destination="ZCf-Pl-scO" id="kRX-yh-pYw"/>
+                        <outlet property="productNameLabel" destination="pEy-rI-MHt" id="xpv-WN-b3G"/>
+                        <outlet property="stockTickerLabel" destination="6Li-8g-DfZ" id="BJM-ZO-W8Z"/>
+                        <segue destination="Pfj-nu-wHZ" kind="show" identifier="stockBackToScanner" id="lAn-OL-wIF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CtE-9Y-rH9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2050" y="894"/>
+            <point key="canvasLocation" x="2341.5999999999999" y="893.70314842578716"/>
         </scene>
     </scenes>
     <resources>
@@ -612,7 +628,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="72H-eo-Dxj"/>
-        <segue reference="b8n-iR-rbe"/>
-        <segue reference="yM3-9n-cEP"/>
+        <segue reference="lAn-OL-wIF"/>
+        <segue reference="zAR-34-OVM"/>
     </inferredMetricsTieBreakers>
 </document>
