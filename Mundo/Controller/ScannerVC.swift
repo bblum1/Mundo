@@ -92,18 +92,24 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                         // Sending the API request and receiving stock info
                         self.scannedStockItem = barcodeService.makeBarcodeCall(gtin: barcodeString)//"018200150470")
                         
-                        let barcodeStringAlert = UIAlertController(title: "Barcode scanned!", message: barcodeString, preferredStyle: .alert)
-                        barcodeStringAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
-                        present(barcodeStringAlert, animated: true, completion: nil)
-                        
                         // stop capture session after successful scan and move on
                         session.stopRunning()
+                        
+                        let barcodeStringAlert = UIAlertController(title: "Barcode scanned!", message: barcodeString, preferredStyle: .alert)
+                        barcodeStringAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: { (action) in
+                            self.reRunSession()
+                            barcodeStringAlert.dismiss(animated: true, completion: nil)
+                        }))
+                        
+                        present(barcodeStringAlert, animated: true, completion: nil)
+                        
                         performSegue(withIdentifier: "scannerToStockInfo", sender: nil)
                     } else {
                         print("ERROR")
                     }
                 }
             } else {
+                
                 let unreadableBarcodeAlert = UIAlertController(title: "Unable to Read Barcode", message: "Please try again.", preferredStyle: .alert)
                 unreadableBarcodeAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
                 
@@ -112,6 +118,10 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         } else {
             print("ERROR IN READING QR")
         }
+    }
+    
+    func reRunSession() {
+        session.startRunning()
     }
     
     // Functionalities for preparing to transfer returned stock after scan to StockInfoVC

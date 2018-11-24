@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Highcharts
 
 class StockInfoVC: UIViewController {
     
