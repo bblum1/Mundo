@@ -14,10 +14,9 @@ class BarcodeService {
     let apiURL = "https://mignify.p.mashape.com/gtins/v1.0/productsToGtin?gtin="
     
     var scannedStockItem: ScannedStockItem!
-    var similarStockService: SimilarStockService()
+    var similarStockService: SimilarStockService!
     
     func makeBarcodeCall(gtin: String) -> ScannedStockItem {
-        print("THE STRING IN BARCODE SERVICE:", gtin)
         
         let requestURL = NSURL(string: apiURL+gtin)
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -36,20 +35,12 @@ class BarcodeService {
             
             do {
                 let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
-                print("MYJSON: \(myJSON)")
                 
                 let thePayload = myJSON!["payload"]
                 
-                if let parseJSON = thePayload as? Dictionary<String, Any>{
+                if let parseJSON = thePayload as? Dictionary<String, Any> {
                     print("BOO YAA JSON: \(parseJSON)")
                     
-                    // Parse the JSON returned from Mashape API and store to object
-//                    let gtinCode = parseJSON["payload"]!["gtinCode"] as? Int
-//                    let gtinType = parseJSON["payload"]!["gtinType"] as? String
-                    
-//                    let languageCode: String?
-//                    let productName: String?
-//
                     if let results = parseJSON["results"] as? [Dictionary<String, String>] {
                         
                         if let brand = results[0]["brand"] {
@@ -78,13 +69,16 @@ class BarcodeService {
                                     if let parseJSON = ourJSON {
                                         
                                         let result = parseJSON["result"] as? String
-                                        let symbol = parseJSON["symbol"] as? String
+                                        
                                         
                                         print("result = \(result!)")
-                                        print("SYMBOL BABY: \(symbol!)!!!!!!!!!!")
                                         
-                                        // create the ScannedStockItem and return it
-                                        self.scannedStockItem = ScannedStockItem(ticker: symbol ?? "N/A")
+                                        // create the ScannedStockItem
+                                        if let symbol = parseJSON["symbol"] as? String {
+                                            print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
+                                            // get the scanned stock item loaded as we segue
+                                            self.scannedStockItem = self.scannedStockItem.callChartData(ticker: symbol, range: "1d")
+                                        }
                                         
                                         // TODO: Get top 5-8 stocks also in the industry
                                         // similarStockService.receiveIndustryStocks(industry: industry)
@@ -104,7 +98,6 @@ class BarcodeService {
             }
         }
         task.resume()
-        
         return self.scannedStockItem
     }
     

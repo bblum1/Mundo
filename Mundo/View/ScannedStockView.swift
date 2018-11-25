@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import Highcharts
 
 // This is the View object of the main stock that is scanned by user
 
-class ScannedStockView: UIView {
+class ScannedStockView: HIChartView {
     
-
+    func chartViewDidLoad(_ chart: HIChartView!) {
+        
+    }
+    
+    
 }

@@ -19,6 +19,8 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var video = AVCaptureVideoPreviewLayer()
     let session = AVCaptureSession()
     
+    var theBarcodeString = ""
+    
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
                                       AVMetadataObject.ObjectType.code39Mod43,
@@ -77,10 +79,8 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        print("IN THE FUNC")
         if metadataObjects.count > 0
         {
-         print("NEXT LEVEL")
             if let object = metadataObjects[0] as? AVMetadataMachineReadableCodeObject
             {
                 if supportedCodeTypes.contains(object.type)
@@ -89,29 +89,26 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     if let barcodeString = object.stringValue {
                         print("THE STRING", barcodeString)
                         
-                        // Sending the API request and receiving stock info
-                        self.scannedStockItem = barcodeService.makeBarcodeCall(gtin: barcodeString)//"018200150470")
+                        self.theBarcodeString = barcodeString
                         
                         // stop capture session after successful scan and move on
                         session.stopRunning()
-                        
-                        let barcodeStringAlert = UIAlertController(title: "Barcode scanned!", message: barcodeString, preferredStyle: .alert)
-                        barcodeStringAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: { (action) in
-                            self.reRunSession()
-                            barcodeStringAlert.dismiss(animated: true, completion: nil)
-                        }))
-                        
-                        present(barcodeStringAlert, animated: true, completion: nil)
-                        
                         performSegue(withIdentifier: "scannerToStockInfo", sender: nil)
+                        
                     } else {
                         print("ERROR")
                     }
                 }
             } else {
                 
+                // stop unnecessary captures even on failure
+                session.stopRunning()
+                
                 let unreadableBarcodeAlert = UIAlertController(title: "Unable to Read Barcode", message: "Please try again.", preferredStyle: .alert)
-                unreadableBarcodeAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: nil))
+                unreadableBarcodeAlert.addAction(UIAlertAction(title: "Retake", style: .default, handler: { (action) in
+                    self.reRunSession()
+                    unreadableBarcodeAlert.dismiss(animated: true, completion: nil)
+                }))
                 
                 present(unreadableBarcodeAlert, animated: true, completion: nil)
             }
@@ -124,14 +121,10 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         session.startRunning()
     }
     
-    // Functionalities for preparing to transfer returned stock after scan to StockInfoVC
-    
+    // Prepare to transfer returned stock after scan to StockInfoVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Create a new variable to store the instance of StockInfoVC
         let viewController = segue.destination as? StockInfoVC
-        
-        viewController?.tickerString = self.scannedStockItem.ticker
-        
+        viewController?.gtinString = self.theBarcodeString
     }
     
     // Camera function attempting to get flash to work
