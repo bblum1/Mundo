@@ -45,6 +45,8 @@ class BarcodeService {
                         if results.count > 0, let brand = results[0]["brand"] {
                             print("THE BRAND: \(brand)")
                             
+                            let product = results[0]["productName"] ?? "Uknown Product"
+                            
                             // Send brand name as request to receive stock ticker
                             let requestURL = NSURL(string: self.dbURL)
                             let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -74,7 +76,7 @@ class BarcodeService {
                                         if let symbol = parseJSON["symbol"] as? String {
                                             print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
                                             // get the scanned stock item loaded as we segue
-                                            completionHandler([brand, symbol], nil)
+                                            completionHandler([brand, symbol, product], nil)
                                         }
                                         
                                     }

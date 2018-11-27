@@ -80,6 +80,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     // variables that will be prepared and sent in segue
     private var stockTicker = ""
     private var stockBrand = ""
+    private var scannedProduct = ""
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if metadataObjects.count > 0
@@ -100,6 +101,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                             
                             self.stockBrand = brandAndSymbol![0]
                             self.stockTicker = brandAndSymbol![1]
+                            self.scannedProduct = brandAndSymbol![2]
                             
                             DispatchQueue.main.async {
                                 self.activityIndicator.stopSpinner()
@@ -139,6 +141,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         let viewController = segue.destination as? StockInfoVC
         viewController?.stockTickerString = self.stockTicker
         viewController?.scannedBrandString = self.stockBrand
+        viewController?.scannedProductString = self.scannedProduct
     }
     
     // Camera function attempting to get flash to work

@@ -22,6 +22,7 @@ class StockInfoVC: UIViewController {
     // String data is passed from previous view controller
     var stockTickerString = ""
     var scannedBrandString = ""
+    var scannedProductString = ""
     
     @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var stockTickerLabel: UILabel!
@@ -44,7 +45,7 @@ class StockInfoVC: UIViewController {
             DispatchQueue.main.async {
                 // Load the scannedStockItem object with return item
                 var newDict = responseJSON!
-                newDict["brand"] = self.scannedBrandString
+                newDict["brand"] = self.scannedBrandString.localizedCapitalized
                 
                 self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
                 
@@ -60,9 +61,11 @@ class StockInfoVC: UIViewController {
     }
     
     func loadChartView() {
+        
         self.companyNameLabel.text = self.scannedStockItem.company
         self.stockTickerLabel.text = self.scannedStockItem.ticker
         self.brandNameLabel.text = self.scannedStockItem.brand
+        self.productNameLabel.text = self.scannedProductString
         
         self.chartView = HIChartView(frame: stockView.bounds)
         
