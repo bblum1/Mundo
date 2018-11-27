@@ -13,13 +13,12 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     @IBOutlet weak var square: UIImageView!
     
-    let barcodeService = BarcodeService()
-    var scannedStockItem: ScannedStockItem!
+    var activityIndicator = ActivitySpinnerClass()
     
+    let barcodeService = BarcodeService()
+        
     var video = AVCaptureVideoPreviewLayer()
     let session = AVCaptureSession()
-    
-    var theBarcodeString = ""
     
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
                                       AVMetadataObject.ObjectType.code39,
@@ -78,6 +77,8 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
         session.startRunning()
     }
     
+    private var stockTicker = ""
+    
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if metadataObjects.count > 0
         {
@@ -89,11 +90,20 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                     if let barcodeString = object.stringValue {
                         print("THE STRING", barcodeString)
                         
-                        self.theBarcodeString = barcodeString
-                        
-                        // stop capture session after successful scan and move on
+                        // stop capture session after successful scan
                         session.stopRunning()
-                        performSegue(withIdentifier: "scannerToStockInfo", sender: nil)
+                        activityIndicator.startSpinner(viewcontroller: self)
+                        
+                        barcodeService.makeBarcodeCall(gtin: "018200150470", completionHandler: {(symbol, error) in
+                            
+                            self.stockTicker = symbol!
+                            
+                            DispatchQueue.main.async {
+                                self.activityIndicator.stopSpinner()
+                                self.performSegue(withIdentifier: "scannerToStockInfo", sender: nil)
+                            }
+                            
+                        })
                         
                     } else {
                         print("ERROR")
@@ -124,7 +134,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     // Prepare to transfer returned stock after scan to StockInfoVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let viewController = segue.destination as? StockInfoVC
-        viewController?.gtinString = self.theBarcodeString
+        viewController?.stockTickerString = self.stockTicker
     }
     
     // Camera function attempting to get flash to work

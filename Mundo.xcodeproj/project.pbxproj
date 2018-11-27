@@ -11,6 +11,7 @@
 		381FE48A21A514620041779E /* ScannedStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48921A514620041779E /* ScannedStockView.swift */; };
 		381FE48C21A514A00041779E /* SimilarStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48B21A514A00041779E /* SimilarStockCell.swift */; };
 		381FE48E21A520CE0041779E /* SimilarStockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48D21A520CE0041779E /* SimilarStockService.swift */; };
+		3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826DD2321AD03AC00FFD351 /* StockInfoService.swift */; };
 		3834AD6621A3B3C700C5BA71 /* StockInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */; };
 		386287D321868D2F0058A164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D221868D2F0058A164 /* AppDelegate.swift */; };
 		386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D421868D2F0058A164 /* FirstPageVC.swift */; };
@@ -35,6 +36,7 @@
 		381FE48921A514620041779E /* ScannedStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedStockView.swift; sourceTree = "<group>"; };
 		381FE48B21A514A00041779E /* SimilarStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockCell.swift; sourceTree = "<group>"; };
 		381FE48D21A520CE0041779E /* SimilarStockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockService.swift; sourceTree = "<group>"; };
+		3826DD2321AD03AC00FFD351 /* StockInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoService.swift; sourceTree = "<group>"; };
 		3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoVC.swift; sourceTree = "<group>"; };
 		386287CF21868D2F0058A164 /* Mundo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mundo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386287D221868D2F0058A164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			children = (
 				38D20F65218B6EC700553619 /* DataService.swift */,
 				38EDD981219A558A00B26869 /* BarcodeService.swift */,
+				3826DD2321AD03AC00FFD351 /* StockInfoService.swift */,
 				381FE48D21A520CE0041779E /* SimilarStockService.swift */,
 				38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */,
 			);
@@ -293,6 +296,7 @@
 				386287E521868DDE0058A164 /* ScannerVC.swift in Sources */,
 				386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */,
 				7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */,
+				3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */,
 				386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */,
 				38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */,
 				7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */,

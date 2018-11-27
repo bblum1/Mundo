@@ -16,6 +16,7 @@ class ScannedStockItem {
     private var _low: Float!
     private var _high: Float!
     private var _latestPrice: Float!
+    private var _chartLabels: [String]!
     private var _chartPrices: [Float]!
     
     var ticker: String {
@@ -29,7 +30,7 @@ class ScannedStockItem {
         if _company == nil {
             _company = "NoCo."
         }
-        return _ticker
+        return _company
     }
     
     var low: Float {
@@ -54,6 +55,13 @@ class ScannedStockItem {
         return _latestPrice
     }
     
+    var chartLabels: [String] {
+        if _chartLabels == nil {
+            _chartLabels = ["Nada"]
+        }
+        return _chartLabels
+    }
+    
     var chartPrices: [Float] {
         if _chartPrices == nil {
             _chartPrices = [0.00]
@@ -61,74 +69,14 @@ class ScannedStockItem {
         return _chartPrices
     }
     
-    // initializer function
-    func callChartData(ticker: String, range: String) -> ScannedStockItem {
-        
-        self._ticker = ticker
-        
-        let apiURL = "https://api.iextrading.com/1.0/stock/market/batch?symbols=\(ticker)&types=quote,news,chart&range=\(range)"
-        let requestURL = NSURL(string: apiURL)
-        let request = NSMutableURLRequest(url: requestURL! as URL)
-        request.httpMethod = "GET"
-        
-        // Call the IEX API to get chart data
-        let task = URLSession.shared.dataTask(with: request as URLRequest) {
-            data, response, error in
-            
-            if error != nil {
-                print("error is \(String(describing: error))")
-                return;
-            }
-            
-            do {
-                let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
-                
-                if let parseJSON = myJSON as? Dictionary<String, AnyObject>{
-                    
-                    // Get basic information on the stock, unrelated to range
-                    if let quote = parseJSON["quote"] as? Dictionary<String, AnyObject> {
-                        print("THE QUOTE: \(quote)")
-                        self._company = quote["companyName"] as? String
-                        
-                        self._high = quote["high"] as? Float
-                        self._low = quote["low"] as? Float
-                        self._latestPrice = quote["latestPrice"] as? Float
-                    }
-                    
-                    // Parse chart to get array of all prices in range
-                    if let chart = parseJSON["chart"] as? [Dictionary<String, AnyObject>] {
-                        
-                        var chartPrices: [Float] = []
-                        
-                        if range == "1d" {
-                            for priceItem in chart {
-                                // TODO: reformat and use dates for scrollable interactions on line
-                                //let label = priceItem["label"] as? String
-                                let marketAverage = priceItem["marketAverage"] as! Float
-                                
-                                chartPrices.append(marketAverage)
-                            }
-                            
-                            self._chartPrices = chartPrices
-                        } else {
-                            // keys for prices are different for 1m and 1y ranges
-                            for priceItem in chart {
-                                // TODO: reformat and use dates for scrollable interactions on line
-                                // let label = priceItem["date"] as? String
-                                let closePrice = priceItem["close"] as! Float
-                                
-                                chartPrices.append(closePrice)
-                            }
-                            
-                            self._chartPrices = chartPrices
-                        }
-                    }
-                }
-            } catch {
-                print(error)
-            }
-        }
-        task.resume()
-        return self
+    init(stockItemDict: Dictionary<String, Any>) {
+        self._ticker = (stockItemDict["symbol"] as! String)
+        self._company = (stockItemDict["company"] as! String)
+        self._low = (stockItemDict["low"] as! Float)
+        self._high = (stockItemDict["high"] as! Float)
+        self._latestPrice = (stockItemDict["latestPrice"] as! Float)
+        self._chartLabels = (stockItemDict["chartLabels"] as! [String])
+        self._chartPrices = (stockItemDict["chartPrices"] as! [Float])
     }
+    
 }

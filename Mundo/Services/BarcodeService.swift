@@ -13,10 +13,9 @@ class BarcodeService {
     let dbURL = "http://dsg1.crc.nd.edu/cse30246/groms/dbaccess/get_corp.php"
     let apiURL = "https://mignify.p.mashape.com/gtins/v1.0/productsToGtin?gtin="
     
-    var scannedStockItem: ScannedStockItem!
-    var similarStockService: SimilarStockService!
+    var stockTicker = ""
     
-    func makeBarcodeCall(gtin: String) -> ScannedStockItem {
+    func makeBarcodeCall(gtin: String, completionHandler: @escaping (String?, Error?)->Void) {
         
         let requestURL = NSURL(string: apiURL+gtin)
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -43,7 +42,7 @@ class BarcodeService {
                     
                     if let results = parseJSON["results"] as? [Dictionary<String, String>] {
                         
-                        if let brand = results[0]["brand"] {
+                        if results.count > 0, let brand = results[0]["brand"] {
                             print("THE BRAND: \(brand)")
                             
                             // Send brand name as request to receive stock ticker
@@ -69,25 +68,25 @@ class BarcodeService {
                                     if let parseJSON = ourJSON {
                                         
                                         let result = parseJSON["result"] as? String
-                                        
-                                        
                                         print("result = \(result!)")
                                         
                                         // create the ScannedStockItem
                                         if let symbol = parseJSON["symbol"] as? String {
                                             print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
                                             // get the scanned stock item loaded as we segue
-                                            self.scannedStockItem = self.scannedStockItem.callChartData(ticker: symbol, range: "1d")
+                                            completionHandler(symbol, nil)
                                         }
                                         
-                                        // TODO: Get top 5-8 stocks also in the industry
-                                        // similarStockService.receiveIndustryStocks(industry: industry)
                                     }
                                 } catch {
-                                    print(error)
+                                    print(error.localizedDescription)
+                                    completionHandler(nil, error)
+                                    
                                 }
                             }
                             task.resume()
+                        } else {
+                            // TODO: PRINT AN ERROR SAYING THAT IT WAS NOT FOUND
                         }
                         
                     }
@@ -98,7 +97,6 @@ class BarcodeService {
             }
         }
         task.resume()
-        return self.scannedStockItem
     }
     
 }

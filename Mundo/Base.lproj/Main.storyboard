@@ -660,6 +660,7 @@
         <image name="purple1-round-rect" width="250" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="eYr-Yv-mqk"/>
         <segue reference="72H-eo-Dxj"/>
         <segue reference="lAn-OL-wIF"/>
         <segue reference="T0Y-3w-Vz4"/>

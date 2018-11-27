@@ -12,11 +12,15 @@ import Highcharts
 class StockInfoVC: UIViewController {
     
     var activityIndicator = ActivitySpinnerClass()
-    var barcodeService: BarcodeService!
     
-    var scannedStockItem = ScannedStockItem()
+    // Use this class to make calls with a stock symbol and range of chart data
+    var stockInfoService = StockInfoService()
     
-    var gtinString = ""
+    // Use this object as the overall class item to store the data
+    var scannedStockItem: ScannedStockItem!
+    
+    // String data is passed from previous view controller
+    var stockTickerString = ""
     
     @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var stockTickerLabel: UILabel!
@@ -28,18 +32,27 @@ class StockInfoVC: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("BOUT TO LOAD UP")
+        print("BOUT TO LOAD UP AND MAKE CALL WITH: \(stockTickerString)")
+        
         // Begin loading the view with the API call
         activityIndicator.startSpinner(viewcontroller: self)
         
-        print("Beginning the API Calls")
-        // TODO: Fix the timing here
-        scannedStockItem = barcodeService.makeBarcodeCall(gtin: gtinString)
+        stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
+            print("FINAL STEP IS HERE:::::: \(responseJSON)")
+            
+            DispatchQueue.main.async {
+                // Load the scannedStockItem object with return item
+                self.scannedStockItem = ScannedStockItem(stockItemDict: responseJSON!)
+                
+                print("With StockItem: \(self.scannedStockItem.chartPrices)")
+                
+                // Load main stock view using Highcharts
+                self.loadChartView()
+                
+                self.activityIndicator.stopSpinner()
+            }
+        })
         
-        activityIndicator.stopSpinner()
-        
-        // Load main stock view using Highcharts
-        self.loadChartView()
     }
     
     func loadChartView() {
