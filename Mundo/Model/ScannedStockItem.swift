@@ -12,6 +12,7 @@ class ScannedStockItem {
     
     private var _ticker: String!
     private var _company: String!
+    private var _brand: String!
     
     private var _low: Float!
     private var _high: Float!
@@ -31,6 +32,13 @@ class ScannedStockItem {
             _company = "NoCo."
         }
         return _company
+    }
+    
+    var brand: String {
+        if _brand == nil {
+            _brand = "Brandless"
+        }
+        return _brand
     }
     
     var low: Float {
@@ -72,9 +80,12 @@ class ScannedStockItem {
     init(stockItemDict: Dictionary<String, Any>) {
         self._ticker = (stockItemDict["symbol"] as! String)
         self._company = (stockItemDict["company"] as! String)
+        self._brand = (stockItemDict["brand"] as! String)
+        
         self._low = (stockItemDict["low"] as! Float)
         self._high = (stockItemDict["high"] as! Float)
         self._latestPrice = (stockItemDict["latestPrice"] as! Float)
+        
         self._chartLabels = (stockItemDict["chartLabels"] as! [String])
         self._chartPrices = (stockItemDict["chartPrices"] as! [Float])
     }

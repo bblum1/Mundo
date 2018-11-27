@@ -36,11 +36,9 @@ class StockInfoService {
                 if let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary {
                     
                     if let parseJSON = myJSON[ticker] as? Dictionary<String, Any> {
-                        print("BOOOOOO YAAA!!!!!!!! parseJSON: \(parseJSON)")
                         
                         // Get basic information on the stock, unrelated to range
                         if let quote = parseJSON["quote"] as? Dictionary<String, Any> {
-                            print("THE QUOTE: \(quote)")
                             
                             if let company = quote["companyName"] {
                                 returnJSON["company"] = company as! String

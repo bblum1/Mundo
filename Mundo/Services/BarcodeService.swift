@@ -15,7 +15,7 @@ class BarcodeService {
     
     var stockTicker = ""
     
-    func makeBarcodeCall(gtin: String, completionHandler: @escaping (String?, Error?)->Void) {
+    func makeBarcodeCall(gtin: String, completionHandler: @escaping ([String]?, Error?)->Void) {
         
         let requestURL = NSURL(string: apiURL+gtin)
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -74,7 +74,7 @@ class BarcodeService {
                                         if let symbol = parseJSON["symbol"] as? String {
                                             print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
                                             // get the scanned stock item loaded as we segue
-                                            completionHandler(symbol, nil)
+                                            completionHandler([brand, symbol], nil)
                                         }
                                         
                                     }
