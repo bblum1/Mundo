@@ -70,8 +70,7 @@ class StockInfoVC: UIViewController {
         let options = HIOptions()
         
         let chart = HIChart()
-        chart.type = "spline"
-        options.chart = chart
+        chart.zoomType = "x"
         
         let title = HITitle()
         title.text = scannedStockItem.ticker
@@ -81,20 +80,37 @@ class StockInfoVC: UIViewController {
         options.subtitle = subtitle
         
         let xAxis = HIXAxis()
-        xAxis.categories = ["date"]
+        xAxis.type = "datetime"
         options.xAxis = [xAxis]
         
         let yAxis = HIYAxis()
         yAxis.min = 0
         options.yAxis = [yAxis]
         
-        let plotOptions = HIPlotOptions()
-        plotOptions.line = HILine()
-        options.plotOptions = plotOptions
+        let legend = HILegend()
+        legend.enabled = 0
         
-        let line = HILine()
-        line.data = scannedStockItem.chartPrices
-        print("BOUT TO ADD: \(line.data)")
+        let plotOptions = HIPlotOptions()
+        plotOptions.area = HIArea()
+        plotOptions.area.fillColor = HIColor(linearGradient: ["x1": 0, "x2": 0, "y1": 0, "y2": 1], stops: [[0, "rgb(47,126,216)"], [1, "rgba(47,126,216,0)"]])
+        
+        plotOptions.area.marker = HIMarker()
+        plotOptions.area.marker.radius = 2
+        plotOptions.area.lineWidth = 1
+        
+        let state = HIStates()
+        state.hover = HIHover()
+        state.hover.lineWidth = 1
+        plotOptions.area.states = state
+        
+        let area = HIArea()
+        area.name = "\(stockTickerString) Stock Data"
+        print("BOUT TO ADD: \(scannedStockItem.chartPrices)")
+        area.data = scannedStockItem.chartPrices
+        
+        options.chart = chart
+        options.plotOptions = plotOptions
+        options.series = [area]
         
         self.chartView.options = options
         self.stockView.addSubview(self.chartView)
