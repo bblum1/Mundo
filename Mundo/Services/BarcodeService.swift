@@ -88,7 +88,7 @@ class BarcodeService {
                             }
                             task.resume()
                         } else {
-                            // TODO: PRINT AN ERROR SAYING THAT IT WAS NOT FOUND
+                            // TODO: SEND AN ERROR ALERT SAYING THAT IT WAS NOT FOUND
                         }
                         
                     }

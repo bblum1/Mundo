@@ -69,7 +69,13 @@ class StockInfoService {
                                     chartLabels.append(label)
                                     
                                     if let marketAverage = priceItem["marketAverage"] as? NSNumber {
-                                        chartPrices.append(marketAverage.floatValue)
+                                        // TODO: May want to leave this as negative one if you can create a gray segment in the line chart
+                                        if marketAverage.floatValue < 0 {
+                                            chartPrices.append(0.0)
+                                        } else {
+                                            chartPrices.append(marketAverage.floatValue)
+                                        }
+                                        
                                     }
                                 }
                                 returnJSON["chartLabels"] = chartLabels
@@ -81,7 +87,13 @@ class StockInfoService {
                                     chartLabels.append(label)
                                     
                                     if let closePrice = priceItem["close"] as? NSNumber {
-                                        chartPrices.append(closePrice.floatValue)
+                                        
+                                        if closePrice.floatValue < 0.0 {
+                                            chartPrices.append(closePrice.floatValue)
+                                        } else {
+                                            chartPrices.append(0.0)
+                                        }
+                                        
                                     }
                                 }
                                 returnJSON["chartLabels"] = chartLabels

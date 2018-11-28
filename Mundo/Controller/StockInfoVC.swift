@@ -49,8 +49,6 @@ class StockInfoVC: UIViewController {
                 
                 self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
                 
-                print("With StockItem: \(self.scannedStockItem.chartPrices)")
-                
                 // Load main stock view using Highcharts
                 self.loadChartView()
                 
@@ -82,14 +80,24 @@ class StockInfoVC: UIViewController {
         options.title = title
         options.subtitle = subtitle
         
+        let xAxis = HIXAxis()
+        xAxis.categories = ["date"]
+        options.xAxis = [xAxis]
+        
+        let yAxis = HIYAxis()
+        yAxis.min = 0
+        options.yAxis = [yAxis]
+        
         let plotOptions = HIPlotOptions()
-        plotOptions.spline = HISpline()
+        plotOptions.line = HILine()
         options.plotOptions = plotOptions
         
-        let line = HISpline()
+        let line = HILine()
         line.data = scannedStockItem.chartPrices
+        print("BOUT TO ADD: \(line.data)")
         
         self.chartView.options = options
+        self.stockView.addSubview(self.chartView)
     }
     
     
