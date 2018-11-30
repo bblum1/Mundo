@@ -11,6 +11,7 @@
 		381FE48A21A514620041779E /* ScannedStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48921A514620041779E /* ScannedStockView.swift */; };
 		381FE48C21A514A00041779E /* SimilarStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48B21A514A00041779E /* SimilarStockCell.swift */; };
 		381FE48E21A520CE0041779E /* SimilarStockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48D21A520CE0041779E /* SimilarStockService.swift */; };
+		3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826DD2321AD03AC00FFD351 /* StockInfoService.swift */; };
 		3834AD6621A3B3C700C5BA71 /* StockInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */; };
 		386287D321868D2F0058A164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D221868D2F0058A164 /* AppDelegate.swift */; };
 		386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D421868D2F0058A164 /* FirstPageVC.swift */; };
@@ -20,18 +21,22 @@
 		386287E521868DDE0058A164 /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287E421868DDE0058A164 /* ScannerVC.swift */; };
 		386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B351621A39DAF005BB2D9 /* ScannedProduct.swift */; };
 		38D20F66218B6EC700553619 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D20F65218B6EC700553619 /* DataService.swift */; };
+		38D48E4321AA7E720049E553 /* ActivitySpinnerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */; };
 		38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */; };
 		38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EF22188CCF7002D6A4B /* LoginVC.swift */; };
 		38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD981219A558A00B26869 /* BarcodeService.swift */; };
 		7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */; };
 		7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */; };
+		E38D68C7C7CF78144558515A /* Pods_Mundo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37626ADC951F50907323F1AB /* Pods_Mundo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37626ADC951F50907323F1AB /* Pods_Mundo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mundo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		381FE48721A4EA990041779E /* ScannedStockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedStockItem.swift; sourceTree = "<group>"; };
 		381FE48921A514620041779E /* ScannedStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedStockView.swift; sourceTree = "<group>"; };
 		381FE48B21A514A00041779E /* SimilarStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockCell.swift; sourceTree = "<group>"; };
 		381FE48D21A520CE0041779E /* SimilarStockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockService.swift; sourceTree = "<group>"; };
+		3826DD2321AD03AC00FFD351 /* StockInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoService.swift; sourceTree = "<group>"; };
 		3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoVC.swift; sourceTree = "<group>"; };
 		386287CF21868D2F0058A164 /* Mundo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mundo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386287D221868D2F0058A164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,11 +48,14 @@
 		386287E421868DDE0058A164 /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
 		386B351621A39DAF005BB2D9 /* ScannedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		38D20F65218B6EC700553619 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySpinnerClass.swift; sourceTree = "<group>"; };
 		38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		38E36EF22188CCF7002D6A4B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		38EDD981219A558A00B26869 /* BarcodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeService.swift; sourceTree = "<group>"; };
+		4BCB783C1C728FCA546198F7 /* Pods-Mundo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mundo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mundo/Pods-Mundo.debug.xcconfig"; sourceTree = "<group>"; };
 		7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordVC.swift; sourceTree = "<group>"; };
 		7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
+		953340DFDA52CAD272D70BA1 /* Pods-Mundo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mundo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mundo/Pods-Mundo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E38D68C7C7CF78144558515A /* Pods_Mundo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +75,8 @@
 			children = (
 				386287D121868D2F0058A164 /* Mundo */,
 				386287D021868D2F0058A164 /* Products */,
+				C8171D9D8E7866C7CA6F18CA /* Pods */,
+				4E23A95BC7EB90FBD2CCECD9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,7 +109,9 @@
 			children = (
 				38D20F65218B6EC700553619 /* DataService.swift */,
 				38EDD981219A558A00B26869 /* BarcodeService.swift */,
+				3826DD2321AD03AC00FFD351 /* StockInfoService.swift */,
 				381FE48D21A520CE0041779E /* SimilarStockService.swift */,
+				38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -143,6 +156,23 @@
 			path = "Initial Pages";
 			sourceTree = "<group>";
 		};
+		4E23A95BC7EB90FBD2CCECD9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37626ADC951F50907323F1AB /* Pods_Mundo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C8171D9D8E7866C7CA6F18CA /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4BCB783C1C728FCA546198F7 /* Pods-Mundo.debug.xcconfig */,
+				953340DFDA52CAD272D70BA1 /* Pods-Mundo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -150,9 +180,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 386287E121868D320058A164 /* Build configuration list for PBXNativeTarget "Mundo" */;
 			buildPhases = (
+				09CA1E0025005C7E426D8D63 /* [CP] Check Pods Manifest.lock */,
 				386287CB21868D2F0058A164 /* Sources */,
 				386287CC21868D2F0058A164 /* Frameworks */,
 				386287CD21868D2F0058A164 /* Resources */,
+				2500B565C0F28C23E6804109 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -209,6 +241,53 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		09CA1E0025005C7E426D8D63 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mundo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2500B565C0F28C23E6804109 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Mundo/Pods-Mundo-frameworks.sh",
+				"${PODS_ROOT}/Highcharts/development/Highcharts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highcharts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mundo/Pods-Mundo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		386287CB21868D2F0058A164 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -217,10 +296,12 @@
 				386287E521868DDE0058A164 /* ScannerVC.swift in Sources */,
 				386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */,
 				7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */,
+				3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */,
 				386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */,
 				38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */,
 				7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */,
 				386287D321868D2F0058A164 /* AppDelegate.swift in Sources */,
+				38D48E4321AA7E720049E553 /* ActivitySpinnerClass.swift in Sources */,
 				381FE48A21A514620041779E /* ScannedStockView.swift in Sources */,
 				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
 				381FE48821A4EA990041779E /* ScannedStockItem.swift in Sources */,
@@ -372,10 +453,11 @@
 		};
 		386287E221868D320058A164 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BCB783C1C728FCA546198F7 /* Pods-Mundo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EK8ZNBX4WM;
+				DEVELOPMENT_TEAM = AADZNM58WB;
 				INFOPLIST_FILE = Mundo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -390,10 +472,11 @@
 		};
 		386287E321868D320058A164 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 953340DFDA52CAD272D70BA1 /* Pods-Mundo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = EK8ZNBX4WM;
+				DEVELOPMENT_TEAM = AADZNM58WB;
 				INFOPLIST_FILE = Mundo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

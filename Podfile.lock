@@ -1,0 +1,16 @@
+PODS:
+  - Highcharts (6.1.4)
+
+DEPENDENCIES:
+  - Highcharts (~> 6.1.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Highcharts
+
+SPEC CHECKSUMS:
+  Highcharts: a1d99de1c075fd9acedf25cde4f6e4a54266b25e
+
+PODFILE CHECKSUM: 4ef9f7fcf744c61b575d2122ead23a1a78b740ee
+
+COCOAPODS: 1.5.3
