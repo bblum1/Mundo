@@ -92,7 +92,6 @@ class BarcodeService {
                         }
                         
                     }
-                    
                 }
             } catch {
                 print(error)

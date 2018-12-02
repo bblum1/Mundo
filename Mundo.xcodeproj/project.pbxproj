@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		381FE48821A4EA990041779E /* ScannedStockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48721A4EA990041779E /* ScannedStockItem.swift */; };
 		381FE48A21A514620041779E /* ScannedStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48921A514620041779E /* ScannedStockView.swift */; };
-		381FE48C21A514A00041779E /* SimilarStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48B21A514A00041779E /* SimilarStockCell.swift */; };
 		381FE48E21A520CE0041779E /* SimilarStockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FE48D21A520CE0041779E /* SimilarStockService.swift */; };
 		3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3826DD2321AD03AC00FFD351 /* StockInfoService.swift */; };
 		3834AD6621A3B3C700C5BA71 /* StockInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */; };
+		384E22C721B351D9000608E1 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E22C621B351D9000608E1 /* UserService.swift */; };
+		384E22C921B35BB3000608E1 /* SimilarStockCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E22C821B35BB3000608E1 /* SimilarStockCell.swift */; };
 		386287D321868D2F0058A164 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D221868D2F0058A164 /* AppDelegate.swift */; };
 		386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287D421868D2F0058A164 /* FirstPageVC.swift */; };
 		386287D821868D2F0058A164 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 386287D621868D2F0058A164 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 		386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B351621A39DAF005BB2D9 /* ScannedProduct.swift */; };
 		38D20F66218B6EC700553619 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D20F65218B6EC700553619 /* DataService.swift */; };
 		38D48E4321AA7E720049E553 /* ActivitySpinnerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */; };
+		38DA230121B1EC8C0061FC4F /* SimilarStockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DA230021B1EC8C0061FC4F /* SimilarStockItem.swift */; };
 		38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */; };
 		38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EF22188CCF7002D6A4B /* LoginVC.swift */; };
 		38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD981219A558A00B26869 /* BarcodeService.swift */; };
@@ -34,10 +36,11 @@
 		37626ADC951F50907323F1AB /* Pods_Mundo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mundo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		381FE48721A4EA990041779E /* ScannedStockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedStockItem.swift; sourceTree = "<group>"; };
 		381FE48921A514620041779E /* ScannedStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedStockView.swift; sourceTree = "<group>"; };
-		381FE48B21A514A00041779E /* SimilarStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockCell.swift; sourceTree = "<group>"; };
 		381FE48D21A520CE0041779E /* SimilarStockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockService.swift; sourceTree = "<group>"; };
 		3826DD2321AD03AC00FFD351 /* StockInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoService.swift; sourceTree = "<group>"; };
 		3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoVC.swift; sourceTree = "<group>"; };
+		384E22C621B351D9000608E1 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		384E22C821B35BB3000608E1 /* SimilarStockCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockCell.swift; sourceTree = "<group>"; };
 		386287CF21868D2F0058A164 /* Mundo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mundo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		386287D221868D2F0058A164 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		386287D421868D2F0058A164 /* FirstPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPageVC.swift; sourceTree = "<group>"; };
@@ -49,6 +52,7 @@
 		386B351621A39DAF005BB2D9 /* ScannedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
 		38D20F65218B6EC700553619 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySpinnerClass.swift; sourceTree = "<group>"; };
+		38DA230021B1EC8C0061FC4F /* SimilarStockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockItem.swift; sourceTree = "<group>"; };
 		38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		38E36EF22188CCF7002D6A4B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		38EDD981219A558A00B26869 /* BarcodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeService.swift; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 				38EDD981219A558A00B26869 /* BarcodeService.swift */,
 				3826DD2321AD03AC00FFD351 /* StockInfoService.swift */,
 				381FE48D21A520CE0041779E /* SimilarStockService.swift */,
+				384E22C621B351D9000608E1 /* UserService.swift */,
 				38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */,
 			);
 			path = Services;
@@ -130,7 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				381FE48921A514620041779E /* ScannedStockView.swift */,
-				381FE48B21A514A00041779E /* SimilarStockCell.swift */,
+				384E22C821B35BB3000608E1 /* SimilarStockCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -140,6 +145,7 @@
 			children = (
 				386B351621A39DAF005BB2D9 /* ScannedProduct.swift */,
 				381FE48721A4EA990041779E /* ScannedStockItem.swift */,
+				38DA230021B1EC8C0061FC4F /* SimilarStockItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -298,6 +304,7 @@
 				7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */,
 				3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */,
 				386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */,
+				38DA230121B1EC8C0061FC4F /* SimilarStockItem.swift in Sources */,
 				38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */,
 				7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */,
 				386287D321868D2F0058A164 /* AppDelegate.swift in Sources */,
@@ -305,11 +312,12 @@
 				381FE48A21A514620041779E /* ScannedStockView.swift in Sources */,
 				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
 				381FE48821A4EA990041779E /* ScannedStockItem.swift in Sources */,
+				384E22C721B351D9000608E1 /* UserService.swift in Sources */,
 				381FE48E21A520CE0041779E /* SimilarStockService.swift in Sources */,
 				38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */,
 				38D20F66218B6EC700553619 /* DataService.swift in Sources */,
-				381FE48C21A514A00041779E /* SimilarStockCell.swift in Sources */,
 				3834AD6621A3B3C700C5BA71 /* StockInfoVC.swift in Sources */,
+				384E22C921B35BB3000608E1 /* SimilarStockCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

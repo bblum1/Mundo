@@ -25,31 +25,35 @@ class StockInfoVC: UIViewController {
     var scannedProductString = ""
     
     @IBOutlet weak var companyNameLabel: UILabel!
-    @IBOutlet weak var stockTickerLabel: UILabel!
     @IBOutlet weak var brandNameLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var stockView: UIView!
     var chartView: HIChartView!
-        
+    
+    var industryString = ""
+    
+    @IBOutlet weak var tableView: UITableView!
+    var similarStockService = SimilarStockService()
+    var similarStocks = [SimilarStockItem]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("BOUT TO LOAD UP AND MAKE CALL WITH: \(stockTickerString)")
         
-        // Begin loading the view with the API call
         activityIndicator.startSpinner(viewcontroller: self)
         
+        // Load the chart for the stock that was scanned
         stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
-            print("FINAL STEP IS HERE:::::: \(responseJSON)")
             
             DispatchQueue.main.async {
+                
                 // Load the scannedStockItem object with return item
                 var newDict = responseJSON!
                 newDict["brand"] = self.scannedBrandString.localizedCapitalized
                 
                 self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
                 
-                print("With StockItem: \(self.scannedStockItem.chartPrices)")
+                //print("With StockItem: \(self.scannedStockItem.chartPrices)")
                 
                 // Load main stock view using Highcharts
                 self.loadChartView()
@@ -58,86 +62,69 @@ class StockInfoVC: UIViewController {
             }
         })
         
+        // Set tableView of top 5 stocks in the same industry
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.backgroundColor = UIColor(red: 254/255, green: 255/255, blue: 240/255, alpha: 1.00)
+        
+        // Assign the table data
+        similarStockService.loadSimilarStocks(ticker: stockTickerString, completionHandler: {(responseArray, error) in
+            print("RESPONSE ARRAY::::: \(String(describing: responseArray))")
+            
+            if let parseResponse = responseArray {
+                
+                let myGroup = DispatchGroup()
+                
+                for item in parseResponse {
+                    
+                    myGroup.enter()
+                    if let tickerSymbol = item["symbol"] {
+                        
+                        // Make API Call with each symbol
+                        self.stockInfoService.callChartData(ticker: tickerSymbol, range: "1d", completionHandler: {(response, error) in
+                            
+                            if let stockInfoDict = response {
+                                if let company = stockInfoDict["company"] as? String {
+                                    if let latestPrice = stockInfoDict["latestPrice"] as? Float {
+                                        
+                                        print("RESPONSE JSON:::: \(company), \(latestPrice)")
+                                        // Crear new SimilarStockItem
+                                        let stockItem = SimilarStockItem(ticker: tickerSymbol, company: company, latestPrice: latestPrice)
+                                        
+                                        // Once the new stock item is appended, send updated array back
+                                        self.similarStocks.append(stockItem)
+                                        print("UPDATED ARRAY:::::::: \(self.similarStocks)")
+                                        
+                                        // reload the tableView
+                                        DispatchQueue.main.async {
+                                            print("RELOADING with: \(self.similarStocks)")
+                                            self.tableView.reloadData()
+                                        }
+                                    }
+                                }
+                            }
+                            myGroup.leave()
+                        })
+                    }
+                }
+                
+                
+            }
+            
+            
+        })
+        
     }
     
-    /*func loadChartView() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        self.companyNameLabel.text = self.scannedStockItem.company
-        self.stockTickerLabel.text = self.scannedStockItem.ticker
-        self.brandNameLabel.text = self.scannedStockItem.brand
-        self.productNameLabel.text = self.scannedProductString
-        
-        self.chartView = HIChartView(frame: stockView.bounds)
-        
-        let options = HIOptions()
-        
-        let chart = HIChart()
-        chart.type = "spline"
-        options.chart = chart
-        
-        let title = HITitle()
-        title.text = scannedStockItem.ticker
-        let subtitle = HISubtitle()
-        subtitle.text = scannedStockItem.company
-        options.title = title
-        options.subtitle = subtitle
-        
-        let plotOptions = HIPlotOptions()
-        plotOptions.spline = HISpline()
-        options.plotOptions = plotOptions
-        
-        let line = HISpline()
-        line.data = scannedStockItem.chartPrices
-        
-        self.chartView.options = options
-    } */
-    
-    /*func loadChartView() {
-        
-        self.companyNameLabel.text = self.scannedStockItem.company
-        self.stockTickerLabel.text = self.scannedStockItem.ticker
-        self.brandNameLabel.text = self.scannedStockItem.brand
-        self.productNameLabel.text = self.scannedProductString
-        
-        super.viewDidLoad()
-        
-        self.chartView = HIChartView(frame: stockView.bounds)
-        
-        let options = HIOptions()
-    
-        let title = HITitle()
-        title.text = scannedStockItem.ticker
-        
-        let subtitle = HISubtitle()
-        subtitle.text = scannedStockItem.company
-        
-        let yaxis = HIYAxis()
-        yaxis.title = HITitle()
-        yaxis.title.text = "Price"
-        
-        let line1 = HILine()
-        line1.data = scannedStockItem.chartPrices
-        
-        let responsive = HIResponsive()
-        
-        let rules1 = HIRules()
-        rules1.condition = HICondition()
-        rules1.condition.maxWidth = 500
-        responsive.rules = [rules1]
-        
-        options.title = title
-        options.yAxis = [yaxis]
-        options.responsive = responsive
-        
-        chartView.options = options
-        
-        view.addSubview(chartView)
-    } */
+    }
     
     func loadChartView() {
         
         var dataset:[(time: String, price: Float)] = []
-        
         
         let times = scannedStockItem.chartLabels
         let prices = scannedStockItem.chartPrices
@@ -147,21 +134,17 @@ class StockInfoVC: UIViewController {
             counter = counter + 1
         }
         
-        print(dataset)
+        //print(dataset)
         
         
         let priceList = prices.filter() {
             $0 > 0
         }
         
-        
         self.companyNameLabel.text = self.scannedStockItem.company
-        self.stockTickerLabel.text = self.scannedStockItem.ticker
         self.brandNameLabel.text = self.scannedStockItem.brand
         self.productNameLabel.text = self.scannedProductString
-        
-        super.viewDidLoad()
-        
+                
         self.chartView = HIChartView(frame: stockView.bounds)
         
         let options = HIOptions()
@@ -181,10 +164,10 @@ class StockInfoVC: UIViewController {
         yaxis.title.text = "Price"
         
         let xaxis = HIXAxis()
-        xaxis.title = HITitle()
+        //xaxis.title = HITitle()
         xaxis.labels = HILabels()
         xaxis.labels.enabled = false
-        xaxis.title.text = "Time"
+        //xaxis.title.text = "Time"
         let date = xaxis.dateTimeLabelFormats
         date?.hour = "%I %p"
         date?.minute = "%I:%M %p"
@@ -231,13 +214,46 @@ class StockInfoVC: UIViewController {
         options.exporting = exporting
         
         chartView.options = options
-        
-        view.addSubview(chartView)
+        stockView.addSubview(chartView)
     }
-    
     
     @IBAction func backBttn(_ sender: Any) {
         performSegue(withIdentifier: "stockBackToScanner", sender: nil)
     }
     
+}
+
+// MARK: - UITableViewDataSource
+extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return similarStocks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let stock = similarStocks[indexPath.row]
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "SimilarStockCell") as? SimilarStockCell {
+            
+            cell.configureCell(stock: stock)
+            cell.delegate = self
+            
+            return cell
+        } else {
+            return SimilarStockCell()
+        }
+    }
+}
+
+extension StockInfoVC: SimilarStockDelegate {
+    
+    func didTapCell(_ cell: SimilarStockCell) {
+        // Initiate refreshing of the view with whatever cell user tapped
+        
+    }
 }
