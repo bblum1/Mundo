@@ -24,8 +24,8 @@ class StockInfoVC: UIViewController {
     var scannedBrandString = ""
     var scannedProductString = ""
     
-    @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var brandNameLabel: UILabel!
+    @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var stockView: UIView!
