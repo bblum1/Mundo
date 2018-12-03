@@ -24,11 +24,15 @@ class StockInfoVC: UIViewController {
     var scannedBrandString = ""
     var scannedProductString = ""
     
+    @IBOutlet weak var stockView: UIView!
+    @IBOutlet weak var addToWatchlistButton: UIButton!
+    
+    
     @IBOutlet weak var brandNameLabel: UILabel!
     @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
     
-    @IBOutlet weak var stockView: UIView!
+    
     var chartView: HIChartView!
     
     var industryString = ""
@@ -218,6 +222,11 @@ class StockInfoVC: UIViewController {
     @IBAction func backBttn(_ sender: Any) {
         performSegue(withIdentifier: "stockBackToScanner", sender: nil)
     }
+    
+    @IBAction func temporaryProfileButton(_ sender: Any) {
+        performSegue(withIdentifier: "stockinfoToProfile", sender: nil)
+    }
+    
     
     @IBAction func indexChanged(_ sender: Any) {
         var timeSelect = "1d"
