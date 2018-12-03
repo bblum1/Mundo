@@ -37,6 +37,9 @@ class StockInfoVC: UIViewController {
     var similarStockService = SimilarStockService()
     var similarStocks = [SimilarStockItem]()
     
+    @IBOutlet weak var SegmentedControlButton: UISegmentedControl!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,9 +55,7 @@ class StockInfoVC: UIViewController {
                 newDict["brand"] = self.scannedBrandString.localizedCapitalized
                 
                 self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
-                
-                //print("With StockItem: \(self.scannedStockItem.chartPrices)")
-                
+                                
                 // Load main stock view using Highcharts
                 self.loadChartView()
                 
@@ -119,7 +120,6 @@ class StockInfoVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
     
     func loadChartView() {
@@ -151,15 +151,17 @@ class StockInfoVC: UIViewController {
         
         let title = HITitle()
         title.text = scannedStockItem.ticker
-        title.style?.fontWeight = "bold"
-        title.style?.fontSize = "30px"
-        title.style?.color = "#333333"
+        title.style = HIStyle()
+        title.style.fontSize = "30px"
+        title.style.color = "CB92EF"
+        title.style.fontFamily = "Avenir Next"
         
         let subtitle = HISubtitle()
         subtitle.text = scannedStockItem.company
+        //subtitle.style = HIStyle()
+        //subtitle.style.fontFamily = "Avenir Next"
         
         let yaxis = HIYAxis()
-        //yaxis.labels.format =
         yaxis.title = HITitle()
         yaxis.title.text = "Price"
         
@@ -172,16 +174,9 @@ class StockInfoVC: UIViewController {
         date?.hour = "%I %p"
         date?.minute = "%I:%M %p"
         
-        //let legend = HILegend()
-        //legend.layout = "vertical"
-        //legend.align = "right"
-        //legend.verticalAlign = "middle"
-        
         let plotoptions = HIPlotOptions()
         plotoptions.series = HISeries()
-        //plotoptions.series.label = HILabel()
-        //plotoptions.series.label.connectorAllowed = 0
-        //plotoptions.series.pointStart = 1
+        //plotoptions.series.color = "#CB92EF"
         
         let line1 = HILine()
         line1.name = scannedStockItem.ticker + " Stock Price"
@@ -192,11 +187,13 @@ class StockInfoVC: UIViewController {
         let rules1 = HIRules()
         rules1.condition = HICondition()
         rules1.condition.maxWidth = 500
-        //rules1.chartOptions = ["legend": ["layout": "horizontal", "align": "center", "verticalAlign": "bottom"]]
         responsive.rules = [rules1]
         
         let exporting = HIExporting()
         exporting.enabled = false
+        
+        let credits = HICredits()
+        credits.enabled = false
         
         options.title = title
         options.subtitle = subtitle
@@ -208,6 +205,7 @@ class StockInfoVC: UIViewController {
         tooltip.valueDecimals = 2
         tooltip.headerFormat = ""
         options.series = [line1]
+        options.credits = credits
         options.tooltip = tooltip
         options.responsive = responsive
         options.plotOptions = plotoptions
@@ -219,6 +217,76 @@ class StockInfoVC: UIViewController {
     
     @IBAction func backBttn(_ sender: Any) {
         performSegue(withIdentifier: "stockBackToScanner", sender: nil)
+    }
+    
+    @IBAction func indexChanged(_ sender: Any) {
+        var timeSelect = "1d"
+        switch SegmentedControlButton.selectedSegmentIndex
+        {
+        case 0:
+            timeSelect = "1d";
+            stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
+                print("FINAL STEP IS HERE:::::: \(String(describing: responseJSON))")
+                
+                DispatchQueue.main.async {
+                    // Load the scannedStockItem object with return item
+                    var newDict = responseJSON!
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    print("With StockItem: \(self.scannedStockItem.chartPrices)")
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
+            })
+        case 1:
+            timeSelect = "1m"
+            stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
+                print("FINAL STEP IS HERE:::::: \(String(describing: responseJSON))")
+                
+                DispatchQueue.main.async {
+                    // Load the scannedStockItem object with return item
+                    var newDict = responseJSON!
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    print("With StockItem: \(self.scannedStockItem.chartPrices)")
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
+            })
+        case 2:
+            timeSelect = "1y";
+            stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
+                print("FINAL STEP IS HERE:::::: \(String(describing: responseJSON))")
+                
+                DispatchQueue.main.async {
+                    // Load the scannedStockItem object with return item
+                    var newDict = responseJSON!
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    print("With StockItem: \(self.scannedStockItem.chartPrices)")
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
+            })
+            
+        default:
+            break
+        }
     }
     
 }
