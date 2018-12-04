@@ -11,8 +11,15 @@ import Highcharts
 
 class StockInfoVC: UIViewController {
     
-    let currUserEmail = "btrossen@nd.edu"
+    @IBOutlet weak var stockView: UIView!
+    @IBOutlet weak var addToWatchlistButton: UIButton!
     
+    @IBOutlet weak var brandNameLabel: UILabel!
+    @IBOutlet weak var companyNameLabel: UILabel!
+    @IBOutlet weak var productNameLabel: UILabel!
+    
+    let currUserEmail = "btrossen@nd.edu"
+        
     var activityIndicator = ActivitySpinnerClass()
     
     // Use this class to make calls with a stock symbol and range of chart data
@@ -28,13 +35,6 @@ class StockInfoVC: UIViewController {
     var stockTickerString = ""
     var scannedBrandString = ""
     var scannedProductString = ""
-    
-    @IBOutlet weak var stockView: UIView!
-    @IBOutlet weak var addToWatchlistButton: UIButton!
-    
-    @IBOutlet weak var brandNameLabel: UILabel!
-    @IBOutlet weak var companyNameLabel: UILabel!
-    @IBOutlet weak var productNameLabel: UILabel!
     
     var chartView: HIChartView!
     
@@ -59,7 +59,6 @@ class StockInfoVC: UIViewController {
             }
             
             DispatchQueue.main.async {
-                
                 if self.watchlistStocks.contains(self.stockTickerString) {
                     // Already in watchlist, set as checkmark
                     self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
@@ -68,7 +67,6 @@ class StockInfoVC: UIViewController {
                     self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
                 }
             }
-            
         })
         
         // Load the chart for the stock that was scanned
@@ -121,11 +119,9 @@ class StockInfoVC: UIViewController {
                                         
                                         // Once the new stock item is appended, send updated array back
                                         self.similarStocks.append(stockItem)
-                                        print("UPDATED ARRAY:::::::: \(self.similarStocks)")
                                         
                                         // reload the tableView
                                         DispatchQueue.main.async {
-                                            print("RELOADING with: \(self.similarStocks)")
                                             self.tableView.reloadData()
                                         }
                                     }
@@ -247,31 +243,36 @@ class StockInfoVC: UIViewController {
     
     @IBAction func watchListButtonTapped(_ sender: Any) {
         
-        if self.watchlistStocks != nil && self.watchlistStocks.contains(self.stockTickerString) {
+        if self.watchlistStocks.contains(self.stockTickerString) {
             
             // Already in watchlist, remove it and switch button back to plus
             userService.removeFromWatchlist(email: currUserEmail, symbol: stockTickerString, completionHandler: {(responseString, error) in
                 DispatchQueue.main.async {
+                    
+                    // Remove ticker symbol from self.watchlistStocks
+                    if let itemToRemoveIndex = self.watchlistStocks.index(of: self.stockTickerString) {
+                        self.watchlistStocks.remove(at: itemToRemoveIndex)
+                    }
+                    
+                    // Update button
                     self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
                 }
             })
-            
-            // Remove ticker symbol from self.watchlistStocks
-            if let itemToRemoveIndex = self.watchlistStocks.index(of: self.stockTickerString) {
-                self.watchlistStocks.remove(at: itemToRemoveIndex)
-            }
             
         } else {
             
             // Not in watchlist, add it and switch button back to check
             userService.addToWatchlist(email: currUserEmail, symbol: stockTickerString, completionHandler: {(responseString, error) in
                 DispatchQueue.main.async {
+                    
+                    // Add ticker symbol to self.watchlistStocks
+                    self.watchlistStocks.append(self.stockTickerString)
+                    
+                    // Update button
                     self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
                 }
             })
             
-            // Add ticker symbol to self.watchlistStocks
-            self.watchlistStocks.append(self.stockTickerString)
         }
         
     }
@@ -451,7 +452,6 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
                                         
                                         // Once the new stock item is appended, send updated array back
                                         self.similarStocks.append(stockItem)
-                                        print("UPDATED ARRAY:::::::: \(self.similarStocks)")
                                         
                                         // reload the tableView
                                         DispatchQueue.main.async {
