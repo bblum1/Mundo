@@ -21,6 +21,9 @@ class StockInfoVC: UIViewController {
     // Use this class to make calls to functions related to user and watchlist
     var userService = UserService()
     
+    // Use this class to make calls to fundamentals data of Robinhood.
+    var fundamentalsInfoService = FundamentalsInfoService()
+    
     // Use this class as the overall class item to store the data
     var scannedStockItem: ScannedStockItem!
     
@@ -35,6 +38,21 @@ class StockInfoVC: UIViewController {
     @IBOutlet weak var brandNameLabel: UILabel!
     @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var highLabel: UILabel!
+    @IBOutlet weak var lowLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var ceoLabel: UILabel!
+    @IBOutlet weak var marketCapLabel: UILabel!
+    @IBOutlet weak var high52Label: UILabel!
+    @IBOutlet weak var low52Label: UILabel!
+    @IBOutlet weak var sectorLabel: UILabel!
+    @IBOutlet weak var industryLabel: UILabel!
+    @IBOutlet weak var employeesLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
+    
     
     var chartView: HIChartView!
     
@@ -49,6 +67,29 @@ class StockInfoVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.startSpinner(viewcontroller: self)
+        
+        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
+        fundamentalsInfoService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
+            
+            if let parseDict = responseDict {
+                self.openLabel.text = parseDict["open"] as? String
+                self.highLabel.text = parseDict["high"] as? String
+                self.descriptionLabel.text = parseDict["description"] as? String
+                self.cityLabel.text = parseDict["city"] as? String
+                self.stateLabel.text = parseDict["state"] as? String
+                self.ceoLabel.text = parseDict["ceo"] as? String
+                self.marketCapLabel.text = parseDict["market_cap"] as? String
+                self.high52Label.text = parseDict["high_52_weeks"] as? String
+                self.low52Label.text = parseDict["low_52_weeks"] as? String
+                self.sectorLabel.text = parseDict["sector"] as? String
+                self.industryLabel.text = parseDict["industry"] as? String
+                self.employeesLabel.text = parseDict["num_employees"] as? String
+                self.yearLabel.text = parseDict["year_founded"] as? String
+                
+            }
+            
+            
+        })
         
         // Load the users watchlist
         // TODO: Add a way to store current user, will have to use Keychain
@@ -170,6 +211,7 @@ class StockInfoVC: UIViewController {
         self.chartView = HIChartView(frame: stockView.bounds)
         
         let options = HIOptions()
+        //options.colors([UIColor(red: 0.81, green: 0.56, blue: 0.95, alpha: 1.0)])
         
         let title = HITitle()
         title.text = scannedStockItem.ticker
@@ -198,8 +240,13 @@ class StockInfoVC: UIViewController {
         
         let plotoptions = HIPlotOptions()
         plotoptions.series = HISeries()
-        //plotoptions.series.color = "#CB92EF"
-        
+        plotoptions.series.marker = HIMarker()
+        plotoptions.series.marker.enabled = false
+        plotoptions.series.color = HIColor(uiColor: UIColor(red: 0.81, green: 0.56, blue: 0.95, alpha: 1.0))
+        //plotoptions.series.color = HIColor()
+        //plotoptions.series.color = UIColor(red: 0.81, green: 0.56, blue: 0.95, alpha: 1.0)
+        //plotoptions.series.color = UIColor(red: 206/255, green: 143/255, blue: 242/255, alpha: 1.0) as HIColor()
+       
         let line1 = HILine()
         line1.name = scannedStockItem.ticker + " Stock Price"
         line1.data = priceList
@@ -316,7 +363,41 @@ class StockInfoVC: UIViewController {
                 }
             })
         case 2:
+            timeSelect = "3m";
+            stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
+                
+                DispatchQueue.main.async {
+                    // Load the scannedStockItem object with return item
+                    var newDict = responseJSON!
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
+            })
+        case 3:
             timeSelect = "1y";
+            stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
+                
+                DispatchQueue.main.async {
+                    // Load the scannedStockItem object with return item
+                    var newDict = responseJSON!
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
+            })
+        case 4:
+            timeSelect = "5y";
             stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
                 
                 DispatchQueue.main.async {
