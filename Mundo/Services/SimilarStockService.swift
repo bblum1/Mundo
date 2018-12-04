@@ -33,12 +33,10 @@ class SimilarStockService {
             do {
                 let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSArray
                 
+                print("MYJSON::: \(myJSON)")
+                
                 // parseArray contains all 5 tickers
                 if let parseArray = myJSON as? [Dictionary<String, String>] {
-                    print("YESSSSS::: \(parseArray)")
-                    var i = 0
-                    
-                    var ansArray = [SimilarStockItem]()
                     
                     /*while i < parseArray.count {
                         
@@ -69,23 +67,18 @@ class SimilarStockService {
     // Function will make API call to the symbol
     func loadItem(symbol: String, loadedArray: [SimilarStockItem], completionHandler: @escaping ([SimilarStockItem]?, Error?)->Void) {
         
-        print("LOADING ITEM")
         var similarStocks = loadedArray
         
         do {
-            print("SYMBOL IN loadItem: \(symbol)")
             // Make API call
             let stockInfoService = StockInfoService()
             
             stockInfoService.callChartData(ticker: symbol, range: "1d", completionHandler: {(responseJSON, error) in
                 
-                print("JSON for \(symbol)::::: \(responseJSON)")
-                
                 if let stockInfoDict = responseJSON {
                     if let company = stockInfoDict["company"] as? String {
                         if let latestPrice = stockInfoDict["latestPrice"] as? Float {
                             
-                            print("RESPONSE JSON:::: \(company), \(latestPrice)")
                             // Crear new SimilarStockItem
                             let stockItem = SimilarStockItem(ticker: symbol, company: company, latestPrice: latestPrice)
                             
