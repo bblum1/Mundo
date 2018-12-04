@@ -29,7 +29,7 @@ class StockInfoService {
             
             if error != nil {
                 print("error is \(String(describing: error))")
-                return;
+                return
             }
             
             do {
