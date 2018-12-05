@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Highcharts
 
 class ProfileAccountVC: UIViewController {
 
@@ -15,13 +16,16 @@ class ProfileAccountVC: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var stockView: UIView!
     
-    @IBOutlet weak var segmentedChartButton: UISegmentedControl!
-    
     @IBOutlet weak var watchlistTableView: UITableView!
     var watchlistSymbols: [String] = []
+    var watchlistSectors: [String] = []
     var watchlistStocks = [WatchlistItem]()
     
     let currUserEmail = "btrossen@nd.edu"
+    
+    var stockTickerString = ""
+    var scannedBrandString = ""
+    var scannedProductString = ""
     
     var activityIndicator = ActivitySpinnerClass()
     
@@ -42,13 +46,19 @@ class ProfileAccountVC: UIViewController {
             
             if let returnedStocks = responseArray {
                 // TODO: Delete watchlistSymbols if not needed
-                self.watchlistSymbols = returnedStocks
+                for tuple in returnedStocks {
+                    self.watchlistSymbols.append(tuple.0)
+                    self.watchlistSectors.append(tuple.1)
+                }
+                //print("WATCHLIST SECTORS: \(self.watchlistSectors)")
+                
+                //self.watchlistSymbols = returnedStocks
                 
                 let myGroup = DispatchGroup()
                 
                 // Make API call with each symbol, only need full Watchlist items here
                 // NOTE: In StockInfoVC, we just needed the quick array to update + and - buttons
-                for symbol in returnedStocks {
+                for symbol in self.watchlistSymbols {
                     
                     myGroup.enter()
                     self.stockInfoService.callChartData(ticker: symbol, range: "1d", completionHandler: {(responseDict, error) in
@@ -64,7 +74,8 @@ class ProfileAccountVC: UIViewController {
                             }
                             
                             if let returnLatestPrice = stockInfoDict["latestPrice"] as? Float {
-                                latestPrice = returnLatestPrice
+                                latestPrice = (returnLatestPrice * 100) / 100
+                                print("LatestPrice: \(latestPrice)")
                             }
                             
                             if let returnOpeningPrice = stockInfoDict["open"] as? Float {
@@ -77,6 +88,7 @@ class ProfileAccountVC: UIViewController {
                             
                             DispatchQueue.main.async {
                                 self.watchlistTableView.reloadData()
+                                self.loadChartView()
                             }
                             
                         }
@@ -84,10 +96,97 @@ class ProfileAccountVC: UIViewController {
                     })
                 }
             }
+            //print("BEFORE CALL: WATCHLIST SECTORS: \(self.watchlistSectors)")
         })
-        
+        //loadChartView()
         watchlistTableView.delegate = self
         watchlistTableView.dataSource = self
+    }
+    
+    // Prepare to transfer returned stock after scan to StockInfoVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let viewController = segue.destination as? StockInfoVC
+        viewController?.stockTickerString = self.stockTickerString
+        viewController?.scannedBrandString = self.scannedBrandString
+        viewController?.scannedProductString = self.scannedProductString
+    }
+    
+    func loadChartView() {
+        //print("AFTER CALL: WATCHLIST SECTORS: \(self.watchlistSectors)")
+        let chartView = HIChartView(frame: stockView.bounds)
+        let options = HIOptions()
+        let chart = HIChart()
+        chart.plotBackgroundColor = HIColor()
+        chart.plotBorderWidth = NSNumber()
+        chart.plotShadow = 0
+        chart.type = "pie"
+        
+        let title = HITitle()
+        title.text = "My Likings Breakdown"
+        
+        let tooltip = HITooltip()
+        tooltip.pointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"
+        
+        let exporting = HIExporting()
+        exporting.enabled = false
+        
+        let credits = HICredits()
+        credits.enabled = false
+        
+        let plotoptions = HIPlotOptions()
+        plotoptions.pie = HIPie()
+        plotoptions.pie.allowPointSelect = 1
+        plotoptions.pie.cursor = "pointer"
+        plotoptions.pie.dataLabels = HIDataLabels()
+        plotoptions.pie.dataLabels.enabled = 0
+        plotoptions.pie.showInLegend = 1
+        
+        let pie = HIPie()
+        pie.name = "Industries"
+        
+        var sectorDict = Dictionary<String, Double>()
+        var length = Double(0.00)
+        print("WATCHLIST SECTORS: \(self.watchlistSectors)")
+        for sector in self.watchlistSectors {
+            length = length + 1
+            if let val = sectorDict[sector] {
+                sectorDict[sector] = val + 1
+            }
+            else {
+                sectorDict[sector] = 1
+            }
+        }
+        
+        print("Length: \(length)")
+        
+        for (sector, total) in sectorDict {
+            sectorDict[sector] = ((total / length) * 100)
+        }
+        
+        var data : [Dictionary<String, Any>] = []
+        var inner : Dictionary<String, Any> = [:]
+        
+        for (sector, percent) in sectorDict {
+            inner["name"] = sector
+            inner["y"] = percent
+            data.append(inner)
+        }
+        
+        print("Data: \(data)")
+        
+        pie.data = data
+        
+        options.chart = chart
+        options.title = title
+        options.tooltip = tooltip
+        options.plotOptions = plotoptions
+        options.series = [pie]
+        options.exporting = exporting
+        options.credits = credits
+        
+        chartView.options = options
+        stockView.addSubview(chartView)
+        
     }
     
 }

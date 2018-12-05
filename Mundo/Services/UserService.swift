@@ -13,7 +13,7 @@ class UserService {
     // Function will add a stock ticker to their watchlist with POST request
     func addToWatchlist(email: String, symbol: String, completionHandler: @escaping (String?, Error?)->Void) {
         
-        let dbURL = "http://dsg1.crc.nd.edu/cse30246/groms/dbaccess/add_watchlist_sminer.php"
+        let dbURL = "http://dsg1.crc.nd.edu/cse30246/groms/dbaccess/add_watchlist.php"
         
         let requestURL = NSURL(string: dbURL)
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -57,7 +57,7 @@ class UserService {
     }
     
     // Function will return all the stock tickers in their watchlist with GET request
-    func loadUserWatchlist(email: String, completionHandler: @escaping ([String]?, Error?)->Void) {
+    func loadUserWatchlist(email: String, completionHandler: @escaping ([(String, String)]?, Error?)->Void) {
         
         let dbURL = "http://dsg1.crc.nd.edu/cse30246/groms/dbaccess/watchlist.php/?email=\(email)"
         
@@ -80,14 +80,17 @@ class UserService {
                 
                 if let tickersArray = returnJSON as? [Dictionary<String, String>] {
                     
-                    var returnArray: [String] = []
+                    var returnArray: [(String, String)] = []
                     
                     for dict in tickersArray {
                         if let symbolStr = dict["symbol"] {
-                            returnArray.append(symbolStr)
+                            if let indStr = dict["sector"] {
+                                returnArray.append((symbolStr, indStr))
+                            }
+                            //returnArray.append(symbolStr)
                         }
                     }
-                    print("GOT MY TICKERS::::::\(returnArray)")
+                    print("GOT MY TICKERS USER SERVICE::::::\(returnArray)")
                     completionHandler(returnArray, nil)
                 }
                 
