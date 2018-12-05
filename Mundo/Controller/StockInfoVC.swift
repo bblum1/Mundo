@@ -55,7 +55,10 @@ class StockInfoVC: UIViewController {
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
             print("RESPONSE ARRAY OF BLAKE STOCKS::::\(responseArray)")
             if let returnedStocks = responseArray {
-                self.watchlistStocks = returnedStocks
+                for tuple in returnedStocks {
+                    self.watchlistStocks.append(tuple.0)
+                }
+                //self.watchlistStocks = returnedStocks
             }
             
             DispatchQueue.main.async {
@@ -194,6 +197,9 @@ class StockInfoVC: UIViewController {
         
         let plotoptions = HIPlotOptions()
         plotoptions.series = HISeries()
+        plotoptions.series.marker = HIMarker()
+        plotoptions.series.marker.enabled = false
+        plotoptions.series.color = HIColor(uiColor: UIColor(red: 0.81, green: 0.56, blue: 0.95, alpha: 1.0))
         //plotoptions.series.color = "#CB92EF"
         
         let line1 = HILine()
@@ -428,7 +434,10 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
             
             if let returnedStocks = responseArray {
-                self.watchlistStocks = returnedStocks
+                for tuple in returnedStocks {
+                    self.watchlistStocks.append(tuple.0)
+                }
+                //self.watchlistStocks = returnedStocks
             }
             
             DispatchQueue.main.async {
