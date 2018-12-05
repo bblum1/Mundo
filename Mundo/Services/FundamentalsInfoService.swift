@@ -52,7 +52,7 @@ class FundamentalsInfoService {
                         state = returnState
                     }
                     
-                    newDict["open"] = open
+                    newDict["open"] = parseJSON["open"]
                     newDict["high"] = parseJSON["high"]
                     newDict["low"] = parseJSON["low"]
                     newDict["description"] = parseJSON["description"]

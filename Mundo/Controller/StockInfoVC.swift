@@ -71,7 +71,7 @@ class StockInfoVC: UIViewController {
         //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
         fundamentalsInfoService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
             
-            if let parseDict = responseDict {
+            /*if let parseDict = responseDict {
                 self.openLabel.text = parseDict["open"] as? String
                 self.highLabel.text = parseDict["high"] as? String
                 self.descriptionLabel.text = parseDict["description"] as? String
@@ -86,7 +86,7 @@ class StockInfoVC: UIViewController {
                 self.employeesLabel.text = parseDict["num_employees"] as? String
                 self.yearLabel.text = parseDict["year_founded"] as? String
                 
-            }
+            } */
             
             
         })
