@@ -7,18 +7,180 @@
 //
 
 import UIKit
+import Highcharts
 
 class StockViewPopUpVC: UIViewController {
     
-    var modalSlideInteractor:ModalSlideInteractor? = nil
+    @IBOutlet weak var stockView: UIView!
+    @IBOutlet weak var addToWatchlistButton: UIButton!
+    
+    var stockTickerString = ""
+    @IBOutlet weak var companyNameLabel: UILabel!
+    
+    let currUserEmail = "btrossen@nd.edu"
+    
+    var activityIndicator = ActivitySpinnerClass()
+    
+    var modalSlideInteractor: ModalSlideInteractor? = nil
+    
+    // Use this class to make calls with a stock symbol and range of chart data
+    var stockInfoService = StockInfoService()
+    
+    // Use this class to make calls to functions related to user and watchlist
+    var userService = UserService()
+    
+    // Use this class as the overall class item to store the data
+    var scannedStockItem: ScannedStockItem!
+    
+    var chartView: HIChartView!
+    
+    @IBOutlet weak var segmentedControlButton: UISegmentedControl!
+    
+    var watchlistStocks: [String] = []
+    
+    var savedTicker = ""
+    var savedModalSlideInteractor: ModalSlideInteractor? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("LOADING POPUP NOW...... with \(stockTickerString) and \(modalSlideInteractor)")
+        if modalSlideInteractor != nil {
+            self.savedModalSlideInteractor = self.modalSlideInteractor
+            self.savedTicker = self.stockTickerString
+        }
+        print("TRY AGAIN NOW....... with \(savedTicker) and \(savedModalSlideInteractor)")
+        
+        activityIndicator.startSpinner(viewcontroller: self)
+        
+        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
+            print("GOT THE USER STOCKS: \(String(describing: responseArray))")
+            if let returnedStocks = responseArray {
+                self.watchlistStocks = returnedStocks
+            }
+            
+            DispatchQueue.main.async {
+                if self.watchlistStocks.contains(self.stockTickerString) {
+                    // Already in watchlist, set as checkmark
+                    self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
+                } else {
+                    // Not in watchlist, make it a plus
+                    self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
+                }
+            }
+        })
+        
+        // Load the chart for the stock that was scanned
+        stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
+            print("LOADING THE STOCK TICKER: \(self.stockTickerString)")
+            DispatchQueue.main.async {
+                
+                // Load the scannedStockItem object with return item
+                if let responseDict = responseJSON {
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: responseDict)
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                }
+                self.activityIndicator.stopSpinner()
+            }
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //showHelperCircle()
+        
+    }
+    
+    func saveItems(ticker: String, modalSlider: ModalSlideInteractor) {
+        self.savedTicker = ticker
+        self.savedModalSlideInteractor = modalSlider
+    }
+    
+    func loadChartView() {
+        var dataset:[(time: String, price: Float)] = []
+        
+        let times = scannedStockItem.chartLabels
+        let prices = scannedStockItem.chartPrices
+        var counter = 0
+        for _ in times {
+            dataset.append((time: times[counter], price: prices[counter]))
+            counter = counter + 1
+        }
+        
+        let priceList = prices.filter() {
+            $0 > 0
+        }
+        
+        self.companyNameLabel.text = self.scannedStockItem.company
+        
+        self.chartView = HIChartView(frame: stockView.bounds)
+        
+        let options = HIOptions()
+        
+        let title = HITitle()
+        title.text = scannedStockItem.ticker
+        title.style = HIStyle()
+        title.style.fontSize = "30px"
+        title.style.color = "CB92EF"
+        title.style.fontFamily = "Avenir Next"
+        
+        let subtitle = HISubtitle()
+        subtitle.text = scannedStockItem.company
+        //subtitle.style = HIStyle()
+        //subtitle.style.fontFamily = "Avenir Next"
+        
+        let yaxis = HIYAxis()
+        yaxis.title = HITitle()
+        yaxis.title.text = "Price"
+        
+        let xaxis = HIXAxis()
+        //xaxis.title = HITitle()
+        xaxis.labels = HILabels()
+        xaxis.labels.enabled = false
+        //xaxis.title.text = "Time"
+        let date = xaxis.dateTimeLabelFormats
+        date?.hour = "%I %p"
+        date?.minute = "%I:%M %p"
+        
+        let plotoptions = HIPlotOptions()
+        plotoptions.series = HISeries()
+        //plotoptions.series.color = "#CB92EF"
+        
+        let line1 = HILine()
+        line1.name = scannedStockItem.ticker + " Stock Price"
+        line1.data = priceList
+        
+        let responsive = HIResponsive()
+        
+        let rules1 = HIRules()
+        rules1.condition = HICondition()
+        rules1.condition.maxWidth = 500
+        responsive.rules = [rules1]
+        
+        let exporting = HIExporting()
+        exporting.enabled = false
+        
+        let credits = HICredits()
+        credits.enabled = false
+        
+        options.title = title
+        options.subtitle = subtitle
+        options.yAxis = [yaxis]
+        options.xAxis = [xaxis]
+        let tooltip = HITooltip()
+        tooltip.valuePrefix = "$"
+        tooltip.valueSuffix = " USD"
+        tooltip.valueDecimals = 2
+        tooltip.headerFormat = ""
+        options.series = [line1]
+        options.credits = credits
+        options.tooltip = tooltip
+        options.responsive = responsive
+        options.plotOptions = plotoptions
+        options.exporting = exporting
+        
+        chartView.options = options
+        stockView.addSubview(chartView)
     }
     
     @IBAction func handleGesture(_ sender: UIPanGestureRecognizer) {
@@ -32,52 +194,66 @@ class StockViewPopUpVC: UIViewController {
         let downwardMovementPercent = fminf(downwardMovement, 1.0)
         let progress = CGFloat(downwardMovementPercent)
         
-        guard let modalSlideInteractor = modalSlideInteractor else { return }
+        print("About to see if we fit in")
+        guard let modalSlider = modalSlideInteractor else { return }
+        print("PROGRESS: \(progress)")
         
-        print("Got beyond guard")
         switch sender.state {
         case .began:
-            print("BEGINNING SLIDE")
-            modalSlideInteractor.hasStarted = true
+            print("GOT BEGINNING SLIDE")
+            modalSlider.hasStarted = true
             dismiss(animated: true, completion: nil)
         case .changed:
-            modalSlideInteractor.shouldFinish = progress > percentThreshold
-            modalSlideInteractor.update(progress)
+            print("GOT CHANGED")
+            modalSlider.shouldFinish = progress > percentThreshold
+            modalSlider.update(progress)
         case .cancelled:
-            modalSlideInteractor.hasStarted = false
-            modalSlideInteractor.cancel()
+            print("GOT CANCELLED")
+            modalSlider.hasStarted = false
+            modalSlider.cancel()
         case .ended:
-            modalSlideInteractor.hasStarted = false
-            modalSlideInteractor.shouldFinish
-                ? modalSlideInteractor.finish()
-                : modalSlideInteractor.cancel()
+            print("GOT ENDED")
+            modalSlider.hasStarted = false
+            modalSlider.shouldFinish
+                ? modalSlider.finish()
+                : modalSlider.cancel()
         default:
             break
         }
     }
     
-    /*func showHelperCircle(){
-        let center = CGPoint(x: view.bounds.width * 0.5, y: 100)
-        let small = CGSize(width: 30, height: 30)
-        let circle = UIView(frame: CGRect(origin: center, size: small))
-        circle.layer.cornerRadius = circle.frame.width/2
-        circle.backgroundColor = UIColor.white
-        circle.layer.shadowOpacity = 0.8
-        circle.layer.shadowOffset = CGSize()
-        view.addSubview(circle)
-        UIView.animate(
-            withDuration: 0.5,
-            delay: 0.25,
-            options: [],
-            animations: {
-                circle.frame.origin.y += 200
-                circle.layer.opacity = 0
-        },
-            completion: { _ in
-                circle.removeFromSuperview()
+    @IBAction func watchlistButtonTapped(_ sender: Any) {
+        
+        if self.watchlistStocks.contains(self.stockTickerString) {
+            
+            // Already in watchlist, remove it and switch button back to plus
+            userService.removeFromWatchlist(email: currUserEmail, symbol: stockTickerString, completionHandler: {(responseString, error) in
+                DispatchQueue.main.async {
+                    
+                    // Remove ticker symbol from self.watchlistStocks
+                    if let itemToRemoveIndex = self.watchlistStocks.index(of: self.stockTickerString) {
+                        self.watchlistStocks.remove(at: itemToRemoveIndex)
+                    }
+                    
+                    // Update button
+                    self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
+                }
+            })
+            
+        } else {
+            
+            // Not in watchlist, add it and switch button back to check
+            userService.addToWatchlist(email: currUserEmail, symbol: stockTickerString, completionHandler: {(responseString, error) in
+                DispatchQueue.main.async {
+                    
+                    // Add ticker symbol to self.watchlistStocks
+                    self.watchlistStocks.append(self.stockTickerString)
+                    
+                    // Update button
+                    self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
+                }
+            })
         }
-        )
     }
-    */
     
 }

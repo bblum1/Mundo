@@ -22,7 +22,7 @@ class StockInfoVC: UIViewController {
         
     var activityIndicator = ActivitySpinnerClass()
     
-    var modalSlideInteractor = ModalSlideInteractor()
+    let modalSlideInteractor = ModalSlideInteractor()
     
     // Use this class to make calls with a stock symbol and range of chart data
     var stockInfoService = StockInfoService()
@@ -43,6 +43,8 @@ class StockInfoVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var similarStockService = SimilarStockService()
     var similarStocks = [SimilarStockItem]()
+    
+    var selectedStockSymbol = ""          // variable stores a stock ticker selected from tableView
     
     @IBOutlet weak var SegmentedControlButton: UISegmentedControl!
     
@@ -236,10 +238,14 @@ class StockInfoVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? StockInfoVC {
+        
+        if let viewController = segue.destination as? StockViewPopUpVC {
+            print("PREPARING SEGUE WITH \(self.selectedStockSymbol) and \(modalSlideInteractor)")
+            viewController.stockTickerString = self.selectedStockSymbol
             viewController.transitioningDelegate = self
-            viewController.modalSlideInteractor = modalSlideInteractor
+            viewController.modalSlideInteractor = self.modalSlideInteractor
         }
+        
     }
     
     @IBAction func backBttn(_ sender: Any) {
@@ -379,111 +385,14 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        performSegue(withIdentifier: "stockInfoToPopUp", sender: nil)
-        
-        let popUpViewController =  storyboard?.instantiateViewController(withIdentifier: "StockViewPopUpVC") as! StockViewPopUpVC
-        
-        present(popUpViewController, animated: true, completion: nil)
-        
-        /*activityIndicator.startSpinner(viewcontroller: self)
-        
-        // Recreate the actions initiated when the screen is first loaded
-        
         if let indexPath = tableView.indexPathForSelectedRow {
-            print("SELECTED STOCK IS:::::::\(similarStocks[indexPath.row])::\(similarStocks[indexPath.row].ticker)")
-            let selectedStock = similarStocks[indexPath.row]
+            let stockItemTicker = similarStocks[indexPath.row].ticker
+            self.selectedStockSymbol = stockItemTicker
+            performSegue(withIdentifier: "stockInfoToPopUp", sender: nil)
             
-            self.stockTickerString = selectedStock.ticker
-            
-        } else {
-            self.stockTickerString = "TSLA"
+            let popUpViewController =  storyboard?.instantiateViewController(withIdentifier: "StockViewPopUpVC") as! StockViewPopUpVC
+            present(popUpViewController, animated: true, completion: nil)
         }
-        
-        self.scannedBrandString = "--"
-        self.scannedProductString = "--"
-        
-        self.similarStocks = []  // Refresh tableView data
-        
-        // Load the users watchlist
-        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
-            
-            if let returnedStocks = responseArray {
-                self.watchlistStocks = returnedStocks
-            }
-            
-            DispatchQueue.main.async {
-                
-                if self.watchlistStocks.contains(self.stockTickerString) {
-                    // Already in watchlist, set as checkmark
-                    self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
-                } else {
-                    // Not in watchlist, make it a plus
-                    self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
-                }
-            }
-            
-        })
-        
-        // Load the chart for the stock that was scanned
-        stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
-            
-            DispatchQueue.main.async {
-                
-                // Load the scannedStockItem object with return item
-                var newDict = responseJSON!
-                newDict["brand"] = self.scannedBrandString.localizedCapitalized
-                
-                self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
-                
-                // Load main stock view using Highcharts
-                self.loadChartView()
-                
-                self.activityIndicator.stopSpinner()
-            }
-        })
-        
-        // Assign the table data for the similar stocks
-        similarStockService.loadSimilarStocks(ticker: stockTickerString, completionHandler: {(responseArray, error) in
-            print("RESPONSE ARRAY::::: \(String(describing: responseArray))")
-            
-            if let parseResponse = responseArray {
-                
-                let myGroup = DispatchGroup()
-                
-                for item in parseResponse {
-                    
-                    myGroup.enter()
-                    if let tickerSymbol = item["symbol"] {
-                        
-                        // Make API Call with each symbol
-                        self.stockInfoService.callChartData(ticker: tickerSymbol, range: "1d", completionHandler: {(response, error) in
-                            
-                            if let stockInfoDict = response {
-                                if let company = stockInfoDict["company"] as? String {
-                                    if let latestPrice = stockInfoDict["latestPrice"] as? Float {
-                                        
-                                        print("RESPONSE JSON:::: \(company), \(latestPrice)")
-                                        // Crear new SimilarStockItem
-                                        let stockItem = SimilarStockItem(ticker: tickerSymbol, company: company, latestPrice: latestPrice)
-                                        
-                                        // Once the new stock item is appended, send updated array back
-                                        self.similarStocks.append(stockItem)
-                                        
-                                        // reload the tableView
-                                        DispatchQueue.main.async {
-                                            print("RELOADING with: \(self.similarStocks)")
-                                            self.tableView.reloadData()
-                                        }
-                                    }
-                                }
-                            }
-                            myGroup.leave()
-                        })
-                    }
-                }
-            }
-            
-        })*/
         
     }
     

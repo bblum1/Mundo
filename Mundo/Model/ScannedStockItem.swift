@@ -29,14 +29,14 @@ class ScannedStockItem {
     
     var company: String {
         if _company == nil {
-            _company = "NoCo."
+            _company = "--"
         }
         return _company
     }
     
     var brand: String {
         if _brand == nil {
-            _brand = "Brandless"
+            _brand = "--"
         }
         return _brand
     }
@@ -78,16 +78,39 @@ class ScannedStockItem {
     }
     
     init(stockItemDict: Dictionary<String, Any>) {
-        self._ticker = (stockItemDict["symbol"] as! String)
-        self._company = (stockItemDict["company"] as! String)
-        self._brand = (stockItemDict["brand"] as! String)
         
-        self._low = (stockItemDict["low"] as! Float)
-        self._high = (stockItemDict["high"] as! Float)
-        self._latestPrice = (stockItemDict["latestPrice"] as! Float)
+        if let dictTicker = stockItemDict["symbol"] as? String {
+            self._ticker = dictTicker
+        }
         
-        self._chartLabels = (stockItemDict["chartLabels"] as! [String])
-        self._chartPrices = (stockItemDict["chartPrices"] as! [Float])
+        if let dictCompany = stockItemDict["company"] as? String {
+            self._company = dictCompany
+        }
+        
+        if let dictBrand = stockItemDict["brand"] {
+            self._brand = (dictBrand as! String)
+        }
+        
+        if let dictLow = stockItemDict["low"] {
+            self._low = (dictLow as! Float)
+        }
+        
+        if let dictHigh = stockItemDict["high"] {
+            self._high = (dictHigh as! Float)
+        }
+        
+        if let dictLatestPrice = stockItemDict["latestPrice"] {
+            self._latestPrice = (dictLatestPrice as! Float)
+        }
+        
+        if let dictChartLabels = stockItemDict["chartLabels"] {
+            self._chartLabels = (dictChartLabels as! [String])
+        }
+        
+        if let dictChartPrices = stockItemDict["chartPrices"] {
+            self._chartPrices = (dictChartPrices as! [Float])
+        }
+        
     }
     
 }
