@@ -793,9 +793,9 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P5Z-NR-LBD">
-                                                                    <rect key="frame" x="305" y="19.5" width="60" height="36"/>
+                                                                    <rect key="frame" x="285" y="19.5" width="80" height="36"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="60" id="ggH-ti-ai5"/>
+                                                                        <constraint firstAttribute="width" constant="80" id="ggH-ti-ai5"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                                     <state key="normal" title="Button">
@@ -889,7 +889,9 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJq-ic-KwQ">
                                         <rect key="frame" x="315" y="32" width="44" height="30"/>
-                                        <state key="normal" title="Profile"/>
+                                        <state key="normal" title="Profile">
+                                            <color key="titleColor" red="1" green="0.99998790029999995" blue="0.9999920726" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
                                         <connections>
                                             <action selector="temporaryProfileButton:" destination="T4s-rd-9CP" eventType="touchUpInside" id="Ho4-ni-W8h"/>
                                         </connections>
@@ -983,9 +985,9 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n3o-F9-cMU">
-                                                                    <rect key="frame" x="300" y="20.5" width="60" height="34"/>
+                                                                    <rect key="frame" x="280" y="20.5" width="80" height="34"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="60" id="pdh-fr-76Q"/>
+                                                                        <constraint firstAttribute="width" constant="80" id="pdh-fr-76Q"/>
                                                                     </constraints>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                                     <state key="normal" title="Button">
@@ -1045,8 +1047,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deL-G9-Jek">
-                                        <rect key="frame" x="8" y="22" width="34" height="30"/>
-                                        <state key="normal" title="Back"/>
+                                        <rect key="frame" x="16" y="30" width="34" height="30"/>
+                                        <state key="normal" title="Back">
+                                            <color key="titleColor" red="1" green="0.99998790029999995" blue="0.9999920726" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
                                         <connections>
                                             <segue destination="T4s-rd-9CP" kind="show" id="E52-Df-CH4"/>
                                         </connections>
@@ -1054,8 +1058,8 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.76831763980000001" green="0.5839723349" blue="0.91769713159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="deL-G9-Jek" firstAttribute="top" secondItem="Fls-bc-Xft" secondAttribute="top" constant="22" id="A6f-0o-el9"/>
-                                    <constraint firstItem="deL-G9-Jek" firstAttribute="leading" secondItem="Fls-bc-Xft" secondAttribute="leading" constant="8" id="Atz-ey-28f"/>
+                                    <constraint firstItem="deL-G9-Jek" firstAttribute="top" secondItem="Fls-bc-Xft" secondAttribute="top" constant="30" id="A6f-0o-el9"/>
+                                    <constraint firstItem="deL-G9-Jek" firstAttribute="leading" secondItem="Fls-bc-Xft" secondAttribute="leading" constant="16" id="Atz-ey-28f"/>
                                     <constraint firstAttribute="height" constant="60" id="Tyz-y2-sMX"/>
                                 </constraints>
                             </view>
@@ -1093,7 +1097,6 @@
         <image name="purple1-round-rect" width="250" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ufT-7Z-prJ"/>
         <segue reference="E52-Df-CH4"/>
         <segue reference="PFY-o8-PLt"/>
         <segue reference="u3f-0Z-DOg"/>

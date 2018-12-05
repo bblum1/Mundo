@@ -23,6 +23,10 @@ class ProfileAccountVC: UIViewController {
     
     let currUserEmail = "btrossen@nd.edu"
     
+    var stockTickerString = ""
+    var scannedBrandString = ""
+    var scannedProductString = ""
+    
     var activityIndicator = ActivitySpinnerClass()
     
     // Use this class to make calls with a stock symbol and range of chart data
@@ -70,7 +74,8 @@ class ProfileAccountVC: UIViewController {
                             }
                             
                             if let returnLatestPrice = stockInfoDict["latestPrice"] as? Float {
-                                latestPrice = returnLatestPrice
+                                latestPrice = (returnLatestPrice * 100) / 100
+                                print("LatestPrice: \(latestPrice)")
                             }
                             
                             if let returnOpeningPrice = stockInfoDict["open"] as? Float {
@@ -96,6 +101,14 @@ class ProfileAccountVC: UIViewController {
         //loadChartView()
         watchlistTableView.delegate = self
         watchlistTableView.dataSource = self
+    }
+    
+    // Prepare to transfer returned stock after scan to StockInfoVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let viewController = segue.destination as? StockInfoVC
+        viewController?.stockTickerString = self.stockTickerString
+        viewController?.scannedBrandString = self.scannedBrandString
+        viewController?.scannedProductString = self.scannedProductString
     }
     
     func loadChartView() {

@@ -46,6 +46,13 @@ class StockInfoVC: UIViewController {
     
     var watchlistStocks: [String] = []
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let viewController = segue.destination as? ProfileAccountVC
+        viewController?.stockTickerString = self.stockTickerString
+        viewController?.scannedBrandString = self.scannedBrandString
+        viewController?.scannedProductString = self.scannedProductString
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.startSpinner(viewcontroller: self)
@@ -199,7 +206,7 @@ class StockInfoVC: UIViewController {
         plotoptions.series = HISeries()
         plotoptions.series.marker = HIMarker()
         plotoptions.series.marker.enabled = false
-        plotoptions.series.color = HIColor(uiColor: UIColor(red: 0.81, green: 0.56, blue: 0.95, alpha: 1.0))
+        plotoptions.series.color = HIColor(uiColor: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0))
         //plotoptions.series.color = "#CB92EF"
         
         let line1 = HILine()

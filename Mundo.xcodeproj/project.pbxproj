@@ -32,6 +32,7 @@
 		38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD981219A558A00B26869 /* BarcodeService.swift */; };
 		7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */; };
 		7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */; };
+		7BE67C4921B77D0D00002A21 /* FundamentalsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE67C4821B77D0D00002A21 /* FundamentalsService.swift */; };
 		E38D68C7C7CF78144558515A /* Pods_Mundo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37626ADC951F50907323F1AB /* Pods_Mundo.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		4BCB783C1C728FCA546198F7 /* Pods-Mundo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mundo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mundo/Pods-Mundo.debug.xcconfig"; sourceTree = "<group>"; };
 		7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordVC.swift; sourceTree = "<group>"; };
 		7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
+		7BE67C4821B77D0D00002A21 /* FundamentalsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundamentalsService.swift; sourceTree = "<group>"; };
 		953340DFDA52CAD272D70BA1 /* Pods-Mundo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mundo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mundo/Pods-Mundo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 				38EDD981219A558A00B26869 /* BarcodeService.swift */,
 				3826DD2321AD03AC00FFD351 /* StockInfoService.swift */,
 				381FE48D21A520CE0041779E /* SimilarStockService.swift */,
+				7BE67C4821B77D0D00002A21 /* FundamentalsService.swift */,
 				384E22C621B351D9000608E1 /* UserService.swift */,
 				38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */,
 			);
@@ -321,6 +324,7 @@
 				386287D321868D2F0058A164 /* AppDelegate.swift in Sources */,
 				38D48E4321AA7E720049E553 /* ActivitySpinnerClass.swift in Sources */,
 				381FE48A21A514620041779E /* ScannedStockView.swift in Sources */,
+				7BE67C4921B77D0D00002A21 /* FundamentalsService.swift in Sources */,
 				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
 				381FE48821A4EA990041779E /* ScannedStockItem.swift in Sources */,
 				384E22C721B351D9000608E1 /* UserService.swift in Sources */,
