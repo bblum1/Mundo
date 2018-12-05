@@ -834,6 +834,7 @@
                                                     <constraint firstItem="hJB-7p-GpX" firstAttribute="centerY" secondItem="rS7-Hb-Cpb" secondAttribute="centerY" id="DXZ-A8-uiT"/>
                                                     <constraint firstItem="d2V-Ap-Zog" firstAttribute="centerY" secondItem="PhM-AT-yFj" secondAttribute="centerY" id="LlM-ch-dmq"/>
                                                     <constraint firstAttribute="trailing" secondItem="KbZ-TB-cT3" secondAttribute="trailing" constant="20" id="Mnd-Bl-HIm"/>
+                                                    <constraint firstItem="KbZ-TB-cT3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FYq-22-gJt" secondAttribute="trailing" constant="20" id="NWe-DR-PrJ"/>
                                                     <constraint firstItem="hlZ-yw-DDH" firstAttribute="top" secondItem="KbZ-TB-cT3" secondAttribute="bottom" constant="8" id="S3m-nq-TAA"/>
                                                     <constraint firstItem="hlZ-yw-DDH" firstAttribute="centerX" secondItem="StY-TN-bQZ" secondAttribute="centerX" id="SYw-dT-YZa"/>
                                                     <constraint firstItem="KbZ-TB-cT3" firstAttribute="centerY" secondItem="FYq-22-gJt" secondAttribute="centerY" id="Sg7-6y-drz"/>
@@ -1497,9 +1498,10 @@
         <image name="purple1-round-rect" width="250" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ufT-7Z-prJ"/>
         <segue reference="E52-Df-CH4"/>
         <segue reference="yDb-lq-B4f"/>
-        <segue reference="b8n-iR-rbe"/>
+        <segue reference="u3f-0Z-DOg"/>
         <segue reference="zAR-34-OVM"/>
     </inferredMetricsTieBreakers>
 </document>

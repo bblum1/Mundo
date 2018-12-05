@@ -103,7 +103,7 @@ class StockInfoVC: UIViewController {
                             
                             if let stockInfoDict = response {
                                 if let company = stockInfoDict["company"] as? String {
-                                    self.companyString = company
+                                    
                                     if let latestPrice = stockInfoDict["latestPrice"] as? Float {
                                         
                                         print("RESPONSE JSON:::: \(company), \(latestPrice)")
@@ -116,6 +116,8 @@ class StockInfoVC: UIViewController {
                                         // reload the tableView
                                         DispatchQueue.main.async {
                                             self.tableView.reloadData()
+                                            self.companyString = company
+                                            self.loadAllSubViews()
                                         }
                                     }
                                 }
@@ -124,22 +126,6 @@ class StockInfoVC: UIViewController {
                         })
                     }
                 }
-            }
-            
-        })
-        
-        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
-        fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
-            print("response dict: \(String(describing: responseDict))")
-            
-            if let parseDict = responseDict {
-                
-                // set all the views after Robinhood fundamentals call
-                self.companyAndProductView.setCompanyAndProductView(brandName: self.scannedBrandString, companyName: self.companyString, productName: self.scannedProductString, parseDict: parseDict)
-                
-                self.statsView.setStatsView(parseDict: parseDict)
-                
-                self.companyDescriptionView.setCompanyDetailsView(parseDict: parseDict)
             }
             
         })
@@ -167,6 +153,24 @@ class StockInfoVC: UIViewController {
         })
 
         
+    }
+    
+    func loadAllSubViews() {
+        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
+        fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
+            print("response dict: \(String(describing: responseDict))")
+            
+            if let parseDict = responseDict {
+                
+                // set all the views after Robinhood fundamentals call
+                self.companyAndProductView.setCompanyAndProductView(brandName: self.scannedBrandString, companyName: self.companyString, productName: self.scannedProductString, parseDict: parseDict)
+                
+                self.statsView.setStatsView(parseDict: parseDict)
+                
+                self.companyDescriptionView.setCompanyDetailsView(parseDict: parseDict)
+            }
+            
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
