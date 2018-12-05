@@ -28,6 +28,8 @@ class StockInfoVC: UIViewController {
     // Use this class to make calls to functions related to user and watchlist
     var userService = UserService()
     
+    var fundamentalsService = FundamentalsService()
+    
     // Use this class as the overall class item to store the data
     var scannedStockItem: ScannedStockItem!
     
@@ -59,6 +61,32 @@ class StockInfoVC: UIViewController {
         
         // Load the users watchlist
         // TODO: Add a way to store current user, will have to use Keychain
+        
+        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
+        fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
+            
+            if let parseDict = responseDict {
+             self.openLabel.text = parseDict["open"] as? String
+             self.highLabel.text = parseDict["high"] as? String
+             self.descriptionLabel.text = parseDict["description"] as? String
+             self.cityLabel.text = parseDict["city"] as? String
+             self.stateLabel.text = parseDict["state"] as? String
+             self.ceoLabel.text = parseDict["ceo"] as? String
+             self.marketCapLabel.text = parseDict["market_cap"] as? String
+             self.high52Label.text = parseDict["high_52_weeks"] as? String
+             self.low52Label.text = parseDict["low_52_weeks"] as? String
+             self.sectorLabel.text = parseDict["sector"] as? String
+             self.industryLabel.text = parseDict["industry"] as? String
+             self.employeesLabel.text = parseDict["num_employees"] as? String
+             self.yearLabel.text = parseDict["year_founded"] as? String
+             
+             }
+            
+            
+        })
+        
+        
+        
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
             print("RESPONSE ARRAY OF BLAKE STOCKS::::\(responseArray)")
             if let returnedStocks = responseArray {
