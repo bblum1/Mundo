@@ -21,6 +21,9 @@
 		386287DD21868D320058A164 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 386287DB21868D320058A164 /* LaunchScreen.storyboard */; };
 		386287E521868DDE0058A164 /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386287E421868DDE0058A164 /* ScannerVC.swift */; };
 		386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386B351621A39DAF005BB2D9 /* ScannedProduct.swift */; };
+		388F618B21B7271B00F14101 /* StockViewPopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388F618A21B7271B00F14101 /* StockViewPopUpVC.swift */; };
+		388F618D21B72FB200F14101 /* ModalSlideInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388F618C21B72FB200F14101 /* ModalSlideInteractor.swift */; };
+		388F618F21B7321000F14101 /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388F618E21B7321000F14101 /* DismissAnimator.swift */; };
 		38C04CC421B5BF980046E283 /* ProfileAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C04CC321B5BF980046E283 /* ProfileAccountVC.swift */; };
 		38C04CC621B5C8B60046E283 /* WatchlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C04CC521B5C8B60046E283 /* WatchlistItem.swift */; };
 		38C04CC821B5C8D10046E283 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C04CC721B5C8D10046E283 /* WatchlistCell.swift */; };
@@ -53,6 +56,9 @@
 		386287DE21868D320058A164 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		386287E421868DDE0058A164 /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
 		386B351621A39DAF005BB2D9 /* ScannedProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedProduct.swift; sourceTree = "<group>"; };
+		388F618A21B7271B00F14101 /* StockViewPopUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewPopUpVC.swift; sourceTree = "<group>"; };
+		388F618C21B72FB200F14101 /* ModalSlideInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalSlideInteractor.swift; sourceTree = "<group>"; };
+		388F618E21B7321000F14101 /* DismissAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissAnimator.swift; sourceTree = "<group>"; };
 		38C04CC321B5BF980046E283 /* ProfileAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAccountVC.swift; sourceTree = "<group>"; };
 		38C04CC521B5C8B60046E283 /* WatchlistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistItem.swift; sourceTree = "<group>"; };
 		38C04CC721B5C8D10046E283 /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
@@ -133,6 +139,7 @@
 				38E36EF12188CCB6002D6A4B /* Initial Pages */,
 				386287E421868DDE0058A164 /* ScannerVC.swift */,
 				3834AD6521A3B3C700C5BA71 /* StockInfoVC.swift */,
+				388F618A21B7271B00F14101 /* StockViewPopUpVC.swift */,
 				38C04CC321B5BF980046E283 /* ProfileAccountVC.swift */,
 			);
 			path = Controller;
@@ -144,6 +151,8 @@
 				381FE48921A514620041779E /* ScannedStockView.swift */,
 				384E22C821B35BB3000608E1 /* SimilarStockCell.swift */,
 				38C04CC721B5C8D10046E283 /* WatchlistCell.swift */,
+				388F618E21B7321000F14101 /* DismissAnimator.swift */,
+				388F618C21B72FB200F14101 /* ModalSlideInteractor.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -311,6 +320,7 @@
 				386287E521868DDE0058A164 /* ScannerVC.swift in Sources */,
 				386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */,
 				7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */,
+				388F618F21B7321000F14101 /* DismissAnimator.swift in Sources */,
 				3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */,
 				386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */,
 				38DA230121B1EC8C0061FC4F /* SimilarStockItem.swift in Sources */,
@@ -322,7 +332,9 @@
 				38D48E4321AA7E720049E553 /* ActivitySpinnerClass.swift in Sources */,
 				381FE48A21A514620041779E /* ScannedStockView.swift in Sources */,
 				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
+				388F618D21B72FB200F14101 /* ModalSlideInteractor.swift in Sources */,
 				381FE48821A4EA990041779E /* ScannedStockItem.swift in Sources */,
+				388F618B21B7271B00F14101 /* StockViewPopUpVC.swift in Sources */,
 				384E22C721B351D9000608E1 /* UserService.swift in Sources */,
 				381FE48E21A520CE0041779E /* SimilarStockService.swift in Sources */,
 				38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */,

@@ -22,6 +22,8 @@ class StockInfoVC: UIViewController {
         
     var activityIndicator = ActivitySpinnerClass()
     
+    var modalSlideInteractor = ModalSlideInteractor()
+    
     // Use this class to make calls with a stock symbol and range of chart data
     var stockInfoService = StockInfoService()
     
@@ -91,7 +93,7 @@ class StockInfoVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.backgroundColor = UIColor(red: 254/255, green: 255/255, blue: 240/255, alpha: 1.00)
+        // tableView.backgroundColor = UIColor(red: 254/255, green: 255/255, blue: 240/255, alpha: 1.00)
         
         // Assign the table data for the similar stocks
         similarStockService.loadSimilarStocks(ticker: stockTickerString, completionHandler: {(responseArray, error) in
@@ -233,6 +235,13 @@ class StockInfoVC: UIViewController {
         stockView.addSubview(chartView)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let viewController = segue.destination as? StockInfoVC {
+            viewController.transitioningDelegate = self
+            viewController.modalSlideInteractor = modalSlideInteractor
+        }
+    }
+    
     @IBAction func backBttn(_ sender: Any) {
         performSegue(withIdentifier: "stockBackToScanner", sender: nil)
     }
@@ -254,8 +263,9 @@ class StockInfoVC: UIViewController {
                         self.watchlistStocks.remove(at: itemToRemoveIndex)
                     }
                     
-                    // Update button
+                    // Update button and tableView
                     self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
+                    self.tableView.reloadData()
                 }
             })
             
@@ -268,8 +278,9 @@ class StockInfoVC: UIViewController {
                     // Add ticker symbol to self.watchlistStocks
                     self.watchlistStocks.append(self.stockTickerString)
                     
-                    // Update button
+                    // Update button and tableView
                     self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
+                    self.tableView.reloadData()
                 }
             })
             
@@ -359,7 +370,6 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "SimilarStockCell") as? SimilarStockCell {
             
             cell.configureCell(stock: stock)
-            cell.delegate = self
             
             return cell
         } else {
@@ -369,7 +379,13 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        activityIndicator.startSpinner(viewcontroller: self)
+        performSegue(withIdentifier: "stockInfoToPopUp", sender: nil)
+        
+        let popUpViewController =  storyboard?.instantiateViewController(withIdentifier: "StockViewPopUpVC") as! StockViewPopUpVC
+        
+        present(popUpViewController, animated: true, completion: nil)
+        
+        /*activityIndicator.startSpinner(viewcontroller: self)
         
         // Recreate the actions initiated when the screen is first loaded
         
@@ -467,14 +483,20 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
             
-        })
+        })*/
         
     }
+    
 }
 
-extension StockInfoVC: SimilarStockDelegate {
+// Extension for the modal slide dismissal
+extension StockInfoVC: UIViewControllerTransitioningDelegate {
     
-    func didTapCell(_ cell: SimilarStockCell) {
-        
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return modalSlideInteractor.hasStarted ? modalSlideInteractor : nil
     }
 }
