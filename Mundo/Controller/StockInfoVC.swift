@@ -54,6 +54,8 @@ class StockInfoVC: UIViewController {
         super.viewDidLoad()
         activityIndicator.startSpinner(viewcontroller: self)
         
+        print("LOADING NOW IN INFO: \(stockTickerString), \(scannedBrandString), \(scannedProductString)")
+        
         // Load the users watchlist
         // TODO: Add a way to store current user, will have to use Keychain
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in

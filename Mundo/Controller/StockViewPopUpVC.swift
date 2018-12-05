@@ -43,14 +43,19 @@ class StockViewPopUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.startSpinner(viewcontroller: self)
+        
         print("LOADING POPUP NOW...... with \(stockTickerString) and \(modalSlideInteractor)")
+        
         if modalSlideInteractor != nil {
+            print("saving MODAL with val = \(modalSlideInteractor)")
             self.savedModalSlideInteractor = self.modalSlideInteractor
             self.savedTicker = self.stockTickerString
         }
         print("TRY AGAIN NOW....... with \(savedTicker) and \(savedModalSlideInteractor)")
         
-        activityIndicator.startSpinner(viewcontroller: self)
+        
         
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
             print("GOT THE USER STOCKS: \(String(describing: responseArray))")
@@ -195,7 +200,7 @@ class StockViewPopUpVC: UIViewController {
         let progress = CGFloat(downwardMovementPercent)
         
         print("About to see if we fit in")
-        guard let modalSlider = modalSlideInteractor else { return }
+        guard let modalSlider = savedModalSlideInteractor else { return }
         print("PROGRESS: \(progress)")
         
         switch sender.state {
