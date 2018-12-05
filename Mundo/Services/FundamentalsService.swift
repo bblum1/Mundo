@@ -39,10 +39,6 @@ class FundamentalsService {
                 if let parseJSON = returnJSON as? Dictionary<String, Any> {
                     print("GOT MY JSON AFTER GET::::\(parseJSON)")
                     
-                    if let returnOpen = parseJSON["open"] as? Float {
-                        open = returnOpen
-                    }
-                    
                     if let returnCity = parseJSON["headquarters_city"] as? String {
                         city = returnCity
                     }

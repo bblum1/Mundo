@@ -17,6 +17,20 @@ class StockInfoVC: UIViewController {
     @IBOutlet weak var brandNameLabel: UILabel!
     @IBOutlet weak var companyNameLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var openLabel: UILabel!
+    @IBOutlet weak var highLabel: UILabel!
+    @IBOutlet weak var lowLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var ceoLabel: UILabel!
+    @IBOutlet weak var marketCapLabel: UILabel!
+    @IBOutlet weak var high52Label: UILabel!
+    @IBOutlet weak var low52Label: UILabel!
+    @IBOutlet weak var sectorLabel: UILabel!
+    @IBOutlet weak var industryLabel: UILabel!
+    @IBOutlet weak var employeesLabel: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
     
     let currUserEmail = "btrossen@nd.edu"
         
@@ -64,21 +78,26 @@ class StockInfoVC: UIViewController {
         
         //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
         fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
+            print("response dict: \(String(describing: responseDict))")
             
             if let parseDict = responseDict {
-             self.openLabel.text = parseDict["open"] as? String
-             self.highLabel.text = parseDict["high"] as? String
-             self.descriptionLabel.text = parseDict["description"] as? String
-             self.cityLabel.text = parseDict["city"] as? String
-             self.stateLabel.text = parseDict["state"] as? String
-             self.ceoLabel.text = parseDict["ceo"] as? String
-             self.marketCapLabel.text = parseDict["market_cap"] as? String
-             self.high52Label.text = parseDict["high_52_weeks"] as? String
-             self.low52Label.text = parseDict["low_52_weeks"] as? String
-             self.sectorLabel.text = parseDict["sector"] as? String
-             self.industryLabel.text = parseDict["industry"] as? String
-             self.employeesLabel.text = parseDict["num_employees"] as? String
-             self.yearLabel.text = parseDict["year_founded"] as? String
+                //print("PARSEDICT OPEN: \(String(describing: parseDict["open"]))")
+                //if let open = parseDict["open"] as? String {
+                 //   self.openLabel.text = open
+                //}
+                self.openLabel.text = parseDict["open"] as? String
+                self.highLabel.text = parseDict["high"] as? String
+                self.descriptionLabel.text = parseDict["description"] as? String
+                self.cityLabel.text = parseDict["city"] as? String
+                self.stateLabel.text = parseDict["state"] as? String
+                self.ceoLabel.text = parseDict["ceo"] as? String
+                self.marketCapLabel.text = parseDict["market_cap"] as? String
+                self.high52Label.text = parseDict["high_52_weeks"] as? String
+                self.low52Label.text = parseDict["low_52_weeks"] as? String
+                self.sectorLabel.text = parseDict["sector"] as? String
+                self.industryLabel.text = parseDict["industry"] as? String
+                self.employeesLabel.text = parseDict["num_employees"] as? String
+                self.yearLabel.text = parseDict["year_founded"] as? String
              
              }
             
