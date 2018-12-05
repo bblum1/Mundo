@@ -14,21 +14,11 @@ class StockInfoVC: UIViewController {
     @IBOutlet weak var stockView: UIView!
     @IBOutlet weak var addToWatchlistButton: UIButton!
     
-    @IBOutlet weak var brandNameLabel: UILabel!
-    @IBOutlet weak var companyNameLabel: UILabel!
-    @IBOutlet weak var productNameLabel: UILabel!
-    @IBOutlet weak var openLabel: UILabel!
-    @IBOutlet weak var highLabel: UILabel!
-    @IBOutlet weak var lowLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var stateLabel: UILabel!
-    @IBOutlet weak var ceoLabel: UILabel!
-    @IBOutlet weak var marketCapLabel: UILabel!
-    @IBOutlet weak var high52Label: UILabel!
-    @IBOutlet weak var low52Label: UILabel!
-    @IBOutlet weak var sectorLabel: UILabel!
-    @IBOutlet weak var industryLabel: UILabel!
+    var companyString = ""
+    @IBOutlet weak var companyAndProductView: CompanyAndProductView!
+    @IBOutlet weak var statsView: StatsView!
+    @IBOutlet weak var companyDescriptionView: CompanyDescriptionView!
+    
     @IBOutlet weak var employeesLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     
@@ -54,6 +44,8 @@ class StockInfoVC: UIViewController {
     
     var chartView: HIChartView!
     
+    
+    
     @IBOutlet weak var tableView: UITableView!
     var similarStockService = SimilarStockService()
     var similarStocks = [SimilarStockItem]()
@@ -75,56 +67,6 @@ class StockInfoVC: UIViewController {
         
         // Load the users watchlist
         // TODO: Add a way to store current user, will have to use Keychain
-        
-        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
-        fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
-            print("response dict: \(String(describing: responseDict))")
-            
-            if let parseDict = responseDict {
-                //print("PARSEDICT OPEN: \(String(describing: parseDict["open"]))")
-                //if let open = parseDict["open"] as? String {
-                 //   self.openLabel.text = open
-                //}
-                self.openLabel.text = parseDict["open"] as? String
-                self.highLabel.text = parseDict["high"] as? String
-                self.descriptionLabel.text = parseDict["description"] as? String
-                self.cityLabel.text = parseDict["city"] as? String
-                self.stateLabel.text = parseDict["state"] as? String
-                self.ceoLabel.text = parseDict["ceo"] as? String
-                self.marketCapLabel.text = parseDict["market_cap"] as? String
-                self.high52Label.text = parseDict["high_52_weeks"] as? String
-                self.low52Label.text = parseDict["low_52_weeks"] as? String
-                self.sectorLabel.text = parseDict["sector"] as? String
-                self.industryLabel.text = parseDict["industry"] as? String
-                self.employeesLabel.text = parseDict["num_employees"] as? String
-                self.yearLabel.text = parseDict["year_founded"] as? String
-             
-             }
-            
-            
-        })
-        
-        
-        
-        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
-            print("RESPONSE ARRAY OF BLAKE STOCKS::::\(responseArray)")
-            if let returnedStocks = responseArray {
-                for tuple in returnedStocks {
-                    self.watchlistStocks.append(tuple.0)
-                }
-                //self.watchlistStocks = returnedStocks
-            }
-            
-            DispatchQueue.main.async {
-                if self.watchlistStocks.contains(self.stockTickerString) {
-                    // Already in watchlist, set as checkmark
-                    self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
-                } else {
-                    // Not in watchlist, make it a plus
-                    self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
-                }
-            }
-        })
         
         // Load the chart for the stock that was scanned
         stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
@@ -168,6 +110,7 @@ class StockInfoVC: UIViewController {
                             
                             if let stockInfoDict = response {
                                 if let company = stockInfoDict["company"] as? String {
+                                    self.companyString = company
                                     if let latestPrice = stockInfoDict["latestPrice"] as? Float {
                                         
                                         print("RESPONSE JSON:::: \(company), \(latestPrice)")
@@ -192,6 +135,46 @@ class StockInfoVC: UIViewController {
             
         })
         
+        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
+        fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
+            print("response dict: \(String(describing: responseDict))")
+            
+            if let parseDict = responseDict {
+                
+                // set all the views after Robinhood fundamentals call
+                self.companyAndProductView.setCompanyAndProductView(brandName: self.scannedBrandString, companyName: self.companyString, productName: self.scannedProductString, parseDict: parseDict)
+                
+                self.statsView.setStatsView(parseDict: parseDict)
+                
+                self.companyDescriptionView.setCompanyDetailsView(parseDict: parseDict)
+                
+            }
+            
+        })
+        
+        
+        
+        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
+            print("RESPONSE ARRAY OF BLAKE STOCKS::::\(responseArray)")
+            if let returnedStocks = responseArray {
+                for tuple in returnedStocks {
+                    self.watchlistStocks.append(tuple.0)
+                }
+                //self.watchlistStocks = returnedStocks
+            }
+            
+            DispatchQueue.main.async {
+                if self.watchlistStocks.contains(self.stockTickerString) {
+                    // Already in watchlist, set as checkmark
+                    self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
+                } else {
+                    // Not in watchlist, make it a plus
+                    self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
+                }
+            }
+        })
+
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -215,10 +198,6 @@ class StockInfoVC: UIViewController {
         let priceList = prices.filter() {
             $0 > 0
         }
-        
-        self.companyNameLabel.text = self.scannedStockItem.company
-        self.brandNameLabel.text = self.scannedStockItem.brand
-        self.productNameLabel.text = self.scannedProductString
                 
         self.chartView = HIChartView(frame: stockView.bounds)
         

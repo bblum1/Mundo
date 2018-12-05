@@ -30,6 +30,9 @@
 		38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */; };
 		38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EF22188CCF7002D6A4B /* LoginVC.swift */; };
 		38EDD982219A558A00B26869 /* BarcodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EDD981219A558A00B26869 /* BarcodeService.swift */; };
+		7B31BA1821B7877B00433C84 /* CompanyAndProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B31BA1721B7877B00433C84 /* CompanyAndProductView.swift */; };
+		7B31BA1A21B787DF00433C84 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B31BA1921B787DF00433C84 /* StatsView.swift */; };
+		7B31BA1C21B7880500433C84 /* CompanyDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B31BA1B21B7880500433C84 /* CompanyDescriptionView.swift */; };
 		7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */; };
 		7B668ED5218A8DA200553DE6 /* DeleteAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */; };
 		7BE67C4921B77D0D00002A21 /* FundamentalsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE67C4821B77D0D00002A21 /* FundamentalsService.swift */; };
@@ -64,6 +67,9 @@
 		38E36EF22188CCF7002D6A4B /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		38EDD981219A558A00B26869 /* BarcodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeService.swift; sourceTree = "<group>"; };
 		4BCB783C1C728FCA546198F7 /* Pods-Mundo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mundo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mundo/Pods-Mundo.debug.xcconfig"; sourceTree = "<group>"; };
+		7B31BA1721B7877B00433C84 /* CompanyAndProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyAndProductView.swift; sourceTree = "<group>"; };
+		7B31BA1921B787DF00433C84 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		7B31BA1B21B7880500433C84 /* CompanyDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyDescriptionView.swift; sourceTree = "<group>"; };
 		7B668ED2218A804100553DE6 /* UpdatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordVC.swift; sourceTree = "<group>"; };
 		7B668ED4218A8DA200553DE6 /* DeleteAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountVC.swift; sourceTree = "<group>"; };
 		7BE67C4821B77D0D00002A21 /* FundamentalsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundamentalsService.swift; sourceTree = "<group>"; };
@@ -147,6 +153,9 @@
 				381FE48921A514620041779E /* ScannedStockView.swift */,
 				384E22C821B35BB3000608E1 /* SimilarStockCell.swift */,
 				38C04CC721B5C8D10046E283 /* WatchlistCell.swift */,
+				7B31BA1721B7877B00433C84 /* CompanyAndProductView.swift */,
+				7B31BA1921B787DF00433C84 /* StatsView.swift */,
+				7B31BA1B21B7880500433C84 /* CompanyDescriptionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -314,6 +323,7 @@
 				386287E521868DDE0058A164 /* ScannerVC.swift in Sources */,
 				386287D521868D2F0058A164 /* FirstPageVC.swift in Sources */,
 				7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */,
+				7B31BA1C21B7880500433C84 /* CompanyDescriptionView.swift in Sources */,
 				3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */,
 				386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */,
 				38DA230121B1EC8C0061FC4F /* SimilarStockItem.swift in Sources */,
@@ -323,9 +333,11 @@
 				38C04CC821B5C8D10046E283 /* WatchlistCell.swift in Sources */,
 				386287D321868D2F0058A164 /* AppDelegate.swift in Sources */,
 				38D48E4321AA7E720049E553 /* ActivitySpinnerClass.swift in Sources */,
+				7B31BA1821B7877B00433C84 /* CompanyAndProductView.swift in Sources */,
 				381FE48A21A514620041779E /* ScannedStockView.swift in Sources */,
 				7BE67C4921B77D0D00002A21 /* FundamentalsService.swift in Sources */,
 				38E36EF32188CCF7002D6A4B /* LoginVC.swift in Sources */,
+				7B31BA1A21B787DF00433C84 /* StatsView.swift in Sources */,
 				381FE48821A4EA990041779E /* ScannedStockItem.swift in Sources */,
 				384E22C721B351D9000608E1 /* UserService.swift in Sources */,
 				381FE48E21A520CE0041779E /* SimilarStockService.swift in Sources */,
