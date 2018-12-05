@@ -15,8 +15,6 @@ class ProfileAccountVC: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var stockView: UIView!
     
-    @IBOutlet weak var segmentedChartButton: UISegmentedControl!
-    
     @IBOutlet weak var watchlistTableView: UITableView!
     var watchlistSymbols: [String] = []
     var watchlistStocks = [WatchlistItem]()

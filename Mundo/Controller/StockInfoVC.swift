@@ -317,7 +317,43 @@ class StockInfoVC: UIViewController {
                 }
             })
         case 2:
+            timeSelect = "3m";
+            stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
+                
+                DispatchQueue.main.async {
+                    // Load the scannedStockItem object with return item
+                    var newDict = responseJSON!
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
+            })
+            
+        case 3:
             timeSelect = "1y";
+            stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
+                
+                DispatchQueue.main.async {
+                    // Load the scannedStockItem object with return item
+                    var newDict = responseJSON!
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
+            })
+            
+        case 4:
+            timeSelect = "5y";
             stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
                 
                 DispatchQueue.main.async {

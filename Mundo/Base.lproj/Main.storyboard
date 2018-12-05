@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -739,11 +739,13 @@
                                                 </constraints>
                                             </view>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="To6-je-zn8">
-                                                <rect key="frame" x="138.5" y="379" width="98" height="29"/>
+                                                <rect key="frame" x="100.5" y="379" width="174" height="29"/>
                                                 <segments>
                                                     <segment title="1d"/>
                                                     <segment title="1m"/>
+                                                    <segment title="3m"/>
                                                     <segment title="1y"/>
+                                                    <segment title="5y"/>
                                                 </segments>
                                                 <connections>
                                                     <action selector="indexChanged:" destination="T4s-rd-9CP" eventType="valueChanged" id="Bev-oQ-OJk"/>
@@ -954,15 +956,7 @@
                                                     <constraint firstAttribute="height" constant="363" id="XBE-N6-kzX"/>
                                                 </constraints>
                                             </view>
-                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="eyH-by-YdN">
-                                                <rect key="frame" x="138.5" y="379" width="98" height="29"/>
-                                                <segments>
-                                                    <segment title="1d"/>
-                                                    <segment title="1m"/>
-                                                    <segment title="1y"/>
-                                                </segments>
-                                            </segmentedControl>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tTc-Q6-SHL">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tTc-Q6-SHL">
                                                 <rect key="frame" x="0.0" y="680" width="375" height="452"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -1018,7 +1012,7 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Watchlist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="I6h-0m-qqj">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Watchlist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="I6h-0m-qqj">
                                                 <rect key="frame" x="16" y="638" width="102" height="33"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="24"/>
                                                 <color key="textColor" white="0.15741644969999999" alpha="0.87" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1029,11 +1023,8 @@
                                         <constraints>
                                             <constraint firstItem="tTc-Q6-SHL" firstAttribute="top" secondItem="I6h-0m-qqj" secondAttribute="bottom" constant="9" id="GIp-cO-Hty"/>
                                             <constraint firstItem="BEa-uT-76g" firstAttribute="centerX" secondItem="Dro-zv-w9A" secondAttribute="centerX" id="JYZ-tX-oMD"/>
-                                            <constraint firstItem="I6h-0m-qqj" firstAttribute="top" secondItem="eyH-by-YdN" secondAttribute="bottom" constant="231" id="PK4-bt-PsI"/>
                                             <constraint firstItem="I6h-0m-qqj" firstAttribute="leading" secondItem="Dro-zv-w9A" secondAttribute="leading" constant="16" id="UoP-fu-Saz"/>
                                             <constraint firstItem="BEa-uT-76g" firstAttribute="top" secondItem="Dro-zv-w9A" secondAttribute="top" constant="8" id="Yxe-Ej-bBx"/>
-                                            <constraint firstItem="eyH-by-YdN" firstAttribute="centerX" secondItem="Dro-zv-w9A" secondAttribute="centerX" id="ZnX-eg-hwj"/>
-                                            <constraint firstItem="eyH-by-YdN" firstAttribute="top" secondItem="BEa-uT-76g" secondAttribute="bottom" constant="8" id="e5i-6g-dou"/>
                                             <constraint firstAttribute="bottom" secondItem="tTc-Q6-SHL" secondAttribute="bottom" constant="8" id="eBv-U4-xHa"/>
                                             <constraint firstItem="tTc-Q6-SHL" firstAttribute="width" secondItem="Dro-zv-w9A" secondAttribute="width" id="ekI-p9-sCq"/>
                                             <constraint firstItem="tTc-Q6-SHL" firstAttribute="centerX" secondItem="Dro-zv-w9A" secondAttribute="centerX" id="lFz-gS-pdd"/>
@@ -1086,7 +1077,6 @@
                     <connections>
                         <outlet property="contentView" destination="Dro-zv-w9A" id="5fH-ZZ-uAI"/>
                         <outlet property="mainView" destination="Hqe-fX-clU" id="4Eb-iP-xAH"/>
-                        <outlet property="segmentedChartButton" destination="eyH-by-YdN" id="8Kd-XH-CjL"/>
                         <outlet property="stockView" destination="BEa-uT-76g" id="DZu-Jh-AnT"/>
                         <outlet property="theScrollView" destination="K0O-YU-hF8" id="fdI-UF-oUp"/>
                         <outlet property="watchlistTableView" destination="tTc-Q6-SHL" id="mep-qD-Byf"/>
@@ -1103,6 +1093,7 @@
         <image name="purple1-round-rect" width="250" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ufT-7Z-prJ"/>
         <segue reference="E52-Df-CH4"/>
         <segue reference="PFY-o8-PLt"/>
         <segue reference="u3f-0Z-DOg"/>
