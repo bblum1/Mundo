@@ -122,7 +122,7 @@ class ProfileAccountVC: UIViewController {
         chart.type = "pie"
         
         let title = HITitle()
-        title.text = "Watchlist Industry Breakdown"
+        title.text = "My Likings Breakdown"
         
         let tooltip = HITooltip()
         tooltip.pointFormat = "{series.name}: <b>{point.percentage:.1f}%</b>"

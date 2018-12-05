@@ -10,20 +10,30 @@ import UIKit
 
 class CompanyDescriptionView: UIView {
     
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var stateLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var ceoLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var employeesLabel: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     
     func setCompanyDetailsView(parseDict: Dictionary<String, Any>) {
-        // AboutCompany View/ TextView
-        self.descriptionLabel.text = parseDict["description"] as? String
-        self.ceoLabel.text = parseDict["ceo"] as? String
-        self.cityLabel.text = parseDict["city"] as? String
-        self.stateLabel.text = parseDict["state"] as? String
-        self.employeesLabel.text = parseDict["num_employees"] as? String
-        self.yearLabel.text = parseDict["year_founded"] as? String
+        
+        DispatchQueue.main.async {
+            // AboutCompany View/ TextView
+            self.descriptionLabel.text = parseDict["description"] as? String
+            self.ceoLabel.text = parseDict["ceo"] as? String
+            let city = parseDict["city"] as? String ?? "Unknown City"
+            let state = parseDict["state"] as? String ?? "US"
+            self.locationLabel.text = "\(city), \(state)"
+            if let employeeInt = parseDict["num_employees"] as? Int {
+                self.employeesLabel.text = "\(employeeInt)"
+            }
+            print("some employees::::\(parseDict["num_employees"])")
+            if let yearInt = parseDict["year_founded"] as? Int {
+                self.yearLabel.text = "\(yearInt)"
+            }
+            print("some year:::::\(parseDict["year_founded"])")
+        }
+        
     }
 }

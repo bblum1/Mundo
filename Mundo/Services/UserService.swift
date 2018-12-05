@@ -13,7 +13,7 @@ class UserService {
     // Function will add a stock ticker to their watchlist with POST request
     func addToWatchlist(email: String, symbol: String, completionHandler: @escaping (String?, Error?)->Void) {
         
-        let dbURL = "http://dsg1.crc.nd.edu/cse30246/groms/dbaccess/add_watchlist_sminer.php"
+        let dbURL = "http://dsg1.crc.nd.edu/cse30246/groms/dbaccess/add_watchlist.php"
         
         let requestURL = NSURL(string: dbURL)
         let request = NSMutableURLRequest(url: requestURL! as URL)

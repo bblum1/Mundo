@@ -97,8 +97,8 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                         session.stopRunning()
                         activityIndicator.startSpinner(viewcontroller: self)
                         
-                        barcodeService.makeBarcodeCall(gtin: "018200150470", completionHandler: {(brandAndSymbol, error) in
-                        //barcodeService.makePaidBarcodeCall(gtin: "018200150470", completionHandler: {(brandAndSymbol, error) in
+                        //barcodeService.makeBarcodeCall(gtin: "018200150470", completionHandler: {(brandAndSymbol, error) in
+                        barcodeService.makePaidBarcodeCall(gtin: barcodeString, completionHandler: {(brandAndSymbol, error) in
                             
                             self.stockBrand = brandAndSymbol![0]
                             self.stockTicker = brandAndSymbol![1]

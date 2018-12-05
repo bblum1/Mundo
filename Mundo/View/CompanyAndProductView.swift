@@ -17,11 +17,15 @@ class CompanyAndProductView: UIView {
     @IBOutlet weak var industryLabel: UILabel!
     
     func setCompanyAndProductView(brandName: String, companyName: String, productName: String, parseDict: Dictionary<String, Any>) {
-        self.brandNameLabel.text = brandName
-        self.companyNameLabel.text = companyName
-        self.productNameLabel.text = productName
-        self.sectorLabel.text = parseDict["sector"] as? String
-        self.industryLabel.text = parseDict["industry"] as? String
+        
+        DispatchQueue.main.async {
+            self.brandNameLabel.text = brandName
+            self.companyNameLabel.text = companyName
+            self.productNameLabel.text = productName
+            self.sectorLabel.text = parseDict["sector"] as? String
+            self.industryLabel.text = parseDict["industry"] as? String
+        }
+        
     }
 
 }

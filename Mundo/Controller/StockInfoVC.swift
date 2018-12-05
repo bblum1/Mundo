@@ -19,9 +19,6 @@ class StockInfoVC: UIViewController {
     @IBOutlet weak var statsView: StatsView!
     @IBOutlet weak var companyDescriptionView: CompanyDescriptionView!
     
-    @IBOutlet weak var employeesLabel: UILabel!
-    @IBOutlet weak var yearLabel: UILabel!
-    
     let currUserEmail = "btrossen@nd.edu"
         
     var activityIndicator = ActivitySpinnerClass()
@@ -43,8 +40,6 @@ class StockInfoVC: UIViewController {
     var scannedProductString = ""
     
     var chartView: HIChartView!
-    
-    
     
     @IBOutlet weak var tableView: UITableView!
     var similarStockService = SimilarStockService()
@@ -89,8 +84,6 @@ class StockInfoVC: UIViewController {
         // Set tableView of top 5 stocks in the same industry
         tableView.delegate = self
         tableView.dataSource = self
-        
-        tableView.backgroundColor = UIColor(red: 254/255, green: 255/255, blue: 240/255, alpha: 1.00)
         
         // Assign the table data for the similar stocks
         similarStockService.loadSimilarStocks(ticker: stockTickerString, completionHandler: {(responseArray, error) in
@@ -147,14 +140,12 @@ class StockInfoVC: UIViewController {
                 self.statsView.setStatsView(parseDict: parseDict)
                 
                 self.companyDescriptionView.setCompanyDetailsView(parseDict: parseDict)
-                
             }
             
         })
         
-        
-        
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
+            
             print("RESPONSE ARRAY OF BLAKE STOCKS::::\(responseArray)")
             if let returnedStocks = responseArray {
                 for tuple in returnedStocks {
@@ -164,6 +155,7 @@ class StockInfoVC: UIViewController {
             }
             
             DispatchQueue.main.async {
+                
                 if self.watchlistStocks.contains(self.stockTickerString) {
                     // Already in watchlist, set as checkmark
                     self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
@@ -232,8 +224,7 @@ class StockInfoVC: UIViewController {
         plotoptions.series = HISeries()
         plotoptions.series.marker = HIMarker()
         plotoptions.series.marker.enabled = false
-        plotoptions.series.color = HIColor(uiColor: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0))
-        //plotoptions.series.color = "#CB92EF"
+        plotoptions.series.color = HIColor(rgb: 206, green: 143, blue: 242)
         
         let line1 = HILine()
         line1.name = scannedStockItem.ticker + " Stock Price"
@@ -295,6 +286,7 @@ class StockInfoVC: UIViewController {
                     
                     // Update button
                     self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
+                    self.tableView.reloadData()
                 }
             })
             
@@ -309,6 +301,7 @@ class StockInfoVC: UIViewController {
                     
                     // Update button
                     self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
+                    self.tableView.reloadData()
                 }
             })
             
@@ -543,6 +536,22 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
                         })
                     }
                 }
+            }
+            
+        })
+        
+        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
+        fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
+            print("response dict: \(String(describing: responseDict))")
+            
+            if let parseDict = responseDict {
+                
+                // set all the views after Robinhood fundamentals call
+                self.companyAndProductView.setCompanyAndProductView(brandName: self.scannedBrandString, companyName: self.companyString, productName: self.scannedProductString, parseDict: parseDict)
+                
+                self.statsView.setStatsView(parseDict: parseDict)
+                
+                self.companyDescriptionView.setCompanyDetailsView(parseDict: parseDict)
             }
             
         })
