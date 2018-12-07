@@ -82,9 +82,18 @@ class ScannedStockItem {
         self._company = (stockItemDict["company"] as! String)
         self._brand = (stockItemDict["brand"] as! String)
         
-        self._low = (stockItemDict["low"] as! Float)
-        self._high = (stockItemDict["high"] as! Float)
-        self._latestPrice = (stockItemDict["latestPrice"] as! Float)
+        if let lowvar = stockItemDict["low"] {
+            self._low = lowvar as? Float
+        }
+        //self._low = (stockItemDict["low"] as! Float)
+        if let highvar = stockItemDict["high"] {
+            self._high = highvar as? Float
+        }
+        //self._high = (stockItemDict["high"] as! Float)
+        if let latevar = stockItemDict["latestPrice"] {
+            self._latestPrice = latevar as? Float
+        }
+        //self._latestPrice = (stockItemDict["latestPrice"] as! Float)
         
         self._chartLabels = (stockItemDict["chartLabels"] as! [String])
         self._chartPrices = (stockItemDict["chartPrices"] as! [Float])
