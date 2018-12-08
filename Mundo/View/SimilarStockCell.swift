@@ -39,10 +39,11 @@ class SimilarStockCell: UITableViewCell {
         // set the labels in the cell
         self.tickerLabel.text = stock.ticker
         self.companyLabel.text = stock.company
-        self.priceButton.setTitle("\(stock.latestPrice)", for: .normal)
+        self.priceButton.setTitle(String(format: "$%.2f", stock.latestPrice), for: .normal)
         
         // check if price is down and assign color accordingly
         self.priceButton.setTitleColor(UIColor.white, for: .normal)
+        self.priceButton.layer.cornerRadius = 7
         
         if stock.latestPrice < stock.openingPrice {
             priceButton.backgroundColor = UIColor(red: 244/255, green: 85/255, blue: 50/255, alpha: 1.0)

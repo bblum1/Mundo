@@ -110,7 +110,7 @@ class ScannedStockItem {
         if let dictChartPrices = stockItemDict["chartPrices"] {
             self._chartPrices = (dictChartPrices as! [Float])
         }
-        
+
     }
     
 }

@@ -49,18 +49,21 @@ class StockViewPopUpVC: UIViewController {
         topBarView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         activityIndicator.startSpinner(viewcontroller: self)
         
-        print("LOADING POPUP NOW...... with \(stockTickerString) and \(modalSlideInteractor)")
+        print("LOADING POPUP NOW...... with \(stockTickerString) and \(String(describing: modalSlideInteractor))")
         
         if modalSlideInteractor != nil {
-            print("saving MODAL with val = \(modalSlideInteractor)")
+            print("saving MODAL with val = \(String(describing: modalSlideInteractor))")
             self.savedModalSlideInteractor = self.modalSlideInteractor
             self.savedTicker = self.stockTickerString
         }
-        print("TRY AGAIN NOW....... with \(savedTicker) and \(savedModalSlideInteractor)")
+        print("TRY AGAIN NOW....... with \(savedTicker) and \(String(describing: savedModalSlideInteractor))")
         
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
             if let returnedStocks = responseArray {
-                self.watchlistStocks = returnedStocks
+                for item in returnedStocks {
+                    self.watchlistStocks.append(item.0)
+                }
+                //self.watchlistStocks = returnedStocks
             }
             
             DispatchQueue.main.async {
