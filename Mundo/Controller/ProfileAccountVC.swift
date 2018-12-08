@@ -55,21 +55,9 @@ class ProfileAccountVC: UIViewController {
                         
                         if let stockInfoDict = responseDict {
                             
-                            var company = ""
-                            var openingPrice = Float(0.00)
-                            var latestPrice = Float(0.00)
-                            
-                            if let returnCompany = stockInfoDict["company"] as? String {
-                                company = returnCompany
-                            }
-                            
-                            if let returnLatestPrice = stockInfoDict["latestPrice"] as? Float {
-                                latestPrice = returnLatestPrice
-                            }
-                            
-                            if let returnOpeningPrice = stockInfoDict["open"] as? Float {
-                                openingPrice = returnOpeningPrice
-                            }
+                            let company = stockInfoDict["company"] as? String ?? "No Company"
+                            let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
+                            let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
                             
                             let watchlistItem = WatchlistItem(ticker: symbol, company: company, openingPrice: openingPrice, latestPrice: latestPrice)
                             

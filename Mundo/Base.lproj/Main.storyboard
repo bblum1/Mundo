@@ -1106,11 +1106,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hAX-6u-TvQ" userLabel="TopBarView">
+                                <rect key="frame" x="0.0" y="50" width="375" height="60"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swipebar" translatesAutoresizingMaskIntoConstraints="NO" id="nhs-ew-fCF">
+                                        <rect key="frame" x="150" y="12" width="75" height="6"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.80392156859999997" green="0.57254901960000004" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="nhs-ew-fCF" firstAttribute="top" secondItem="hAX-6u-TvQ" secondAttribute="top" constant="12" id="Jke-P4-yrs"/>
+                                    <constraint firstAttribute="height" constant="60" id="ORX-jd-rL0"/>
+                                    <constraint firstItem="nhs-ew-fCF" firstAttribute="centerX" secondItem="hAX-6u-TvQ" secondAttribute="centerX" id="V9f-TV-Eac"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="PYZ-pz-raC" appends="YES" id="mZF-8L-orC"/>
+                                </connections>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9RH-i2-No9">
-                                <rect key="frame" x="0.0" y="60" width="375" height="940"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="890"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kVL-SV-KWl" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="940"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="890"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kbd-Xg-Yz7" userLabel="StockView">
                                                 <rect key="frame" x="0.0" y="8" width="375" height="363"/>
@@ -1119,9 +1137,6 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="363" id="0Y4-jE-zFE"/>
                                                 </constraints>
-                                                <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="CV4-zz-12H" appends="YES" id="Cc3-Pl-Ix9"/>
-                                                </connections>
                                             </view>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cPL-4Y-wNv">
                                                 <rect key="frame" x="138.5" y="379" width="98" height="29"/>
@@ -1195,12 +1210,11 @@
                                     <constraint firstItem="kVL-SV-KWl" firstAttribute="top" secondItem="9RH-i2-No9" secondAttribute="top" id="yWa-fw-yMI"/>
                                 </constraints>
                             </scrollView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hAX-6u-TvQ" userLabel="TopBarView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                <color key="backgroundColor" red="0.76831763980000001" green="0.5839723349" blue="0.91769713159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <gestureRecognizers/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8T-mC-tXH" userLabel="ExtraSpaceView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                <color key="backgroundColor" red="0.87843137250000003" green="0.74509803919999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="ORX-jd-rL0"/>
+                                    <constraint firstAttribute="height" constant="50" id="tc6-Ap-dWi"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1209,40 +1223,46 @@
                         <constraints>
                             <constraint firstItem="hAX-6u-TvQ" firstAttribute="leading" secondItem="MGE-Yw-Nu8" secondAttribute="leading" id="532-A0-ICZ"/>
                             <constraint firstItem="MGE-Yw-Nu8" firstAttribute="trailing" secondItem="9RH-i2-No9" secondAttribute="trailing" id="7Z4-gz-HnS"/>
+                            <constraint firstItem="hAX-6u-TvQ" firstAttribute="top" secondItem="g8T-mC-tXH" secondAttribute="bottom" id="CQt-Be-pY4"/>
+                            <constraint firstItem="g8T-mC-tXH" firstAttribute="top" secondItem="hhe-SV-x9Z" secondAttribute="top" id="DsD-4D-JEv"/>
                             <constraint firstItem="9RH-i2-No9" firstAttribute="leading" secondItem="MGE-Yw-Nu8" secondAttribute="leading" id="OAx-wu-SD8"/>
                             <constraint firstItem="hAX-6u-TvQ" firstAttribute="width" secondItem="hhe-SV-x9Z" secondAttribute="width" id="YUT-cJ-cby"/>
                             <constraint firstItem="9RH-i2-No9" firstAttribute="top" secondItem="hAX-6u-TvQ" secondAttribute="bottom" id="aWl-Jx-5Jt"/>
                             <constraint firstItem="MGE-Yw-Nu8" firstAttribute="bottom" secondItem="9RH-i2-No9" secondAttribute="bottom" id="aot-h7-Q21"/>
-                            <constraint firstItem="hAX-6u-TvQ" firstAttribute="top" secondItem="hhe-SV-x9Z" secondAttribute="top" id="reD-JX-uZO"/>
+                            <constraint firstItem="g8T-mC-tXH" firstAttribute="trailing" secondItem="MGE-Yw-Nu8" secondAttribute="trailing" id="hDy-jj-8SD"/>
                             <constraint firstItem="MGE-Yw-Nu8" firstAttribute="trailing" secondItem="hAX-6u-TvQ" secondAttribute="trailing" id="wSb-9V-Tiz"/>
+                            <constraint firstItem="g8T-mC-tXH" firstAttribute="leading" secondItem="MGE-Yw-Nu8" secondAttribute="leading" id="yfh-5J-zg5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="MGE-Yw-Nu8"/>
                     </view>
                     <size key="freeformSize" width="375" height="1000"/>
                     <connections>
-                        <outlet property="addToWatchlistButton" destination="d56-wA-Ezn" id="qmZ-jJ-N8M"/>
+                        <outlet property="addToWatchlistButton" destination="d56-wA-Ezn" id="oNY-MH-Sbw"/>
                         <outlet property="companyNameLabel" destination="McD-fJ-qZu" id="aUh-61-Wct"/>
                         <outlet property="segmentedControlButton" destination="cPL-4Y-wNv" id="o38-Vp-Mhh"/>
                         <outlet property="stockView" destination="Kbd-Xg-Yz7" id="IUW-TB-j2h"/>
+                        <outlet property="topBarView" destination="hAX-6u-TvQ" id="Gsz-Px-cn3"/>
+                        <segue destination="T4s-rd-9CP" kind="show" identifier="popUpBackToStockInfo" id="ZWq-gZ-C7z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vaA-A8-O2n" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="CV4-zz-12H">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="PYZ-pz-raC">
                     <connections>
-                        <action selector="handleGesture:" destination="8AG-V8-ONx" id="ySN-cV-ja4"/>
+                        <action selector="handleGesture:" destination="8AG-V8-ONx" id="0vv-vR-An2"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2342" y="3400"/>
+            <point key="canvasLocation" x="2341.5999999999999" y="3399.400299850075"/>
         </scene>
     </scenes>
     <resources>
         <image name="mundo-scan-rect" width="375" height="250"/>
         <image name="plus-add-button" width="44" height="44"/>
         <image name="purple1-round-rect" width="250" height="50"/>
+        <image name="swipebar" width="75" height="6"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="E52-Df-CH4"/>
+        <segue reference="ZWq-gZ-C7z"/>
         <segue reference="PFY-o8-PLt"/>
         <segue reference="u3f-0Z-DOg"/>
         <segue reference="zAR-34-OVM"/>

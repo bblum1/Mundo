@@ -11,6 +11,7 @@ import Highcharts
 
 class StockViewPopUpVC: UIViewController {
     
+    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var stockView: UIView!
     @IBOutlet weak var addToWatchlistButton: UIButton!
     
@@ -43,7 +44,9 @@ class StockViewPopUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //self.view.backgroundColor = UIColor(red: 222/255, green: 188/255, blue: 241/255, alpha: 1.0)
+        topBarView.layer.cornerRadius = 12.0
+        topBarView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         activityIndicator.startSpinner(viewcontroller: self)
         
         print("LOADING POPUP NOW...... with \(stockTickerString) and \(modalSlideInteractor)")
@@ -55,10 +58,7 @@ class StockViewPopUpVC: UIViewController {
         }
         print("TRY AGAIN NOW....... with \(savedTicker) and \(savedModalSlideInteractor)")
         
-        
-        
         userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
-            print("GOT THE USER STOCKS: \(String(describing: responseArray))")
             if let returnedStocks = responseArray {
                 self.watchlistStocks = returnedStocks
             }
@@ -228,6 +228,7 @@ class StockViewPopUpVC: UIViewController {
     }
     
     @IBAction func watchlistButtonTapped(_ sender: Any) {
+        print("TAPPED")
         
         if self.watchlistStocks.contains(self.stockTickerString) {
             

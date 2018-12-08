@@ -42,11 +42,9 @@ class SimilarStockCell: UITableViewCell {
         self.priceButton.setTitle("\(stock.latestPrice)", for: .normal)
         
         // check if price is down and assign color accordingly
-        let openingPrice = Float(0.00)
-        
         self.priceButton.setTitleColor(UIColor.white, for: .normal)
         
-        if stock.latestPrice < openingPrice {
+        if stock.latestPrice < stock.openingPrice {
             priceButton.backgroundColor = UIColor(red: 244/255, green: 85/255, blue: 50/255, alpha: 1.0)
         } else {
             priceButton.backgroundColor = UIColor(red: 29/255, green: 206/255, blue: 151/255, alpha: 1.0)

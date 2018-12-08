@@ -52,6 +52,10 @@ class StockInfoService {
                                 returnJSON["low"] = low.floatValue
                             }
                             
+                            if let openingPrice = quote["open"] as? NSNumber {
+                                returnJSON["open"] = openingPrice.floatValue
+                            }
+                            
                             if let latestPrice = quote["latestPrice"] as? NSNumber {
                                 returnJSON["latestPrice"] = latestPrice.floatValue
                             }

@@ -116,22 +116,23 @@ class StockInfoVC: UIViewController {
                         self.stockInfoService.callChartData(ticker: tickerSymbol, range: "1d", completionHandler: {(response, error) in
                             
                             if let stockInfoDict = response {
-                                if let company = stockInfoDict["company"] as? String {
-                                    if let latestPrice = stockInfoDict["latestPrice"] as? Float {
-                                        
-                                        print("RESPONSE JSON:::: \(company), \(latestPrice)")
-                                        // Crear new SimilarStockItem
-                                        let stockItem = SimilarStockItem(ticker: tickerSymbol, company: company, latestPrice: latestPrice)
-                                        
-                                        // Once the new stock item is appended, send updated array back
-                                        self.similarStocks.append(stockItem)
-                                        
-                                        // reload the tableView
-                                        DispatchQueue.main.async {
-                                            self.tableView.reloadData()
-                                        }
-                                    }
+                                
+                                let company = stockInfoDict["company"] as? String ?? "No Company"
+                                let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
+                                let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
+                                
+                                print("RESPONSE JSON:::: \(company), \(latestPrice), \(openingPrice)")
+                                // Crear new SimilarStockItem
+                                let stockItem = SimilarStockItem(ticker: tickerSymbol, company: company, latestPrice: latestPrice, openingPrice: openingPrice)
+                            
+                                // Once the new stock item is appended, send updated array back
+                                self.similarStocks.append(stockItem)
+                            
+                                // reload the tableView
+                                DispatchQueue.main.async {
+                                    self.tableView.reloadData()
                                 }
+                                
                             }
                             myGroup.leave()
                         })
@@ -240,14 +241,10 @@ class StockInfoVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        if let viewController = segue.destination as? StockViewPopUpVC {
-            print("PREPARING SEGUE WITH \(self.selectedStockSymbol) and \(modalSlideInteractor)")
-            viewController.stockTickerString = self.selectedStockSymbol
-            viewController.transitioningDelegate = self
-            viewController.modalSlideInteractor = self.modalSlideInteractor
-        }
-        
+        let viewController = segue.destination as? StockViewPopUpVC
+        viewController?.stockTickerString = self.selectedStockSymbol
+        viewController?.modalSlideInteractor = self.modalSlideInteractor
+        viewController?.transitioningDelegate = self
     }
     
     @IBAction func backBttn(_ sender: Any) {
@@ -392,8 +389,8 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
             self.selectedStockSymbol = stockItemTicker
             performSegue(withIdentifier: "stockInfoToPopUp", sender: nil)
             
-            let popUpViewController =  storyboard?.instantiateViewController(withIdentifier: "StockViewPopUpVC") as! StockViewPopUpVC
-            present(popUpViewController, animated: true, completion: nil)
+            //let popUpViewController =  storyboard?.instantiateViewController(withIdentifier: "StockViewPopUpVC") as! StockViewPopUpVC
+            //present(popUpViewController, animated: true, completion: nil)
         }
         
     }
