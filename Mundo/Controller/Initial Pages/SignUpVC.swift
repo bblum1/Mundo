@@ -149,6 +149,10 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         // Use this to check if an account with this email already exists in DB
     }*/
     
+    /*func completeSignUp(email: String) {
+        let keychainResult =
+    }*/
+    
     @IBAction func backBttnTapped(_ sender: Any) {
         performSegue(withIdentifier: "signUpToFirstPage", sender: nil)
     }

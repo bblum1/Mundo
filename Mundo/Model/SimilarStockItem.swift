@@ -12,6 +12,7 @@ class SimilarStockItem {
     
     private var _ticker: String!
     private var _company: String!
+    private var _openingPrice: Float!
     private var _latestPrice: Float!
     
     var ticker: String {
@@ -35,9 +36,17 @@ class SimilarStockItem {
         return _latestPrice
     }
     
-    init(ticker: String, company: String, latestPrice: Float) {
+    var openingPrice: Float {
+        if _openingPrice == nil {
+            _openingPrice = 0.00
+        }
+        return _openingPrice
+    }
+    
+    init(ticker: String, company: String, latestPrice: Float, openingPrice: Float) {
         self._ticker = ticker
         self._company = company
+        self._openingPrice = openingPrice
         self._latestPrice = latestPrice
     }
     

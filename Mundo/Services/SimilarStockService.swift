@@ -75,18 +75,23 @@ class SimilarStockService {
             
             stockInfoService.callChartData(ticker: symbol, range: "1d", completionHandler: {(responseJSON, error) in
                 
+                
+                
                 if let stockInfoDict = responseJSON {
-                    if let company = stockInfoDict["company"] as? String {
-                        if let latestPrice = stockInfoDict["latestPrice"] as? Float {
-                            
-                            // Crear new SimilarStockItem
-                            let stockItem = SimilarStockItem(ticker: symbol, company: company, latestPrice: latestPrice)
-                            
-                            // Once the new stock item is appended, send updated array back
-                            similarStocks.append(stockItem)
-                            completionHandler(similarStocks, nil)
-                        }
-                    }
+                    let company = stockInfoDict["company"] as? String ?? "No Company"
+                    let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
+                    let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
+                    
+                    print("RESPONSE JSON:::: \(company), \(latestPrice), \(openingPrice)")
+                    
+                    
+                    // Crear new SimilarStockItem
+                    let stockItem = SimilarStockItem(ticker: symbol, company: company, latestPrice: latestPrice, openingPrice: openingPrice)
+                    
+                    // Once the new stock item is appended, send updated array back
+                    similarStocks.append(stockItem)
+                    completionHandler(similarStocks, nil)
+                        
                 } else {
                     completionHandler(similarStocks, nil)
                 }
