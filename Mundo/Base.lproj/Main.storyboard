@@ -88,12 +88,13 @@
                     </view>
                     <connections>
                         <segue destination="YKK-BM-XPD" kind="show" identifier="firstPageToLogIn" id="yDb-lq-B4f"/>
-                        <segue destination="Pfj-nu-wHZ" kind="show" identifier="firstPageToSignUp" id="b8n-iR-rbe"/>
+                        <segue destination="Pfj-nu-wHZ" kind="show" identifier="firstPageToScanner" id="b8n-iR-rbe"/>
+                        <segue destination="nnE-aj-0Yv" kind="show" identifier="firstPageToSignUp" id="C5x-Eh-rAa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="64.799999999999997" y="59.820089955022496"/>
+            <point key="canvasLocation" x="65" y="0.0"/>
         </scene>
         <!--Sign UpVC-->
         <scene sceneID="nn9-0f-0aR">
@@ -216,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o35-CB-pNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="60"/>
+            <point key="canvasLocation" x="1031" y="60"/>
         </scene>
         <!--ScannerVC-->
         <scene sceneID="XQa-0L-5jf">
@@ -226,24 +227,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ma-rj-1WS">
-                                <rect key="frame" x="22" y="20" width="60" height="30"/>
-                                <state key="normal" title="Sign Out"/>
-                                <connections>
-                                    <action selector="backBttnTapped:" destination="Pfj-nu-wHZ" eventType="touchUpInside" id="vGX-BM-hZB"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mundo-scan-rect" translatesAutoresizingMaskIntoConstraints="NO" id="gwd-rk-UYC">
                                 <rect key="frame" x="112.5" y="320" width="150" height="47"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8ma-rj-1WS" firstAttribute="top" secondItem="Dcv-XP-lsq" secondAttribute="top" id="2DQ-Zz-Esc"/>
                             <constraint firstItem="gwd-rk-UYC" firstAttribute="centerX" secondItem="Dcv-XP-lsq" secondAttribute="centerX" id="3Cg-Vg-Ihw"/>
                             <constraint firstItem="gwd-rk-UYC" firstAttribute="centerY" secondItem="Dcv-XP-lsq" secondAttribute="centerY" id="3la-pT-eFd"/>
                             <constraint firstItem="gwd-rk-UYC" firstAttribute="width" secondItem="tF6-Wv-2xS" secondAttribute="height" multiplier="150:667" id="Rwj-a6-c5I"/>
-                            <constraint firstItem="8ma-rj-1WS" firstAttribute="leading" secondItem="Dcv-XP-lsq" secondAttribute="leading" constant="22" id="cSQ-0E-Mg3"/>
                             <constraint firstItem="Dcv-XP-lsq" firstAttribute="bottom" secondItem="gwd-rk-UYC" secondAttribute="bottom" constant="300" id="x3f-S4-AXD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dcv-XP-lsq"/>
@@ -256,7 +248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nsA-L4-YrQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1281" y="894"/>
+            <point key="canvasLocation" x="1030" y="894"/>
         </scene>
         <!--Update PasswordVC-->
         <scene sceneID="esE-1N-t1j">
@@ -483,7 +475,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJQ-bA-lPX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="65" y="796"/>
+            <point key="canvasLocation" x="65" y="894"/>
         </scene>
         <!--Delete AccountVC-->
         <scene sceneID="7WZ-mm-Exg">
@@ -581,7 +573,6 @@
         <!--Stock InfoVC-->
         <scene sceneID="vfe-gw-jgm">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rah-7L-dXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="T4s-rd-9CP" customClass="StockInfoVC" customModule="Mundo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zrh-Tc-xQL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1750"/>
@@ -1172,6 +1163,7 @@
                         <segue destination="17r-7i-stc" kind="presentation" identifier="stockInfoToPopUp" id="91T-YE-1zh"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rah-7L-dXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2342" y="2071"/>
         </scene>
@@ -1823,12 +1815,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deL-G9-Jek">
-                                        <rect key="frame" x="16" y="30" width="34" height="30"/>
+                                        <rect key="frame" x="16" y="30" width="36" height="34"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                         <state key="normal" title="Back">
                                             <color key="titleColor" red="1" green="0.99998790029999995" blue="0.9999920726" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
                                             <segue destination="T4s-rd-9CP" kind="show" id="E52-Df-CH4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0Y-fL-OPM">
+                                        <rect key="frame" x="294" y="30" width="65" height="34"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                        <state key="normal" title="Sign Out">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="signOutBttnTapped:" destination="VfU-fs-xxS" eventType="touchUpInside" id="9vB-CE-8Xz"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1837,7 +1840,9 @@
                                 <constraints>
                                     <constraint firstItem="deL-G9-Jek" firstAttribute="top" secondItem="Fls-bc-Xft" secondAttribute="top" constant="30" id="A6f-0o-el9"/>
                                     <constraint firstItem="deL-G9-Jek" firstAttribute="leading" secondItem="Fls-bc-Xft" secondAttribute="leading" constant="16" id="Atz-ey-28f"/>
+                                    <constraint firstAttribute="trailing" secondItem="t0Y-fL-OPM" secondAttribute="trailing" constant="16" id="QGQ-Jm-8xe"/>
                                     <constraint firstAttribute="height" constant="60" id="Tyz-y2-sMX"/>
+                                    <constraint firstItem="t0Y-fL-OPM" firstAttribute="centerY" secondItem="deL-G9-Jek" secondAttribute="centerY" id="aJU-wJ-Yk7"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1861,6 +1866,7 @@
                         <outlet property="stockView" destination="BEa-uT-76g" id="DZu-Jh-AnT"/>
                         <outlet property="theScrollView" destination="K0O-YU-hF8" id="fdI-UF-oUp"/>
                         <outlet property="watchlistTableView" destination="tTc-Q6-SHL" id="mep-qD-Byf"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="signOutBackToFirstPage" id="4MK-KR-bA1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGt-fc-azN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1876,9 +1882,9 @@
         <image name="swipebar" width="75" height="6"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="H8p-al-qZf"/>
+        <segue reference="E52-Df-CH4"/>
         <segue reference="yDb-lq-B4f"/>
-        <segue reference="u3f-0Z-DOg"/>
-        <segue reference="zAR-34-OVM"/>
+        <segue reference="b8n-iR-rbe"/>
+        <segue reference="4MK-KR-bA1"/>
     </inferredMetricsTieBreakers>
 </document>

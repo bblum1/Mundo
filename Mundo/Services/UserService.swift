@@ -7,8 +7,24 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class UserService {
+    
+    let userEmail = KeychainWrapper.standard.string(forKey: MUNDO_KEY)
+    
+    // Function will save the user login using Keychain
+    func completeSignIn(email: String) -> Bool {
+        let keychainResult = KeychainWrapper.standard.set(email, forKey: MUNDO_KEY)
+        print("Data saved too keychain \(keychainResult)")
+        return keychainResult
+    }
+    
+    func signOut() -> Bool {
+        let keychainResult = KeychainWrapper.standard.removeObject(forKey: MUNDO_KEY)
+        print("Horacio: ID removed from keychain \(keychainResult)")
+        return keychainResult
+    }
     
     // Function will add a stock ticker to their watchlist with POST request
     func addToWatchlist(email: String, symbol: String, completionHandler: @escaping (String?, Error?)->Void) {

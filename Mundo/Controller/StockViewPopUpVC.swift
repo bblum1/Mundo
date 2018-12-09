@@ -23,19 +23,16 @@ class StockViewPopUpVC: UIViewController {
     
     @IBOutlet weak var segmentedControlButton: UISegmentedControl!
     
-    let currUserEmail = "btrossen@nd.edu"
+    var currUserEmail = ""
     
     var activityIndicator = ActivitySpinnerClass()
     
     var modalSlideInteractor: ModalSlideInteractor? = nil
     
-    // Use this class to make calls with a stock symbol and range of chart data
-    var stockInfoService = StockInfoService()
-    
-    // Use this class to make calls to functions related to user and watchlist
-    var userService = UserService()
-    
-    var fundamentalsService = FundamentalsService()
+    // Services
+    var userService = UserService()                     // loads user email and watchlist data
+    var stockInfoService = StockInfoService()           // gets chart data and company name for ticker
+    var fundamentalsService = FundamentalsService()     // gets fundamentals for stock ticker
     
     // Use this class as the overall class item to store the data
     var scannedStockItem: ScannedStockItem!
@@ -46,6 +43,10 @@ class StockViewPopUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let cachedEmail = userService.userEmail {
+            self.currUserEmail = cachedEmail
+        }
         
         topBarView.layer.cornerRadius = 12.0
         topBarView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]

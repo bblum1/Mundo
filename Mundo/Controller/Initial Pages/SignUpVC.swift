@@ -20,6 +20,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
     var textFieldPosition: CGFloat = 0.00
     var textFieldHeight: CGFloat = 0.00
     
+    var userService = UserService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -149,10 +151,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         // Use this to check if an account with this email already exists in DB
     }*/
     
-    /*func completeSignUp(email: String) {
-        let keychainResult =
-    }*/
-    
     @IBAction func backBttnTapped(_ sender: Any) {
         performSegue(withIdentifier: "signUpToFirstPage", sender: nil)
     }
@@ -163,6 +161,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         let request = NSMutableURLRequest(url: requestURL! as URL)
         request.httpMethod = "POST"
         let email = emailTextField.text
+        
         let password = passwordTextField.text
         
         let postParameters = "email="+email!+"&password="+password!;
@@ -182,7 +181,13 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                 if let parseJSON = myJSON {
                     var msg : String!
                     msg = parseJSON["result"] as? String
-                    print(msg)
+                    print("CHECK MESSAGE: \(msg)")
+                    if self.userService.completeSignIn(email: email!) == true {
+                        self.performSegue(withIdentifier: "signUpToScanner", sender: nil)
+                    } else {
+                        // TODO: Send alert saying sign in was not saved properly
+                        print("ERROR WITH SIGN IN")
+                    }
                 }
             } catch {
                 print(error)
@@ -190,7 +195,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
         }
         
         task.resume()
-        self.performSegue(withIdentifier: "signUpToScanner", sender: nil)
         
     }
 }

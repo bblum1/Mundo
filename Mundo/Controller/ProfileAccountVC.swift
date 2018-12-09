@@ -20,9 +20,7 @@ class ProfileAccountVC: UIViewController {
     var watchlistSymbols: [String] = []
     var watchlistSectors: [String] = []
     var watchlistStocks = [WatchlistItem]()
-    
-    let currUserEmail = "btrossen@nd.edu"
-    
+        
     var stockTickerString = ""
     var scannedBrandString = ""
     var scannedProductString = ""
@@ -41,53 +39,57 @@ class ProfileAccountVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the user's watchlist tickers
-        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
+        // Load user's email, put it here since loadUserWatchlist is first func called
+        if let currUserEmail = userService.userEmail {
             
-            if let returnedStocks = responseArray {
-                // TODO: Delete watchlistSymbols if not needed
-                for tuple in returnedStocks {
-                    self.watchlistSymbols.append(tuple.0)
-                    self.watchlistSectors.append(tuple.1)
-                }
-                //print("WATCHLIST SECTORS: \(self.watchlistSectors)")
+            // Load the user's watchlist tickers
+            userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
                 
-                //self.watchlistSymbols = returnedStocks
-                
-                let myGroup = DispatchGroup()
-                
-                // Make API call with each symbol, only need full Watchlist items here
-                // NOTE: In StockInfoVC, we just needed the quick array to update + and - buttons
-                for symbol in self.watchlistSymbols {
+                if let returnedStocks = responseArray {
+                    // TODO: Delete watchlistSymbols if not needed
+                    for tuple in returnedStocks {
+                        self.watchlistSymbols.append(tuple.0)
+                        self.watchlistSectors.append(tuple.1)
+                    }
+                    //print("WATCHLIST SECTORS: \(self.watchlistSectors)")
                     
-                    myGroup.enter()
-                    self.stockInfoService.callChartData(ticker: symbol, range: "1d", completionHandler: {(responseDict, error) in
+                    //self.watchlistSymbols = returnedStocks
+                    
+                    let myGroup = DispatchGroup()
+                    
+                    // Make API call with each symbol, only need full Watchlist items here
+                    // NOTE: In StockInfoVC, we just needed the quick array to update + and - buttons
+                    for symbol in self.watchlistSymbols {
                         
-                        if let stockInfoDict = responseDict {
+                        myGroup.enter()
+                        self.stockInfoService.callChartData(ticker: symbol, range: "1d", completionHandler: {(responseDict, error) in
                             
-                            let company = stockInfoDict["company"] as? String ?? "No Company"
-                            let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
-                            let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
+                            if let stockInfoDict = responseDict {
+                                
+                                let company = stockInfoDict["company"] as? String ?? "No Company"
+                                let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
+                                let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
 
-                            let watchlistItem = WatchlistItem(ticker: symbol, company: company, openingPrice: openingPrice, latestPrice: latestPrice)
-                            
-                            self.watchlistStocks.append(watchlistItem)
-                            
-                            DispatchQueue.main.async {
-                                self.watchlistTableView.reloadData()
-                                self.loadChartView()
+                                let watchlistItem = WatchlistItem(ticker: symbol, company: company, openingPrice: openingPrice, latestPrice: latestPrice)
+                                
+                                self.watchlistStocks.append(watchlistItem)
+                                
+                                DispatchQueue.main.async {
+                                    self.watchlistTableView.reloadData()
+                                    self.loadChartView()
+                                }
+                                
                             }
-                            
-                        }
-                        myGroup.leave()
-                    })
+                            myGroup.leave()
+                        })
+                    }
                 }
-            }
-            
-        })
-        //loadChartView()
-        watchlistTableView.delegate = self
-        watchlistTableView.dataSource = self
+                
+            })
+            //loadChartView()
+            watchlistTableView.delegate = self
+            watchlistTableView.dataSource = self
+        }
     }
     
     // Prepare to transfer returned stock after scan to StockInfoVC
@@ -176,6 +178,14 @@ class ProfileAccountVC: UIViewController {
         
     }
     
+    @IBAction func signOutBttnTapped(_ sender: Any) {
+        if userService.signOut() == true {
+            performSegue(withIdentifier: "signOutBackToFirstPage", sender: nil)
+        } else {
+            // TODO: Show alert that sign out error occurred
+        }
+        
+    }
 }
 
 // MARK: - UITableViewDataSource

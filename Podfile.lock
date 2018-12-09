@@ -1,16 +1,20 @@
 PODS:
   - Highcharts (6.1.4)
+  - SwiftKeychainWrapper (3.0.1)
 
 DEPENDENCIES:
   - Highcharts (~> 6.1.0)
+  - SwiftKeychainWrapper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Highcharts
+    - SwiftKeychainWrapper
 
 SPEC CHECKSUMS:
   Highcharts: a1d99de1c075fd9acedf25cde4f6e4a54266b25e
+  SwiftKeychainWrapper: 38952a3636320ae61bad3513cadd870929de7a4a
 
-PODFILE CHECKSUM: 4ef9f7fcf744c61b575d2122ead23a1a78b740ee
+PODFILE CHECKSUM: febcb589029109bf93df0155a503d2833621c519
 
 COCOAPODS: 1.5.3

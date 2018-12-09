@@ -171,6 +171,7 @@ class BarcodeService {
                                     
                                 }
                             } catch {
+                                // TODO: Send alert that brand could not be found :(
                                 print(error.localizedDescription)
                                 completionHandler(nil, error)
                                 
@@ -182,6 +183,7 @@ class BarcodeService {
                 }
                 
             } catch {
+                // TODO: Send alert that the barcode could not be read
                 print(error)
             }
         }

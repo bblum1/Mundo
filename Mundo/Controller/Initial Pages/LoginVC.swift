@@ -19,6 +19,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     var textFieldPosition: CGFloat = 0.00
     var textFieldHeight: CGFloat = 0.00
     
+    var userService = UserService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,7 +83,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
         guard
             let email = loginEmailTextField.text, !email.isEmpty,
-            //emailExistsInDB(emailAddressString: email) != true, // add once created
             let password = loginPasswordTextField.text, !password.isEmpty,
             let password_count = loginPasswordTextField.text, !(password_count.count < 6),
             isValidEmailAddress(emailAddressString: email), isValidEmailAddress(emailAddressString: email) != false
@@ -163,19 +164,24 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             
             if error != nil {
                 print("error is \(String(describing: error))")
-                return;
+                return
             }
             
             do {
                  let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
                 
                  if let parseJSON = myJSON {
-                    var msg : String!
-                    var msgEmail : String!
-                    msgEmail = parseJSON["email"] as? String
-                    msg = parseJSON["result"] as? String
+                    let msg = parseJSON["result"] as? String
                     print(msg)
+                    let msgEmail = parseJSON["email"] as? String
                     print(msgEmail)
+                    
+                    if self.userService.completeSignIn(email: msgEmail!) == true {
+                        self.performSegue(withIdentifier: "logInToScanner", sender: nil)
+                    } else {
+                        // TODO: Send alert something went wrong
+                        print("ERROR WITH SIGN IN")
+                    }
                  }
              } catch {
                 print(error)
@@ -183,7 +189,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         }
         task.resume()
         
-        performSegue(withIdentifier: "logInToScanner", sender: nil)
+        
     }
     
 }
