@@ -48,6 +48,7 @@ class StockInfoVC: UIViewController {
     var similarStocks = [SimilarStockItem]()
     
     var selectedStockSymbol = ""          // variable stores a stock ticker selected from tableView
+    var selectedStockCompany = ""         // variable stores the company string of the selected cell
     
     @IBOutlet weak var SegmentedControlButton: UISegmentedControl!
     
@@ -68,15 +69,17 @@ class StockInfoVC: UIViewController {
             DispatchQueue.main.async {
                 
                 // Load the scannedStockItem object with return item
-                var newDict = responseJSON!
-                newDict["brand"] = self.scannedBrandString.localizedCapitalized
-                
-                self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
-                                
-                // Load main stock view using Highcharts
-                self.loadChartView()
-                
-                self.activityIndicator.stopSpinner()
+                if let theDict = responseJSON {
+                    var newDict = theDict
+                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                    
+                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    
+                    // Load main stock view using Highcharts
+                    self.loadChartView()
+                    
+                    self.activityIndicator.stopSpinner()
+                }
             }
         })
         
@@ -116,9 +119,7 @@ class StockInfoVC: UIViewController {
                                 // reload the tableView
                                 DispatchQueue.main.async {
                                     self.tableView.reloadData()
-                                    self.companyString = company
                                     self.loadAllSubViews()
-                                    
                                 }
                                 
                             }
@@ -151,8 +152,6 @@ class StockInfoVC: UIViewController {
                 }
             }
         })
-
-        
     }
     
     func loadAllSubViews() {
@@ -208,18 +207,14 @@ class StockInfoVC: UIViewController {
         
         let subtitle = HISubtitle()
         subtitle.text = scannedStockItem.company
-        //subtitle.style = HIStyle()
-        //subtitle.style.fontFamily = "Avenir Next"
         
         let yaxis = HIYAxis()
         yaxis.title = HITitle()
         yaxis.title.text = "Price"
         
         let xaxis = HIXAxis()
-        //xaxis.title = HITitle()
         xaxis.labels = HILabels()
         xaxis.labels.enabled = false
-        //xaxis.title.text = "Time"
         let date = xaxis.dateTimeLabelFormats
         date?.hour = "%I %p"
         date?.minute = "%I:%M %p"
@@ -277,8 +272,11 @@ class StockInfoVC: UIViewController {
         }
         
         if segue.identifier == "stockInfoToPopUp" {
+            print("SEGUE WITH::: \(self.selectedStockSymbol), \(self.selectedStockCompany)")
             let viewController = segue.destination as? StockViewPopUpVC
             viewController?.stockTickerString = self.selectedStockSymbol
+            viewController?.companyString = self.selectedStockCompany
+            viewController?.watchlistStocks = self.watchlistStocks
             viewController?.modalSlideInteractor = self.modalSlideInteractor
             viewController?.transitioningDelegate = self
         }
@@ -332,6 +330,8 @@ class StockInfoVC: UIViewController {
     }
     
     @IBAction func indexChanged(_ sender: Any) {
+        activityIndicator.startSpinner(viewcontroller: self)
+        
         var timeSelect = "1d"
         switch SegmentedControlButton.selectedSegmentIndex
         {
@@ -358,16 +358,15 @@ class StockInfoVC: UIViewController {
             stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
                 
                 DispatchQueue.main.async {
-                    // Load the scannedStockItem object with return item
-                    var newDict = responseJSON!
-                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
                     
-                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
-                    
-                    // Load main stock view using Highcharts
-                    self.loadChartView()
-                    
-                    self.activityIndicator.stopSpinner()
+                    if let newDict = responseJSON {
+                        self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                        
+                        // Load main stock view using Highcharts
+                        self.loadChartView()
+                        
+                        self.activityIndicator.stopSpinner()
+                    }
                 }
             })
         case 2:
@@ -375,16 +374,16 @@ class StockInfoVC: UIViewController {
             stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
                 
                 DispatchQueue.main.async {
-                    // Load the scannedStockItem object with return item
-                    var newDict = responseJSON!
-                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
                     
-                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    if let newDict = responseJSON {
+                        self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                        
+                        // Load main stock view using Highcharts
+                        self.loadChartView()
+                        
+                        self.activityIndicator.stopSpinner()
+                    }
                     
-                    // Load main stock view using Highcharts
-                    self.loadChartView()
-                    
-                    self.activityIndicator.stopSpinner()
                 }
             })
             
@@ -393,16 +392,15 @@ class StockInfoVC: UIViewController {
             stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
                 
                 DispatchQueue.main.async {
-                    // Load the scannedStockItem object with return item
-                    var newDict = responseJSON!
-                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
                     
-                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
-                    
-                    // Load main stock view using Highcharts
-                    self.loadChartView()
-                    
-                    self.activityIndicator.stopSpinner()
+                    if let newDict = responseJSON {
+                        self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                        
+                        // Load main stock view using Highcharts
+                        self.loadChartView()
+                        
+                        self.activityIndicator.stopSpinner()
+                    }
                 }
             })
             
@@ -411,16 +409,16 @@ class StockInfoVC: UIViewController {
             stockInfoService.callChartData(ticker: stockTickerString, range: timeSelect, completionHandler: {(responseJSON, error) in
                 
                 DispatchQueue.main.async {
-                    // Load the scannedStockItem object with return item
-                    var newDict = responseJSON!
-                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
                     
-                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                    if let newDict = responseJSON {
+                        self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                        
+                        // Load main stock view using Highcharts
+                        self.loadChartView()
+                        
+                        self.activityIndicator.stopSpinner()
+                    }
                     
-                    // Load main stock view using Highcharts
-                    self.loadChartView()
-                    
-                    self.activityIndicator.stopSpinner()
                 }
             })
             
@@ -460,13 +458,13 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             let stockItemTicker = similarStocks[indexPath.row].ticker
+            let stockItemCompany = similarStocks[indexPath.row].company
             self.selectedStockSymbol = stockItemTicker
+            self.selectedStockCompany = stockItemCompany
             performSegue(withIdentifier: "stockInfoToPopUp", sender: nil)
-            
-            //let popUpViewController =  storyboard?.instantiateViewController(withIdentifier: "StockViewPopUpVC") as! StockViewPopUpVC
-            //present(popUpViewController, animated: true, completion: nil)
+            tableView.deselectRow(at: indexPath, animated: true)
         }
-        
+        /*
         self.scannedBrandString = "--"
         self.scannedProductString = "--"
         
@@ -570,7 +568,7 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
                 self.companyDescriptionView.setCompanyDetailsView(parseDict: parseDict)
             }
             
-        })
+        })*/
     }
     
 }
