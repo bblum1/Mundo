@@ -100,7 +100,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                         // TODO: UNCOMMENT/COMMENT DEPENDING ON IF YOU ARE TESTING OR NOT
                         //barcodeService.makeBarcodeCall(gtin: "018200150470", completionHandler: {(returnArray, error) in
                         barcodeService.makePaidBarcodeCall(currViewController: self, gtin: barcodeString, completionHandler: {(returnArray, error) in
-                            
+                            print("RETURNING: \(returnArray)")
                             if let brandAndDetails = returnArray {
                                 self.stockBrand = brandAndDetails[0].localizedCapitalized
                                 self.stockTicker = brandAndDetails[1]
@@ -108,8 +108,8 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
                             }
                             
                             DispatchQueue.main.async {
-                                self.activityIndicator.stopSpinner()
                                 self.performSegue(withIdentifier: "scannerToStockInfo", sender: nil)
+                                self.activityIndicator.stopSpinner()
                             }
                             
                         })
@@ -142,6 +142,7 @@ class ScannerVC: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
     // Prepare to transfer returned stock after scan to StockInfoVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("PREP WITH: \(stockTicker)")
         let viewController = segue.destination as? StockInfoVC
         viewController?.stockTickerString = self.stockTicker
         viewController?.scannedBrandString = self.stockBrand

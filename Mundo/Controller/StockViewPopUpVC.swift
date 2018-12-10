@@ -11,6 +11,12 @@ import Highcharts
 
 class StockViewPopUpVC: UIViewController {
     
+    var priorViewController = UIViewController()
+    var profileVC = ProfileAccountVC()
+    var savedStockTickerString = ""
+    var savedScannedBrandString = ""
+    var savedScannedProductString = ""
+    
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var stockView: UIView!
     @IBOutlet weak var addToWatchlistButton: UIButton!
@@ -47,6 +53,8 @@ class StockViewPopUpVC: UIViewController {
         if let cachedEmail = userService.userEmail {
             self.currUserEmail = cachedEmail
         }
+        
+        print("BIIIIGG SEGUE::::\(self.savedStockTickerString)")
         
         topBarView.layer.cornerRadius = 12.0
         topBarView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -212,6 +220,12 @@ class StockViewPopUpVC: UIViewController {
             modalSlider.hasStarted = false
             modalSlider.cancel()
         case .ended:
+            print("BIIG TYPE:::\(priorViewController), \(self.savedStockTickerString)")
+            if priorViewController is ProfileAccountVC {
+                profileVC.stockTickerString = self.savedStockTickerString
+                profileVC.scannedBrandString = self.savedScannedBrandString
+                profileVC.scannedProductString = self.savedScannedProductString
+            }
             modalSlider.hasStarted = false
             modalSlider.shouldFinish
                 ? modalSlider.finish()

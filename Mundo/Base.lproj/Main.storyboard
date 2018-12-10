@@ -1889,6 +1889,7 @@
                         <outlet property="theScrollView" destination="K0O-YU-hF8" id="fdI-UF-oUp"/>
                         <outlet property="watchlistTableView" destination="tTc-Q6-SHL" id="mep-qD-Byf"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="signOutBackToFirstPage" id="4MK-KR-bA1"/>
+                        <segue destination="17r-7i-stc" kind="presentation" identifier="profileToPopUp" id="jmQ-sq-0js"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGt-fc-azN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1905,10 +1906,10 @@
         <image name="swipebar" width="75" height="6"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5Rd-ch-GXp"/>
-        <segue reference="H8p-al-qZf"/>
+        <segue reference="jmQ-sq-0js"/>
+        <segue reference="E52-Df-CH4"/>
         <segue reference="72H-eo-Dxj"/>
         <segue reference="cLu-La-mCO"/>
-        <segue reference="T7D-SH-hqd"/>
+        <segue reference="4MK-KR-bA1"/>
     </inferredMetricsTieBreakers>
 </document>

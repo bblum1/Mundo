@@ -66,7 +66,7 @@ class StockInfoVC: UIViewController {
         print("LOADING NOW IN INFO: \(stockTickerString), \(scannedBrandString), \(scannedProductString)")
         
         if stockTickerString != "" {
-            
+        
             // Load the chart for the stock that was scanned
             stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
                 
@@ -282,8 +282,8 @@ class StockInfoVC: UIViewController {
         }
         
         if segue.identifier == "stockInfoToPopUp" {
-            print("SEGUE WITH::: \(self.selectedStockSymbol), \(self.selectedStockCompany)")
             let viewController = segue.destination as? StockViewPopUpVC
+            viewController?.priorViewController = self
             viewController?.stockTickerString = self.selectedStockSymbol
             viewController?.companyString = self.selectedStockCompany
             viewController?.watchlistStocks = self.watchlistStocks

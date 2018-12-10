@@ -27,6 +27,11 @@ class ProfileAccountVC: UIViewController {
     
     var activityIndicator = ActivitySpinnerClass()
     
+    let modalSlideInteractor = ModalSlideInteractor()
+    
+    var selectedStockSymbol = ""          // variable stores a stock ticker selected from tableView
+    var selectedStockCompany = ""         // variable stores the company string of the selected cell
+    
     // Use this class to make calls with a stock symbol and range of chart data
     var stockInfoService = StockInfoService()
     
@@ -94,10 +99,30 @@ class ProfileAccountVC: UIViewController {
     
     // Prepare to transfer returned stock after scan to StockInfoVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let viewController = segue.destination as? StockInfoVC
-        viewController?.stockTickerString = self.stockTickerString
-        viewController?.scannedBrandString = self.scannedBrandString
-        viewController?.scannedProductString = self.scannedProductString
+        
+        if segue.identifier == "profileToPopUp" {
+            let viewController = segue.destination as? StockViewPopUpVC
+            viewController?.priorViewController = self
+            viewController?.stockTickerString = self.selectedStockSymbol
+            viewController?.companyString = self.selectedStockCompany
+            viewController?.watchlistStocks = self.watchlistSymbols
+            viewController?.modalSlideInteractor = self.modalSlideInteractor
+            viewController?.transitioningDelegate = self
+            
+            // Save these for going back to StockInfoVC
+            viewController?.savedStockTickerString = self.stockTickerString
+            viewController?.savedScannedBrandString = self.scannedBrandString
+            viewController?.savedScannedProductString = self.scannedProductString
+        }
+        
+        if segue.identifier == "stockInfoToPopUp" {
+            let viewController = segue.destination as? StockInfoVC
+            viewController?.stockTickerString = self.stockTickerString
+            viewController?.scannedBrandString = self.scannedBrandString
+            viewController?.scannedProductString = self.scannedProductString
+        }
+        
+        
     }
     
     func loadChartView() {
@@ -213,4 +238,27 @@ extension ProfileAccountVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            let stockItemTicker = watchlistStocks[indexPath.row].ticker
+            let stockItemCompany = watchlistStocks[indexPath.row].company
+            self.selectedStockSymbol = stockItemTicker
+            self.selectedStockCompany = stockItemCompany
+            performSegue(withIdentifier: "profileToPopUp", sender: nil)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+}
+
+// Extension for the modal slide dismissal
+extension ProfileAccountVC: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return modalSlideInteractor.hasStarted ? modalSlideInteractor : nil
+    }
 }

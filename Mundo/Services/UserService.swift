@@ -20,6 +20,19 @@ class UserService {
         return keychainResult
     }
     
+    // Alert for wrong password
+    func passwordWrong(viewController: UIViewController) {
+        let alert = UIAlertController(title: "Wrong Password", message: "Password did not match this email", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        DispatchQueue.main.async {
+            viewController.present(alert, animated: true)
+        }
+    }
+    
     func signOut() -> Bool {
         let keychainResult = KeychainWrapper.standard.removeObject(forKey: MUNDO_KEY)
         print("Horacio: ID removed from keychain \(keychainResult)")

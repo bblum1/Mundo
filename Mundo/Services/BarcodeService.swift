@@ -117,6 +117,7 @@ class BarcodeService {
             data, response, error in
             
             if error != nil {
+                print("return1")
                 completionHandler(nil, error)
                 return
             }
@@ -167,27 +168,33 @@ class BarcodeService {
                                     if let symbol = parseJSON["symbol"] as? String {
                                         print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
                                         // get the scanned stock item loaded as we segue
+                                        print("returnTrue")
                                         completionHandler([brand, symbol, product], nil)
                                     } else {
+                                        print("return7")
                                         completionHandler(nil, error)
                                     }
                                     
                                 } else {
+                                    print("return6")
                                     completionHandler(nil, error)
                                 }
                             } catch {
+                                print("return5")
                                 print(error.localizedDescription)
                                 completionHandler(nil, error)
                             }
                         }
                         task.resume()
                     }
-                    completionHandler(nil, error)
+                    
                 } else {
+                    print("return3")
                     completionHandler(nil, error)
                 }
                 
             } catch {
+                print("return2")
                 completionHandler(nil, error)
             }
         }
