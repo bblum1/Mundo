@@ -172,24 +172,32 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                 
                  if let parseJSON = myJSON {
                     let msg = parseJSON["result"] as? String
-                    print(msg)
                     let msgEmail = parseJSON["email"] as? String
-                    print(msgEmail)
                     
-                    if self.userService.completeSignIn(email: msgEmail!) == true {
-                        self.performSegue(withIdentifier: "logInToScanner", sender: nil)
+                    if msg == "Success" {
+                        if let userEmail = msgEmail {
+                            if self.userService.completeSignIn(email: msgEmail!) == true {
+                                DispatchQueue.main.async {
+                                    self.performSegue(withIdentifier: "logInToScanner", sender: nil)
+                                }
+                            } else {
+                                // TODO: Send alert something went wrong
+                                print("ERROR WITH SIGN IN")
+                            }
+                        } else {
+                            // TODO: Send alert password or email is wrong
+                        }
                     } else {
-                        // TODO: Send alert something went wrong
-                        print("ERROR WITH SIGN IN")
+                        // TODO: Send alert password or email is wrong
+                        
                     }
+                    
                  }
              } catch {
                 print(error)
              }
         }
         task.resume()
-        
-        
     }
     
 }

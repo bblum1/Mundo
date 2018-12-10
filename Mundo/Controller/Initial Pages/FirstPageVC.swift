@@ -15,13 +15,11 @@ class FirstPageVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        activitySpinnerClass.startSpinner(viewcontroller: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        activitySpinnerClass.startSpinner(viewcontroller: self)
         
         if let cachedEmail = userService.userEmail {
             print("SAVED USER EMAIL::::\(cachedEmail)")

@@ -8,8 +8,22 @@
 //  This class contains the functions that make a call to IEXtrading.com with a stock symbol
 
 import Foundation
+import UIKit
 
 class StockInfoService {
+    
+    // Alert for barcode not finding info (API's fault)
+    func generalErrorAlert(viewController: UIViewController) {
+        let alert = UIAlertController(title: "Error ☹️", message: "Sorry, looks like an error occurred.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        DispatchQueue.main.async {
+            viewController.present(alert, animated: true)
+        }
+    }
     
     // function that takes in ticker symbol and range that we want to display chart data for
     func callChartData(ticker: String, range: String, completionHandler: @escaping (Dictionary<String, Any>?, Error?)->Void) {

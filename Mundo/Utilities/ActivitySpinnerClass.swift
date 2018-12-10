@@ -12,18 +12,22 @@ import UIKit
 class ActivitySpinnerClass: UIActivityIndicatorView {
     
     func startSpinner(viewcontroller: UIViewController) {
-        self.center = viewcontroller.view.center
-        self.hidesWhenStopped = true
-        self.style = UIActivityIndicatorView.Style.gray
-        viewcontroller.view.addSubview(self)
-        
-        self.startAnimating()
-        UIApplication.shared.beginIgnoringInteractionEvents()
+        DispatchQueue.main.async {
+            self.center = viewcontroller.view.center
+            self.hidesWhenStopped = true
+            self.style = UIActivityIndicatorView.Style.gray
+            viewcontroller.view.addSubview(self)
+            
+            self.startAnimating()
+            UIApplication.shared.beginIgnoringInteractionEvents()
+        }
     }
     
     func stopSpinner() {
-        self.stopAnimating()
-        UIApplication.shared.endIgnoringInteractionEvents()
+        DispatchQueue.main.async {
+            self.stopAnimating()
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
     }
     
 }

@@ -7,6 +7,7 @@
 // Class object that takes barcode --> receives stock information --> Sends stock info back out
 
 import Foundation
+import UIKit
 
 class BarcodeService {
     
@@ -104,7 +105,7 @@ class BarcodeService {
     
     //--------------------------------------------------------------------------------------
     
-    func makePaidBarcodeCall(gtin: String, completionHandler: @escaping ([String]?, Error?)->Void) {
+    func makePaidBarcodeCall(currViewController: UIViewController, gtin: String, completionHandler: @escaping ([String]?, Error?)->Void) {
         let apiURL = "https://api.barcodelookup.com/v2/products?barcode=" + gtin + "&formatted=y&key=cy93olapm4xshdguq2pxchogblgvdr"
         let requestURL = NSURL(string: apiURL)
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -116,8 +117,8 @@ class BarcodeService {
             data, response, error in
             
             if error != nil {
-                print("error is \(String(describing: error))")
-                return;
+                completionHandler(nil, error)
+                return
             }
             
             do {
@@ -145,12 +146,12 @@ class BarcodeService {
                         let postParameters = "brand="+brand
                         request.httpBody = postParameters.data(using: String.Encoding.utf8)
                         
-                        // TODO: Second task, change name here
+                        // TODO: Second task for brand->stock, change name here
                         let task = URLSession.shared.dataTask(with: request as URLRequest) {
                             data, response, error in
                             
                             if error != nil {
-                                print("error is \(String(describing: error))")
+                                completionHandler(nil, error)
                                 return
                             }
                             
@@ -167,24 +168,27 @@ class BarcodeService {
                                         print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
                                         // get the scanned stock item loaded as we segue
                                         completionHandler([brand, symbol, product], nil)
+                                    } else {
+                                        completionHandler(nil, error)
                                     }
                                     
+                                } else {
+                                    completionHandler(nil, error)
                                 }
                             } catch {
-                                // TODO: Send alert that brand could not be found :(
                                 print(error.localizedDescription)
                                 completionHandler(nil, error)
-                                
                             }
                         }
                         task.resume()
-                        
                     }
+                    completionHandler(nil, error)
+                } else {
+                    completionHandler(nil, error)
                 }
                 
             } catch {
-                // TODO: Send alert that the barcode could not be read
-                print(error)
+                completionHandler(nil, error)
             }
         }
         task.resume()
