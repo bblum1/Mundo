@@ -102,7 +102,6 @@ class ProfileAccountVC: UIViewController {
         
         if segue.identifier == "profileToPopUp" {
             let viewController = segue.destination as? StockViewPopUpVC
-            viewController?.priorViewController = self
             viewController?.stockTickerString = self.selectedStockSymbol
             viewController?.companyString = self.selectedStockCompany
             viewController?.watchlistStocks = self.watchlistSymbols
@@ -115,7 +114,7 @@ class ProfileAccountVC: UIViewController {
             viewController?.savedScannedProductString = self.scannedProductString
         }
         
-        if segue.identifier == "stockInfoToPopUp" {
+        if segue.identifier == "profileToStockInfo" {
             let viewController = segue.destination as? StockInfoVC
             viewController?.stockTickerString = self.stockTickerString
             viewController?.scannedBrandString = self.scannedBrandString

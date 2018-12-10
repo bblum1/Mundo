@@ -283,7 +283,6 @@ class StockInfoVC: UIViewController {
         
         if segue.identifier == "stockInfoToPopUp" {
             let viewController = segue.destination as? StockViewPopUpVC
-            viewController?.priorViewController = self
             viewController?.stockTickerString = self.selectedStockSymbol
             viewController?.companyString = self.selectedStockCompany
             viewController?.watchlistStocks = self.watchlistStocks

@@ -11,8 +11,6 @@ import Highcharts
 
 class StockViewPopUpVC: UIViewController {
     
-    var priorViewController = UIViewController()
-    var profileVC = ProfileAccountVC()
     var savedStockTickerString = ""
     var savedScannedBrandString = ""
     var savedScannedProductString = ""
@@ -220,11 +218,12 @@ class StockViewPopUpVC: UIViewController {
             modalSlider.hasStarted = false
             modalSlider.cancel()
         case .ended:
-            print("BIIG TYPE:::\(priorViewController), \(self.savedStockTickerString)")
-            if priorViewController is ProfileAccountVC {
-                profileVC.stockTickerString = self.savedStockTickerString
-                profileVC.scannedBrandString = self.savedScannedBrandString
-                profileVC.scannedProductString = self.savedScannedProductString
+            
+            if let presenterVC = presentingViewController as? ProfileAccountVC {
+                print("BIIG TYPE:::\(self.savedStockTickerString), \(presenterVC)")
+                presenterVC.stockTickerString = self.savedStockTickerString
+                presenterVC.scannedBrandString = self.savedScannedBrandString
+                presenterVC.scannedProductString = self.savedScannedProductString
             }
             modalSlider.hasStarted = false
             modalSlider.shouldFinish

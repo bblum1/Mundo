@@ -15,6 +15,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginEmailTextField: UITextField!
     @IBOutlet weak var loginPasswordTextField: UITextField!
     @IBOutlet weak var signInBttn: UIButton!
+    @IBOutlet weak var deleteAccountBttn: UIButton!
     
     var textFieldPosition: CGFloat = 0.00
     var textFieldHeight: CGFloat = 0.00
@@ -29,6 +30,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         loginPasswordTextField.delegate = self
         
         signInBttn.isEnabled = false
+        deleteAccountBttn.isHidden = true
         signInBttn.setTitleColor(UIColor.lightGray, for: .normal)
         loginEmailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         loginPasswordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -176,20 +178,21 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     
                     if msg == "Success" {
                         if let userEmail = msgEmail {
-                            if self.userService.completeSignIn(email: msgEmail!) == true {
+                            if self.userService.completeSignIn(email: userEmail) == true {
                                 DispatchQueue.main.async {
                                     self.performSegue(withIdentifier: "logInToScanner", sender: nil)
                                 }
                             } else {
-                                // TODO: Send alert something went wrong
+                                // TODO: Send alert something went wrong with Keychain
                                 print("ERROR WITH SIGN IN")
                             }
                         } else {
                             // TODO: Send alert password or email is wrong
+                            self.userService.passwordWrong(viewController: self)
                         }
                     } else {
                         // TODO: Send alert password or email is wrong
-                        
+                        self.userService.passwordWrong(viewController: self)
                     }
                     
                  }

@@ -443,15 +443,14 @@
                                     <action selector="updatePasswordTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="LXn-fO-MhI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vmC-nm-oNX" userLabel="Delete Account" customClass="loginToDeleteAccount">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vmC-nm-oNX" userLabel="Delete Account">
                                 <rect key="frame" x="222" y="425" width="129" height="37"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                 <state key="normal" title="Delete Account">
                                     <color key="titleColor" red="0.85098856690000002" green="0.85097002980000003" blue="0.85097366569999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <action selector="deleteAccountBtnTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="jNZ-wq-fjs"/>
-                                    <action selector="updatePasswordTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="Dhf-v4-iI4"/>
+                                    <action selector="deleteAccountBtnTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="rh7-53-vyK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -483,6 +482,7 @@
                         <viewLayoutGuide key="safeArea" id="fap-CA-eUf"/>
                     </view>
                     <connections>
+                        <outlet property="deleteAccountBttn" destination="vmC-nm-oNX" id="bFt-pP-0sx"/>
                         <outlet property="loginEmailTextField" destination="hoh-EZ-AKV" id="6DS-zT-5Yg"/>
                         <outlet property="loginPasswordTextField" destination="Ix7-CE-CnF" id="vuO-oU-eOx"/>
                         <outlet property="signInBttn" destination="4NZ-MQ-cWn" id="YRi-4O-SS1"/>
@@ -1716,7 +1716,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2341.5999999999999" y="3867.1664167916047"/>
+            <point key="canvasLocation" x="2342" y="3796"/>
         </scene>
         <!--Profile AccountVC-->
         <scene sceneID="i4q-Az-jn0">
@@ -1843,7 +1843,7 @@
                                             <color key="titleColor" red="1" green="0.99998790029999995" blue="0.9999920726" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
-                                            <segue destination="T4s-rd-9CP" kind="show" id="E52-Df-CH4"/>
+                                            <segue destination="T4s-rd-9CP" kind="show" identifier="profileToStockInfo" id="E52-Df-CH4"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0Y-fL-OPM">
@@ -1906,10 +1906,11 @@
         <image name="swipebar" width="75" height="6"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="5Rd-ch-GXp"/>
         <segue reference="jmQ-sq-0js"/>
         <segue reference="E52-Df-CH4"/>
         <segue reference="72H-eo-Dxj"/>
         <segue reference="cLu-La-mCO"/>
-        <segue reference="4MK-KR-bA1"/>
+        <segue reference="T7D-SH-hqd"/>
     </inferredMetricsTieBreakers>
 </document>

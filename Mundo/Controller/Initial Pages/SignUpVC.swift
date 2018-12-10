@@ -179,9 +179,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                 let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
                 
                 if let parseJSON = myJSON {
-                    var msg : String!
-                    msg = parseJSON["result"] as? String
-                    print("CHECK MESSAGE: \(msg)")
+                    let msg = parseJSON["result"] as? String
+                    print("msg:::\(String(describing: msg))")
                     if self.userService.completeSignIn(email: email!) == true {
                         self.performSegue(withIdentifier: "signUpToScanner", sender: nil)
                     } else {
@@ -193,8 +192,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate {
                 print(error)
             }
         }
-        
         task.resume()
-        
     }
 }

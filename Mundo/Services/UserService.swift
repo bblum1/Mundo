@@ -22,7 +22,7 @@ class UserService {
     
     // Alert for wrong password
     func passwordWrong(viewController: UIViewController) {
-        let alert = UIAlertController(title: "Wrong Password", message: "Password did not match this email", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Incorrect Email or Password", message: "Your entered email or password seems to be wrong.", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
