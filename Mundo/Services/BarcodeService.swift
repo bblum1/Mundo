@@ -7,6 +7,7 @@
 // Class object that takes barcode --> receives stock information --> Sends stock info back out
 
 import Foundation
+import UIKit
 
 class BarcodeService {
     
@@ -104,7 +105,7 @@ class BarcodeService {
     
     //--------------------------------------------------------------------------------------
     
-    func makePaidBarcodeCall(gtin: String, completionHandler: @escaping ([String]?, Error?)->Void) {
+    func makePaidBarcodeCall(currViewController: UIViewController, gtin: String, completionHandler: @escaping ([String]?, Error?)->Void) {
         let apiURL = "https://api.barcodelookup.com/v2/products?barcode=" + gtin + "&formatted=y&key=cy93olapm4xshdguq2pxchogblgvdr"
         let requestURL = NSURL(string: apiURL)
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -116,8 +117,9 @@ class BarcodeService {
             data, response, error in
             
             if error != nil {
-                print("error is \(String(describing: error))")
-                return;
+                print("return1")
+                completionHandler(nil, error)
+                return
             }
             
             do {
@@ -145,12 +147,12 @@ class BarcodeService {
                         let postParameters = "brand="+brand
                         request.httpBody = postParameters.data(using: String.Encoding.utf8)
                         
-                        // TODO: Second task, change name here
+                        // TODO: Second task for brand->stock, change name here
                         let task = URLSession.shared.dataTask(with: request as URLRequest) {
                             data, response, error in
                             
                             if error != nil {
-                                print("error is \(String(describing: error))")
+                                completionHandler(nil, error)
                                 return
                             }
                             
@@ -166,23 +168,34 @@ class BarcodeService {
                                     if let symbol = parseJSON["symbol"] as? String {
                                         print("SYMBOL BABY: \(symbol)!!!!!!!!!!")
                                         // get the scanned stock item loaded as we segue
+                                        print("returnTrue")
                                         completionHandler([brand, symbol, product], nil)
+                                    } else {
+                                        print("return7")
+                                        completionHandler(nil, error)
                                     }
                                     
+                                } else {
+                                    print("return6")
+                                    completionHandler(nil, error)
                                 }
                             } catch {
+                                print("return5")
                                 print(error.localizedDescription)
                                 completionHandler(nil, error)
-                                
                             }
                         }
                         task.resume()
-                        
                     }
+                    
+                } else {
+                    print("return3")
+                    completionHandler(nil, error)
                 }
                 
             } catch {
-                print(error)
+                print("return2")
+                completionHandler(nil, error)
             }
         }
         task.resume()

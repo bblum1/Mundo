@@ -15,9 +15,12 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginEmailTextField: UITextField!
     @IBOutlet weak var loginPasswordTextField: UITextField!
     @IBOutlet weak var signInBttn: UIButton!
+    @IBOutlet weak var deleteAccountBttn: UIButton!
     
     var textFieldPosition: CGFloat = 0.00
     var textFieldHeight: CGFloat = 0.00
+    
+    var userService = UserService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +30,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         loginPasswordTextField.delegate = self
         
         signInBttn.isEnabled = false
+        deleteAccountBttn.isHidden = true
         signInBttn.setTitleColor(UIColor.lightGray, for: .normal)
         loginEmailTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         loginPasswordTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
@@ -81,7 +85,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         
         guard
             let email = loginEmailTextField.text, !email.isEmpty,
-            //emailExistsInDB(emailAddressString: email) != true, // add once created
             let password = loginPasswordTextField.text, !password.isEmpty,
             let password_count = loginPasswordTextField.text, !(password_count.count < 6),
             isValidEmailAddress(emailAddressString: email), isValidEmailAddress(emailAddressString: email) != false
@@ -163,27 +166,41 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             
             if error != nil {
                 print("error is \(String(describing: error))")
-                return;
+                return
             }
             
             do {
                  let myJSON = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
                 
                  if let parseJSON = myJSON {
-                    var msg : String!
-                    var msgEmail : String!
-                    msgEmail = parseJSON["email"] as? String
-                    msg = parseJSON["result"] as? String
-                    print(msg)
-                    print(msgEmail)
+                    let msg = parseJSON["result"] as? String
+                    let msgEmail = parseJSON["email"] as? String
+                    
+                    if msg == "Success" {
+                        if let userEmail = msgEmail {
+                            if self.userService.completeSignIn(email: userEmail) == true {
+                                DispatchQueue.main.async {
+                                    self.performSegue(withIdentifier: "logInToScanner", sender: nil)
+                                }
+                            } else {
+                                // TODO: Send alert something went wrong with Keychain
+                                print("ERROR WITH SIGN IN")
+                            }
+                        } else {
+                            // TODO: Send alert password or email is wrong
+                            self.userService.passwordWrong(viewController: self)
+                        }
+                    } else {
+                        // TODO: Send alert password or email is wrong
+                        self.userService.passwordWrong(viewController: self)
+                    }
+                    
                  }
              } catch {
                 print(error)
              }
         }
         task.resume()
-        
-        performSegue(withIdentifier: "logInToScanner", sender: nil)
     }
     
 }

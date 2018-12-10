@@ -7,5 +7,6 @@ target 'Mundo' do
 
   # Pods for Mundo
   pod 'Highcharts', '~> 6.1.0'
+  pod 'SwiftKeychainWrapper'
 
 end

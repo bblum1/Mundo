@@ -88,12 +88,13 @@
                     </view>
                     <connections>
                         <segue destination="YKK-BM-XPD" kind="show" identifier="firstPageToLogIn" id="yDb-lq-B4f"/>
-                        <segue destination="Pfj-nu-wHZ" kind="show" identifier="firstPageToSignUp" id="b8n-iR-rbe"/>
+                        <segue destination="Pfj-nu-wHZ" kind="show" identifier="firstPageToScanner" id="b8n-iR-rbe"/>
+                        <segue destination="nnE-aj-0Yv" kind="show" identifier="firstPageToSignUp" id="C5x-Eh-rAa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="64.799999999999997" y="59.820089955022496"/>
+            <point key="canvasLocation" x="65" y="0.0"/>
         </scene>
         <!--Sign UpVC-->
         <scene sceneID="nn9-0f-0aR">
@@ -216,7 +217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o35-CB-pNZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="814" y="60"/>
+            <point key="canvasLocation" x="1031" y="60"/>
         </scene>
         <!--ScannerVC-->
         <scene sceneID="XQa-0L-5jf">
@@ -226,37 +227,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ma-rj-1WS">
-                                <rect key="frame" x="22" y="20" width="60" height="30"/>
-                                <state key="normal" title="Sign Out"/>
-                                <connections>
-                                    <action selector="backBttnTapped:" destination="Pfj-nu-wHZ" eventType="touchUpInside" id="vGX-BM-hZB"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mundo-scan-rect" translatesAutoresizingMaskIntoConstraints="NO" id="gwd-rk-UYC">
                                 <rect key="frame" x="112.5" y="320" width="150" height="47"/>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MsQ-dX-zNx">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan a Barcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vpg-x3-0BW">
+                                        <rect key="frame" x="102.5" y="30" width="170" height="33"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="24"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.58823529411764708" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Nra-wG-wRZ"/>
+                                    <constraint firstItem="vpg-x3-0BW" firstAttribute="centerX" secondItem="MsQ-dX-zNx" secondAttribute="centerX" id="TLm-BR-bEN"/>
+                                    <constraint firstItem="vpg-x3-0BW" firstAttribute="top" secondItem="MsQ-dX-zNx" secondAttribute="top" constant="30" id="q9H-lR-S7j"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8ma-rj-1WS" firstAttribute="top" secondItem="Dcv-XP-lsq" secondAttribute="top" id="2DQ-Zz-Esc"/>
                             <constraint firstItem="gwd-rk-UYC" firstAttribute="centerX" secondItem="Dcv-XP-lsq" secondAttribute="centerX" id="3Cg-Vg-Ihw"/>
                             <constraint firstItem="gwd-rk-UYC" firstAttribute="centerY" secondItem="Dcv-XP-lsq" secondAttribute="centerY" id="3la-pT-eFd"/>
+                            <constraint firstItem="MsQ-dX-zNx" firstAttribute="leading" secondItem="Dcv-XP-lsq" secondAttribute="leading" id="Nil-RU-SJ5"/>
                             <constraint firstItem="gwd-rk-UYC" firstAttribute="width" secondItem="tF6-Wv-2xS" secondAttribute="height" multiplier="150:667" id="Rwj-a6-c5I"/>
-                            <constraint firstItem="8ma-rj-1WS" firstAttribute="leading" secondItem="Dcv-XP-lsq" secondAttribute="leading" constant="22" id="cSQ-0E-Mg3"/>
+                            <constraint firstItem="MsQ-dX-zNx" firstAttribute="trailing" secondItem="Dcv-XP-lsq" secondAttribute="trailing" id="TF7-oF-F05"/>
+                            <constraint firstItem="MsQ-dX-zNx" firstAttribute="top" secondItem="tF6-Wv-2xS" secondAttribute="top" id="gcO-GY-bAw"/>
                             <constraint firstItem="Dcv-XP-lsq" firstAttribute="bottom" secondItem="gwd-rk-UYC" secondAttribute="bottom" constant="300" id="x3f-S4-AXD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Dcv-XP-lsq"/>
                     </view>
                     <connections>
                         <outlet property="square" destination="gwd-rk-UYC" id="0lt-6E-o8e"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="scannerToFirstPage" id="zAR-34-OVM"/>
                         <segue destination="T4s-rd-9CP" kind="show" identifier="scannerToStockInfo" id="H8p-al-qZf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nsA-L4-YrQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1281" y="894"/>
+            <point key="canvasLocation" x="1030" y="894"/>
         </scene>
         <!--Update PasswordVC-->
         <scene sceneID="esE-1N-t1j">
@@ -432,15 +443,14 @@
                                     <action selector="updatePasswordTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="LXn-fO-MhI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vmC-nm-oNX" userLabel="Delete Account" customClass="loginToDeleteAccount">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vmC-nm-oNX" userLabel="Delete Account">
                                 <rect key="frame" x="222" y="425" width="129" height="37"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                                 <state key="normal" title="Delete Account">
                                     <color key="titleColor" red="0.85098856690000002" green="0.85097002980000003" blue="0.85097366569999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
-                                    <action selector="deleteAccountBtnTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="jNZ-wq-fjs"/>
-                                    <action selector="updatePasswordTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="Dhf-v4-iI4"/>
+                                    <action selector="deleteAccountBtnTapped:" destination="YKK-BM-XPD" eventType="touchUpInside" id="rh7-53-vyK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -472,6 +482,7 @@
                         <viewLayoutGuide key="safeArea" id="fap-CA-eUf"/>
                     </view>
                     <connections>
+                        <outlet property="deleteAccountBttn" destination="vmC-nm-oNX" id="bFt-pP-0sx"/>
                         <outlet property="loginEmailTextField" destination="hoh-EZ-AKV" id="6DS-zT-5Yg"/>
                         <outlet property="loginPasswordTextField" destination="Ix7-CE-CnF" id="vuO-oU-eOx"/>
                         <outlet property="signInBttn" destination="4NZ-MQ-cWn" id="YRi-4O-SS1"/>
@@ -483,7 +494,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJQ-bA-lPX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="65" y="796"/>
+            <point key="canvasLocation" x="65" y="894"/>
         </scene>
         <!--Delete AccountVC-->
         <scene sceneID="7WZ-mm-Exg">
@@ -576,12 +587,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MWT-eZ-HZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-370" y="1793"/>
+            <point key="canvasLocation" x="-902" y="1675"/>
         </scene>
         <!--Stock InfoVC-->
         <scene sceneID="vfe-gw-jgm">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rah-7L-dXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="T4s-rd-9CP" customClass="StockInfoVC" customModule="Mundo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zrh-Tc-xQL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1750"/>
@@ -925,8 +935,8 @@
                                                         <color key="textColor" white="0.15741644969999999" alpha="0.87" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brooklyn, New York" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5BC-je-Qf0">
-                                                        <rect key="frame" x="235" y="162" width="124" height="20"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chicago, Illinois" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="5BC-je-Qf0">
+                                                        <rect key="frame" x="258" y="162" width="101" height="20"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
                                                         <color key="textColor" white="0.15741644969999999" alpha="0.87" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
@@ -1115,10 +1125,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PK5-B9-a5T" userLabel="TopBarView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efn-Bi-aBo">
-                                        <rect key="frame" x="16" y="30" width="35" height="34"/>
-                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
-                                        <state key="normal" title="Back">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="efn-Bi-aBo">
+                                        <rect key="frame" x="16" y="30" width="31.5" height="26"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="efn-Bi-aBo" secondAttribute="height" multiplier="62:51" id="pmv-9G-KZy"/>
+                                        </constraints>
+                                        <state key="normal" image="barcodeicon">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -1126,7 +1138,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJq-ic-KwQ">
-                                        <rect key="frame" x="315" y="32" width="44" height="30"/>
+                                        <rect key="frame" x="315" y="28" width="44" height="30"/>
                                         <state key="normal" title="Profile">
                                             <color key="titleColor" red="1" green="0.99998790029999995" blue="0.9999920726" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
@@ -1137,6 +1149,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.76831763980000001" green="0.5839723349" blue="0.91769713159999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="efn-Bi-aBo" secondAttribute="bottom" constant="4" id="1IZ-dE-kYw"/>
                                     <constraint firstItem="efn-Bi-aBo" firstAttribute="top" secondItem="PK5-B9-a5T" secondAttribute="top" constant="30" id="ZT4-lU-sPH"/>
                                     <constraint firstItem="efn-Bi-aBo" firstAttribute="leading" secondItem="PK5-B9-a5T" secondAttribute="leading" constant="16" id="kPJ-bu-W5D"/>
                                     <constraint firstItem="HJq-ic-KwQ" firstAttribute="centerY" secondItem="efn-Bi-aBo" secondAttribute="centerY" id="rHE-Ff-KR8"/>
@@ -1172,6 +1185,7 @@
                         <segue destination="17r-7i-stc" kind="presentation" identifier="stockInfoToPopUp" id="91T-YE-1zh"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rah-7L-dXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2342" y="2071"/>
         </scene>
@@ -1702,7 +1716,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2341.5999999999999" y="3867.1664167916047"/>
+            <point key="canvasLocation" x="2342" y="3796"/>
         </scene>
         <!--Profile AccountVC-->
         <scene sceneID="i4q-Az-jn0">
@@ -1823,12 +1837,23 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="deL-G9-Jek">
-                                        <rect key="frame" x="16" y="30" width="34" height="30"/>
+                                        <rect key="frame" x="16" y="30" width="36" height="34"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
                                         <state key="normal" title="Back">
                                             <color key="titleColor" red="1" green="0.99998790029999995" blue="0.9999920726" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </state>
                                         <connections>
-                                            <segue destination="T4s-rd-9CP" kind="show" id="E52-Df-CH4"/>
+                                            <segue destination="T4s-rd-9CP" kind="show" identifier="profileToStockInfo" id="E52-Df-CH4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t0Y-fL-OPM">
+                                        <rect key="frame" x="294" y="30" width="65" height="34"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="16"/>
+                                        <state key="normal" title="Sign Out">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="signOutBttnTapped:" destination="VfU-fs-xxS" eventType="touchUpInside" id="9vB-CE-8Xz"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1837,7 +1862,9 @@
                                 <constraints>
                                     <constraint firstItem="deL-G9-Jek" firstAttribute="top" secondItem="Fls-bc-Xft" secondAttribute="top" constant="30" id="A6f-0o-el9"/>
                                     <constraint firstItem="deL-G9-Jek" firstAttribute="leading" secondItem="Fls-bc-Xft" secondAttribute="leading" constant="16" id="Atz-ey-28f"/>
+                                    <constraint firstAttribute="trailing" secondItem="t0Y-fL-OPM" secondAttribute="trailing" constant="16" id="QGQ-Jm-8xe"/>
                                     <constraint firstAttribute="height" constant="60" id="Tyz-y2-sMX"/>
+                                    <constraint firstItem="t0Y-fL-OPM" firstAttribute="centerY" secondItem="deL-G9-Jek" secondAttribute="centerY" id="aJU-wJ-Yk7"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1861,6 +1888,8 @@
                         <outlet property="stockView" destination="BEa-uT-76g" id="DZu-Jh-AnT"/>
                         <outlet property="theScrollView" destination="K0O-YU-hF8" id="fdI-UF-oUp"/>
                         <outlet property="watchlistTableView" destination="tTc-Q6-SHL" id="mep-qD-Byf"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="signOutBackToFirstPage" id="4MK-KR-bA1"/>
+                        <segue destination="17r-7i-stc" kind="presentation" identifier="profileToPopUp" id="jmQ-sq-0js"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGt-fc-azN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1869,6 +1898,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="barcodeicon" width="62" height="51"/>
         <image name="mundo-globe" width="419" height="514"/>
         <image name="mundo-scan-rect" width="375" height="250"/>
         <image name="plus-add-button" width="44" height="44"/>
@@ -1876,9 +1906,11 @@
         <image name="swipebar" width="75" height="6"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="H8p-al-qZf"/>
-        <segue reference="yDb-lq-B4f"/>
-        <segue reference="u3f-0Z-DOg"/>
-        <segue reference="zAR-34-OVM"/>
+        <segue reference="5Rd-ch-GXp"/>
+        <segue reference="jmQ-sq-0js"/>
+        <segue reference="E52-Df-CH4"/>
+        <segue reference="72H-eo-Dxj"/>
+        <segue reference="cLu-La-mCO"/>
+        <segue reference="T7D-SH-hqd"/>
     </inferredMetricsTieBreakers>
 </document>

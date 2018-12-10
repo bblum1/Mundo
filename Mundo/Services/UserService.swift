@@ -7,8 +7,37 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 class UserService {
+    
+    let userEmail = KeychainWrapper.standard.string(forKey: MUNDO_KEY)
+    
+    // Function will save the user login using Keychain
+    func completeSignIn(email: String) -> Bool {
+        let keychainResult = KeychainWrapper.standard.set(email, forKey: MUNDO_KEY)
+        print("Data saved too keychain \(keychainResult)")
+        return keychainResult
+    }
+    
+    // Alert for wrong password
+    func passwordWrong(viewController: UIViewController) {
+        let alert = UIAlertController(title: "Incorrect Email or Password", message: "Your entered email or password seems to be wrong.", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        DispatchQueue.main.async {
+            viewController.present(alert, animated: true)
+        }
+    }
+    
+    func signOut() -> Bool {
+        let keychainResult = KeychainWrapper.standard.removeObject(forKey: MUNDO_KEY)
+        print("Horacio: ID removed from keychain \(keychainResult)")
+        return keychainResult
+    }
     
     // Function will add a stock ticker to their watchlist with POST request
     func addToWatchlist(email: String, symbol: String, completionHandler: @escaping (String?, Error?)->Void) {

@@ -9,11 +9,27 @@
 import UIKit
 
 class FirstPageVC: UIViewController {
+    
+    var activitySpinnerClass = ActivitySpinnerClass()
+    var userService = UserService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        activitySpinnerClass.startSpinner(viewcontroller: self)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        // here we will need to check if the user is logged in
+        if let cachedEmail = userService.userEmail {
+            print("SAVED USER EMAIL::::\(cachedEmail)")
+            activitySpinnerClass.stopSpinner()
+            print("PERFORMING SEGUE")
+            performSegue(withIdentifier: "firstPageToScanner", sender: nil)
+        }
+        print("No user login yet")
+        // Else user has not logged in for a while
+        activitySpinnerClass.stopSpinner()
     }
     
     

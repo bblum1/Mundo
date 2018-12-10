@@ -20,14 +20,17 @@ class ProfileAccountVC: UIViewController {
     var watchlistSymbols: [String] = []
     var watchlistSectors: [String] = []
     var watchlistStocks = [WatchlistItem]()
-    
-    let currUserEmail = "btrossen@nd.edu"
-    
+        
     var stockTickerString = ""
     var scannedBrandString = ""
     var scannedProductString = ""
     
     var activityIndicator = ActivitySpinnerClass()
+    
+    let modalSlideInteractor = ModalSlideInteractor()
+    
+    var selectedStockSymbol = ""          // variable stores a stock ticker selected from tableView
+    var selectedStockCompany = ""         // variable stores the company string of the selected cell
     
     // Use this class to make calls with a stock symbol and range of chart data
     var stockInfoService = StockInfoService()
@@ -41,61 +44,84 @@ class ProfileAccountVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the user's watchlist tickers
-        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
+        // Load user's email, put it here since loadUserWatchlist is first func called
+        if let currUserEmail = userService.userEmail {
             
-            if let returnedStocks = responseArray {
-                // TODO: Delete watchlistSymbols if not needed
-                for tuple in returnedStocks {
-                    self.watchlistSymbols.append(tuple.0)
-                    self.watchlistSectors.append(tuple.1)
-                }
-                //print("WATCHLIST SECTORS: \(self.watchlistSectors)")
+            // Load the user's watchlist tickers
+            userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
                 
-                //self.watchlistSymbols = returnedStocks
-                
-                let myGroup = DispatchGroup()
-                
-                // Make API call with each symbol, only need full Watchlist items here
-                // NOTE: In StockInfoVC, we just needed the quick array to update + and - buttons
-                for symbol in self.watchlistSymbols {
+                if let returnedStocks = responseArray {
+                    // TODO: Delete watchlistSymbols if not needed
+                    for tuple in returnedStocks {
+                        self.watchlistSymbols.append(tuple.0)
+                        self.watchlistSectors.append(tuple.1)
+                    }
+                    //print("WATCHLIST SECTORS: \(self.watchlistSectors)")
                     
-                    myGroup.enter()
-                    self.stockInfoService.callChartData(ticker: symbol, range: "1d", completionHandler: {(responseDict, error) in
+                    //self.watchlistSymbols = returnedStocks
+                    
+                    let myGroup = DispatchGroup()
+                    
+                    // Make API call with each symbol, only need full Watchlist items here
+                    // NOTE: In StockInfoVC, we just needed the quick array to update + and - buttons
+                    for symbol in self.watchlistSymbols {
                         
-                        if let stockInfoDict = responseDict {
+                        myGroup.enter()
+                        self.stockInfoService.callChartData(ticker: symbol, range: "1d", completionHandler: {(responseDict, error) in
                             
-                            let company = stockInfoDict["company"] as? String ?? "No Company"
-                            let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
-                            let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
+                            if let stockInfoDict = responseDict {
+                                
+                                let company = stockInfoDict["company"] as? String ?? "No Company"
+                                let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
+                                let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
 
-                            let watchlistItem = WatchlistItem(ticker: symbol, company: company, openingPrice: openingPrice, latestPrice: latestPrice)
-                            
-                            self.watchlistStocks.append(watchlistItem)
-                            
-                            DispatchQueue.main.async {
-                                self.watchlistTableView.reloadData()
-                                self.loadChartView()
+                                let watchlistItem = WatchlistItem(ticker: symbol, company: company, openingPrice: openingPrice, latestPrice: latestPrice)
+                                
+                                self.watchlistStocks.append(watchlistItem)
+                                
+                                DispatchQueue.main.async {
+                                    self.watchlistTableView.reloadData()
+                                    self.loadChartView()
+                                }
+                                
                             }
-                            
-                        }
-                        myGroup.leave()
-                    })
+                            myGroup.leave()
+                        })
+                    }
                 }
-            }
-            
-        })
-        //loadChartView()
-        watchlistTableView.delegate = self
-        watchlistTableView.dataSource = self
+                
+            })
+            //loadChartView()
+            watchlistTableView.delegate = self
+            watchlistTableView.dataSource = self
+        }
     }
     
     // Prepare to transfer returned stock after scan to StockInfoVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let viewController = segue.destination as? StockInfoVC
-        viewController?.stockTickerString = self.stockTickerString
-        viewController?.scannedBrandString = self.scannedBrandString
-        viewController?.scannedProductString = self.scannedProductString
+        
+        if segue.identifier == "profileToPopUp" {
+            let viewController = segue.destination as? StockViewPopUpVC
+            viewController?.stockTickerString = self.selectedStockSymbol
+            viewController?.companyString = self.selectedStockCompany
+            viewController?.watchlistStocks = self.watchlistSymbols
+            viewController?.modalSlideInteractor = self.modalSlideInteractor
+            viewController?.transitioningDelegate = self
+            
+            // Save these for going back to StockInfoVC
+            viewController?.savedStockTickerString = self.stockTickerString
+            viewController?.savedScannedBrandString = self.scannedBrandString
+            viewController?.savedScannedProductString = self.scannedProductString
+        }
+        
+        if segue.identifier == "profileToStockInfo" {
+            let viewController = segue.destination as? StockInfoVC
+            viewController?.stockTickerString = self.stockTickerString
+            viewController?.scannedBrandString = self.scannedBrandString
+            viewController?.scannedProductString = self.scannedProductString
+        }
+        
+        
     }
     
     func loadChartView() {
@@ -176,6 +202,14 @@ class ProfileAccountVC: UIViewController {
         
     }
     
+    @IBAction func signOutBttnTapped(_ sender: Any) {
+        if userService.signOut() == true {
+            performSegue(withIdentifier: "signOutBackToFirstPage", sender: nil)
+        } else {
+            // TODO: Show alert that sign out error occurred
+        }
+        
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -203,4 +237,27 @@ extension ProfileAccountVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            let stockItemTicker = watchlistStocks[indexPath.row].ticker
+            let stockItemCompany = watchlistStocks[indexPath.row].company
+            self.selectedStockSymbol = stockItemTicker
+            self.selectedStockCompany = stockItemCompany
+            performSegue(withIdentifier: "profileToPopUp", sender: nil)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+}
+
+// Extension for the modal slide dismissal
+extension ProfileAccountVC: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return modalSlideInteractor.hasStarted ? modalSlideInteractor : nil
+    }
 }

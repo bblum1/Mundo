@@ -28,6 +28,7 @@
 		38C04CC621B5C8B60046E283 /* WatchlistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C04CC521B5C8B60046E283 /* WatchlistItem.swift */; };
 		38C04CC821B5C8D10046E283 /* WatchlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C04CC721B5C8D10046E283 /* WatchlistCell.swift */; };
 		38D20F66218B6EC700553619 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D20F65218B6EC700553619 /* DataService.swift */; };
+		38D3EE9921BDAEC800379E88 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D3EE9821BDAEC800379E88 /* Constants.swift */; };
 		38D48E4321AA7E720049E553 /* ActivitySpinnerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */; };
 		38DA230121B1EC8C0061FC4F /* SimilarStockItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DA230021B1EC8C0061FC4F /* SimilarStockItem.swift */; };
 		38E36EF02188CC7E002D6A4B /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */; };
@@ -67,6 +68,7 @@
 		38C04CC521B5C8B60046E283 /* WatchlistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistItem.swift; sourceTree = "<group>"; };
 		38C04CC721B5C8D10046E283 /* WatchlistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistCell.swift; sourceTree = "<group>"; };
 		38D20F65218B6EC700553619 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		38D3EE9821BDAEC800379E88 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitySpinnerClass.swift; sourceTree = "<group>"; };
 		38DA230021B1EC8C0061FC4F /* SimilarStockItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarStockItem.swift; sourceTree = "<group>"; };
 		38E36EEF2188CC7E002D6A4B /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		386287D121868D2F0058A164 /* Mundo */ = {
 			isa = PBXGroup;
 			children = (
+				38D3EE9721BDAE9A00379E88 /* Utilities */,
 				38D20F64218B6EAE00553619 /* Services */,
 				38E36EEC2188CBC5002D6A4B /* Model */,
 				38E36EEB2188CBBF002D6A4B /* View */,
@@ -137,9 +140,17 @@
 				381FE48D21A520CE0041779E /* SimilarStockService.swift */,
 				7BE67C4821B77D0D00002A21 /* FundamentalsService.swift */,
 				384E22C621B351D9000608E1 /* UserService.swift */,
-				38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		38D3EE9721BDAE9A00379E88 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				38D48E4221AA7E720049E553 /* ActivitySpinnerClass.swift */,
+				38D3EE9821BDAEC800379E88 /* Constants.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		38E36EEA2188CBB5002D6A4B /* Controller */ = {
@@ -310,12 +321,14 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Mundo/Pods-Mundo-frameworks.sh",
 				"${PODS_ROOT}/Highcharts/development/Highcharts.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highcharts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -334,6 +347,7 @@
 				7B668ED3218A804100553DE6 /* UpdatePasswordVC.swift in Sources */,
 				388F618F21B7321000F14101 /* DismissAnimator.swift in Sources */,
 				7B31BA1C21B7880500433C84 /* CompanyDescriptionView.swift in Sources */,
+				38D3EE9921BDAEC800379E88 /* Constants.swift in Sources */,
 				3826DD2421AD03AC00FFD351 /* StockInfoService.swift in Sources */,
 				386B351721A39DAF005BB2D9 /* ScannedProduct.swift in Sources */,
 				38DA230121B1EC8C0061FC4F /* SimilarStockItem.swift in Sources */,

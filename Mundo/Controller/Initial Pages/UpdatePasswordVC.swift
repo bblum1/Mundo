@@ -55,12 +55,10 @@ class UpdatePasswordVC: UIViewController {
             }
         }
         task.resume()
-        
         performSegue(withIdentifier: "updatePasswordToScanner", sender: nil)
     }
     
     @IBAction func backTapped(_ sender: Any) {
-        
         performSegue(withIdentifier: "updatePasswordToLogin", sender: nil)
     }
     

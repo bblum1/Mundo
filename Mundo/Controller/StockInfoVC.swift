@@ -11,7 +11,9 @@ import Highcharts
 
 class StockInfoVC: UIViewController {
     
+    var chartView: HIChartView!
     @IBOutlet weak var stockView: UIView!
+    
     @IBOutlet weak var addToWatchlistButton: UIButton!
     
     var companyString = ""
@@ -19,19 +21,19 @@ class StockInfoVC: UIViewController {
     @IBOutlet weak var statsView: StatsView!
     @IBOutlet weak var companyDescriptionView: CompanyDescriptionView!
     
-    let currUserEmail = "btrossen@nd.edu"
-        
+    // Services
+    
+    var userService = UserService()                     // loads user email and watchlist data
+    var stockInfoService = StockInfoService()           // gets chart data and company name for ticker
+    var fundamentalsService = FundamentalsService()     // gets fundamentals for stock ticker
+    var similarStockService = SimilarStockService()     // finds similar stocks for stock ticker
+    
+    var currUserEmail = ""
+    
+    // View objects
     var activityIndicator = ActivitySpinnerClass()
     
     let modalSlideInteractor = ModalSlideInteractor()
-    
-    // Use this class to make calls with a stock symbol and range of chart data
-    var stockInfoService = StockInfoService()
-    
-    // Use this class to make calls to functions related to user and watchlist
-    var userService = UserService()
-    
-    var fundamentalsService = FundamentalsService()
     
     // Use this class as the overall class item to store the data
     var scannedStockItem: ScannedStockItem!
@@ -41,10 +43,8 @@ class StockInfoVC: UIViewController {
     var scannedBrandString = ""
     var scannedProductString = ""
     
-    var chartView: HIChartView!
-    
     @IBOutlet weak var tableView: UITableView!
-    var similarStockService = SimilarStockService()
+    
     var similarStocks = [SimilarStockItem]()
     
     var selectedStockSymbol = ""          // variable stores a stock ticker selected from tableView
@@ -56,102 +56,112 @@ class StockInfoVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let cachedEmail = userService.userEmail {
+            self.currUserEmail = cachedEmail
+        }
+        
         activityIndicator.startSpinner(viewcontroller: self)
         
         print("LOADING NOW IN INFO: \(stockTickerString), \(scannedBrandString), \(scannedProductString)")
         
-        // Load the users watchlist
-        // TODO: Add a way to store current user, will have to use Keychain
+        if stockTickerString != "" {
         
-        // Load the chart for the stock that was scanned
-        stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
-            
-            DispatchQueue.main.async {
+            // Load the chart for the stock that was scanned
+            stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
                 
-                // Load the scannedStockItem object with return item
-                if let theDict = responseJSON {
-                    var newDict = theDict
-                    newDict["brand"] = self.scannedBrandString.localizedCapitalized
+                DispatchQueue.main.async {
                     
-                    self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
-                    
-                    // Load main stock view using Highcharts
-                    self.loadChartView()
-                    
-                    self.activityIndicator.stopSpinner()
-                }
-            }
-        })
-        
-        // Set tableView of top 5 stocks in the same industry
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        // Assign the table data for the similar stocks
-        similarStockService.loadSimilarStocks(ticker: stockTickerString, completionHandler: {(responseArray, error) in
-            print("RESPONSE ARRAY::::: \(String(describing: responseArray))")
-            
-            if let parseResponse = responseArray {
-                
-                let myGroup = DispatchGroup()
-                
-                for item in parseResponse {
-                    
-                    myGroup.enter()
-                    if let tickerSymbol = item["symbol"] {
+                    // Load the scannedStockItem object with return item
+                    if let theDict = responseJSON {
+                        var newDict = theDict
+                        newDict["brand"] = self.scannedBrandString.localizedCapitalized
                         
-                        // Make API Call with each symbol
-                        self.stockInfoService.callChartData(ticker: tickerSymbol, range: "1d", completionHandler: {(response, error) in
-                            
-                            if let stockInfoDict = response {
-                                
-                                let company = stockInfoDict["company"] as? String ?? "No Company"
-                                let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
-                                let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
-                                
-                                print("RESPONSE JSON:::: \(company), \(latestPrice), \(openingPrice)")
-                                // Crear new SimilarStockItem
-                                let stockItem = SimilarStockItem(ticker: tickerSymbol, company: company, latestPrice: latestPrice, openingPrice: openingPrice)
-                            
-                                // Once the new stock item is appended, send updated array back
-                                self.similarStocks.append(stockItem)
-                            
-                                // reload the tableView
-                                DispatchQueue.main.async {
-                                    self.tableView.reloadData()
-                                    self.loadAllSubViews()
-                                }
-                                
-                            }
-                            myGroup.leave()
-                        })
+                        self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
+                        
+                        // Load main stock view using Highcharts
+                        self.loadChartView()
+                        self.addToWatchlistButton.isEnabled = true
+                        self.activityIndicator.stopSpinner()
+                    } else {
+                        self.activityIndicator.stopSpinner()
                     }
                 }
-            }
+            })
             
-        })
-        
-        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
+            // Set tableView of top 5 stocks in the same industry
+            tableView.delegate = self
+            tableView.dataSource = self
             
-            print("RESPONSE ARRAY OF BLAKE STOCKS::::\(responseArray)")
-            if let returnedStocks = responseArray {
-                for tuple in returnedStocks {
-                    self.watchlistStocks.append(tuple.0)
-                }
-                //self.watchlistStocks = returnedStocks
-            }
-            
-            DispatchQueue.main.async {
+            // Assign the table data for the similar stocks
+            similarStockService.loadSimilarStocks(ticker: stockTickerString, completionHandler: {(responseArray, error) in
+                print("RESPONSE ARRAY::::: \(String(describing: responseArray))")
                 
-                if self.watchlistStocks.contains(self.stockTickerString) {
-                    // Already in watchlist, set as checkmark
-                    self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
-                } else {
-                    // Not in watchlist, make it a plus
-                    self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
+                if let parseResponse = responseArray {
+                    
+                    let myGroup = DispatchGroup()
+                    
+                    for item in parseResponse {
+                        
+                        myGroup.enter()
+                        if let tickerSymbol = item["symbol"] {
+                            
+                            // Make API Call with each symbol
+                            self.stockInfoService.callChartData(ticker: tickerSymbol, range: "1d", completionHandler: {(response, error) in
+                                
+                                if let stockInfoDict = response {
+                                    
+                                    let company = stockInfoDict["company"] as? String ?? "NoCo."
+                                    let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
+                                    let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
+                                    
+                                    print("RESPONSE JSON:::: \(company), \(latestPrice), \(openingPrice)")
+                                    // Crear new SimilarStockItem
+                                    let stockItem = SimilarStockItem(ticker: tickerSymbol, company: company, latestPrice: latestPrice, openingPrice: openingPrice)
+                                
+                                    // Once the new stock item is appended, send updated array back
+                                    self.similarStocks.append(stockItem)
+                                
+                                    // reload the tableView
+                                    DispatchQueue.main.async {
+                                        self.tableView.reloadData()
+                                        self.loadAllSubViews()
+                                    }
+                                    
+                                }
+                                myGroup.leave()
+                            })
+                        }
+                    }
                 }
-            }
-        })
+                
+            })
+            
+            userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
+                
+                if let returnedStocks = responseArray {
+                    for tuple in returnedStocks {
+                        self.watchlistStocks.append(tuple.0)
+                    }
+                    //self.watchlistStocks = returnedStocks
+                }
+                
+                DispatchQueue.main.async {
+                    
+                    if self.watchlistStocks.contains(self.stockTickerString) {
+                        // Already in watchlist, set as checkmark
+                        self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
+                    } else {
+                        // Not in watchlist, make it a plus
+                        self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
+                    }
+                }
+            })
+        } else {
+            activityIndicator.stopSpinner()
+            addToWatchlistButton.isEnabled = false
+            stockInfoService.generalErrorAlert(viewController: self)
+        }
     }
     
     func loadAllSubViews() {
@@ -272,7 +282,6 @@ class StockInfoVC: UIViewController {
         }
         
         if segue.identifier == "stockInfoToPopUp" {
-            print("SEGUE WITH::: \(self.selectedStockSymbol), \(self.selectedStockCompany)")
             let viewController = segue.destination as? StockViewPopUpVC
             viewController?.stockTickerString = self.selectedStockSymbol
             viewController?.companyString = self.selectedStockCompany
@@ -455,7 +464,6 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if let indexPath = tableView.indexPathForSelectedRow {
             let stockItemTicker = similarStocks[indexPath.row].ticker
             let stockItemCompany = similarStocks[indexPath.row].company
@@ -464,111 +472,6 @@ extension StockInfoVC: UITableViewDelegate, UITableViewDataSource {
             performSegue(withIdentifier: "stockInfoToPopUp", sender: nil)
             tableView.deselectRow(at: indexPath, animated: true)
         }
-        /*
-        self.scannedBrandString = "--"
-        self.scannedProductString = "--"
-        
-        self.similarStocks = []  // Refresh tableView data
-        
-        // Load the users watchlist
-        userService.loadUserWatchlist(email: currUserEmail, completionHandler: {(responseArray, error) in
-            
-            if let returnedStocks = responseArray {
-                for tuple in returnedStocks {
-                    self.watchlistStocks.append(tuple.0)
-                }
-                //self.watchlistStocks = returnedStocks
-            }
-            
-            DispatchQueue.main.async {
-                
-                if self.watchlistStocks.contains(self.stockTickerString) {
-                    // Already in watchlist, set as checkmark
-                    self.addToWatchlistButton.setImage(UIImage(named: "check-added-button"), for: .normal)
-                } else {
-                    // Not in watchlist, make it a plus
-                    self.addToWatchlistButton.setImage(UIImage(named: "plus-add-button"), for: .normal)
-                }
-            }
-            
-        })
-        
-        // Load the chart for the stock that was scanned
-        stockInfoService.callChartData(ticker: stockTickerString, range: "1d", completionHandler: {(responseJSON, error) in
-            
-            DispatchQueue.main.async {
-                
-                // Load the scannedStockItem object with return item
-                var newDict = responseJSON!
-                newDict["brand"] = self.scannedBrandString.localizedCapitalized
-                
-                self.scannedStockItem = ScannedStockItem(stockItemDict: newDict)
-                
-                // Load main stock view using Highcharts
-                self.loadChartView()
-                
-                self.activityIndicator.stopSpinner()
-            }
-        })
-        
-        // Assign the table data for the similar stocks
-        similarStockService.loadSimilarStocks(ticker: stockTickerString, completionHandler: {(responseArray, error) in
-            print("RESPONSE ARRAY::::: \(String(describing: responseArray))")
-            
-            if let parseResponse = responseArray {
-                
-                let myGroup = DispatchGroup()
-                
-                for item in parseResponse {
-                    
-                    myGroup.enter()
-                    if let tickerSymbol = item["symbol"] {
-                        
-                        // Make API Call with each symbol
-                        self.stockInfoService.callChartData(ticker: tickerSymbol, range: "1d", completionHandler: {(response, error) in
-                            
-                            
-                            if let stockInfoDict = response {
-                                let company = stockInfoDict["company"] as? String ?? "No Company"
-                                let latestPrice = stockInfoDict["latestPrice"] as? Float ?? Float(0.00)
-                                let openingPrice = stockInfoDict["open"] as? Float ?? Float(0.00)
-                                
-                                print("RESPONSE JSON:::: \(company), \(latestPrice), \(openingPrice)")
-                                // Crear new SimilarStockItem
-                                let stockItem = SimilarStockItem(ticker: tickerSymbol, company: company, latestPrice: latestPrice, openingPrice: openingPrice)
-                                
-                                // Once the new stock item is appended, send updated array back
-                                self.similarStocks.append(stockItem)
-                                
-                                // reload the tableView
-                                DispatchQueue.main.async {
-                                    print("RELOADING with: \(self.similarStocks)")
-                                    self.tableView.reloadData()
-                                }
-                            }
-                            myGroup.leave()
-                        })
-                    }
-                }
-            }
-            
-        })
-        
-        //Load the Robinhood Fundamentals Data from the Robinhood API and FundamentalsInfoService file.
-        fundamentalsService.callFundamentalsData(ticker: stockTickerString, completionHandler: {(responseDict, error) in
-            print("response dict: \(String(describing: responseDict))")
-            
-            if let parseDict = responseDict {
-                
-                // set all the views after Robinhood fundamentals call
-                self.companyAndProductView.setCompanyAndProductView(brandName: self.scannedBrandString, companyName: self.companyString, productName: self.scannedProductString, parseDict: parseDict)
-                
-                self.statsView.setStatsView(parseDict: parseDict)
-                
-                self.companyDescriptionView.setCompanyDetailsView(parseDict: parseDict)
-            }
-            
-        })*/
     }
     
 }
